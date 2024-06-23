@@ -18,3 +18,7 @@ Route::middleware([
         return view('dashboard', compact('users'));
     })->name('dashboard');
 });
+
+Route::get('/victor', function () {
+    return "+ ¿Shakira shakira? \n -lolelolelole...";
+});
