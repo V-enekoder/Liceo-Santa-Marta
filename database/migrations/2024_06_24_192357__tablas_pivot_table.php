@@ -168,6 +168,15 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('periodo_docente');
+        Schema::dropIfExists('periodo_materia');
+        Schema::dropIfExists('periodo_coordinador');
+        Schema::dropIfExists('periodo_grado');
+        Schema::dropIfExists('periodo_seccion');
+        Schema::dropIfExists('estudiante_periodo');
+        Schema::dropIfExists('estudiante_materia');
+        Schema::dropIfExists('estudiante_seccion');
+        Schema::dropIfExists('estudiante_grado');
+        Schema::dropIfExists('estudiante_representante');
     }
 };
