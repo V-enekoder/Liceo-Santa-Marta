@@ -14,8 +14,8 @@ return new class extends Migration {
         Schema::create('Periodos_Academicos', function (Blueprint $table) {
             $table->id();
             $table->string('Nombre');
-            $table->date('Fecha_inicio')->unique();
-            $table->date('Fecha_fin')->unique();
+            $table->integer('Fecha_inicio')->unique();
+            $table->integer('Fecha_fin')->unique();
         });
 
         Schema::create('Coordinadores', function (Blueprint $table) {
