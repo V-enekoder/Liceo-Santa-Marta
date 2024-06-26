@@ -5,3 +5,39 @@
 [x-cloak] {
     display: none;
 }
+
+.arrow {
+    transition: transform 0.3s ease; 
+    font-size: 1.2em;
+    color: #888;
+  }
+  
+  .arrow:hover {
+    transform: translateY(-2px);
+  }
+  
+  .submenu.show + a .arrow {
+    transform: rotate(180deg); 
+  }
+
+  .submenu {
+    transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+  }
+
+  .icono-side {
+    margin-right: 5px; /* Espacio entre el icono y el texto */
+    font-size: 1.2em;  /* Tamaño del icono */
+    /* ... Otros estilos que desees ... */
+  }
+
+  .icono-menu { /* O puedes usar una clase específica para este icono */
+    font-size: 3em; /* Ajusta el valor según el tamaño que desees */
+    margin-bottom: 10px;
+  }
+
+  .container {
+    display: flex;
+    justify-content: space-between; /* Distribuye espacio entre los elementos */
+    align-items: center; /* Alinea verticalmente (opcional) */
+}
+

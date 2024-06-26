@@ -18,8 +18,8 @@ Route::middleware([
         $users = User::all();
         return view('dashboard', compact('users'));
     })->name('dashboard');
-});
 
+<<<<<<< HEAD
 Route::get('/victor', function () {
     return "+ ¿Shakira shakira? \n -lolelolelole...";
 });
@@ -41,3 +41,6 @@ Route::get('/prueba', function () {
     return $coordinador;
     //return "Hola desde la prueba";
 });
+=======
+});
+>>>>>>> cd8d9f7094d15e193c43b8850f3f1284ba574494
