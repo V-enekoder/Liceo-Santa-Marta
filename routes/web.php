@@ -17,8 +17,5 @@ Route::middleware([
         $users = User::all();
         return view('dashboard', compact('users'));
     })->name('dashboard');
-});
 
-Route::get('/victor', function () {
-    return "+ ¿Shakira shakira? \n -lolelolelole...";
 });
