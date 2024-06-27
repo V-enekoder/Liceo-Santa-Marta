@@ -9,6 +9,7 @@
         
 
         <!-- Fonts -->
+        <link rel="stylesheet" href="app.css"> 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -21,7 +22,7 @@
     <body class="font-sans antialiased">
         <x-banner />
 
-        <div class="min-h-screen bg-gray-100 ">
+        <div class="min-h-screen bg-white ">
             @livewire('navigation-menu')
 
             <!-- Page Heading -->
@@ -35,7 +36,7 @@
 
             <!-- Page Content -->
             <x-sidebar />
-            <main>
+            <main class="flex-1 max-w-screen-lg mx-80 mt-5">
                 {{ $slot }}
             </main>
         </div>
