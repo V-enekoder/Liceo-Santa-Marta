@@ -34,6 +34,7 @@
             @endif
 
             <!-- Page Content -->
+            <x-sidebar />
             <main>
                 {{ $slot }}
             </main>

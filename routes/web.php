@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CoordinadorController;
+use App\Http\Controllers\DocenteController;
+use App\Http\Controllers\RepresentanteController;
 use App\Models\coordinador;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -19,28 +22,21 @@ Route::middleware([
         return view('dashboard', compact('users'));
     })->name('dashboard');
 
-<<<<<<< HEAD
-Route::get('/victor', function () {
-    return "+ ¿Shakira shakira? \n -lolelolelole...";
-});
+    Route::get('/dashboard/periodos',[CoordinadorController::class, 'crearPeriodos'])->name('sidebar.periodos');
+    Route::get('/dashboard/notas',[CoordinadorController::class, 'modificarNotas'])->name('sidebar.notas');
+    Route::get('/dashboard/registroRepresentantes',[CoordinadorController::class, 'modificarRepresentantes'])->name('sidebar.modirepresentantes');
+    Route::get('/dashboard/registroEstudiantes',[CoordinadorController::class, 'modificarEstudiantes'])->name('sidebar.modiestudiantes');
+    Route::get('/dashboard/registroDocentes',[CoordinadorController::class, 'modificarDocentes'])->name('sidebar.modidocentes');
+    Route::get('/dashboard/materias',[CoordinadorController::class, 'modificarMaterias'])->name('sidebar.materias');
 
-Route::get('/prueba', function () {
-    $coordinador = new Coordinador();
+    Route::get('/dashboard/CargaNotas',[DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');
+    Route::get('/dashboard/DataSecciones',[DocenteController::class, 'verSecciones'])->name('sidebar.VerSecciones');
+    Route::get('/dashboard/DataCargaAcademica',[DocenteController::class, 'verCargaAcademica'])->name('sidebar.VerCargaAcademica');
+
+    Route::get('/dashboard/VerBoletin',[RepresentanteController::class, 'indexBoletin'])->name('boletin.index');
+    Route::get('/dashboard/VerTodoBoletin',[RepresentanteController::class, 'indexTodoBoletin'])->name('boletin.indexTodo');
+    Route::get('/dashboard/VerFicha',[RepresentanteController::class, 'verFicha'])->name('Ficha.index');
     
-    $coordinador->Cedula = 12345;
-    $coordinador->Nombre = 'Victor';
-    $coordinador->Apellido = 'Astudillo';
-    $coordinador->Telefono = '123';
-    $coordinador->Direccion = 'villa asia';
-    $coordinador->Usuario = '';
-    $coordinador->Clave = '123';
-    $coordinador->Fecha_ingreso = '2023-06-25';
-    $coordinador->Fecha_retiro = null;
 
-    $coordinador->save();
-    return $coordinador;
-    //return "Hola desde la prueba";
+
 });
-=======
-});
->>>>>>> cd8d9f7094d15e193c43b8850f3f1284ba574494
