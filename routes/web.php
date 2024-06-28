@@ -24,9 +24,9 @@ Route::middleware([
 
 });
 
-Route::get('/victor', function () {
-    return "+ ¿Shakira shakira? \n -lolelolelole...";
-});
+/*Route::get('/victor','app\Http\Controllers\TelefonosController@index' /*function () {
+return "+ ¿Shakira shakira? \n -lolelolelole...";
+});*/
 
     Route::get('/dashboard/CargaNotas',[DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');
     Route::get('/dashboard/DataSecciones',[DocenteController::class, 'verSecciones'])->name('sidebar.VerSecciones');
