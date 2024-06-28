@@ -12,6 +12,22 @@ class Coordinador extends Model
 
 
     use HasFactory;
+    protected $table = 'coordinadores';
+    protected $fillable = [
+        'Cedula',
+        'Nombre',
+        'Apellido',
+        'Telefono',
+        'Direccion',
+        'Usuario',
+        'Clave',
+        'Fecha_ingreso',
+        'Fecha_retiro',
+    ];
 
-    protected $table = 'Coordinadores';
+    //Relaciones Muchos a Muchos
+
+    public function periodo_academicos(){
+        return $this->belongsToMany(Periodo_Academico::class, 'coordinador_periodo');
+    }
 }

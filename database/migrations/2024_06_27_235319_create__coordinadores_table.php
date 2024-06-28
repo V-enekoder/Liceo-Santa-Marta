@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('Coordinadores', function (Blueprint $table) {
+        Schema::create('coordinadores', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(User::class);
             $table->integer('Cedula')->unique();
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('Coordinadores');
+        Schema::dropIfExists('coordinadores');
     }
 };
