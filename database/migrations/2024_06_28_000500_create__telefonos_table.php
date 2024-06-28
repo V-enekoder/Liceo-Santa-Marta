@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('Periodos_Academicos', function (Blueprint $table) {
+        Schema::create('Telefonos', function (Blueprint $table) {
             $table->id();
-            $table->string('Nombre');
-            $table->year('Fecha_inicio')->unique();
-            $table->year('Fecha_fin')->unique();
+            $table->foreignId('representante_id')->constrained('Representantes')->onDelete('cascade');
+            $table->string('Telefono');
         });
     }
 
@@ -24,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('Periodos_Academicos');
+        Schema::dropIfExists('Telefonos');
     }
 };

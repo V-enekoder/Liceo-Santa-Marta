@@ -11,7 +11,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.0",
-        "moonshine/moonshine": "^2.16"
+        "moonshine/moonshine": "^2.17"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

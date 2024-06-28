@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('Periodos_Academicos', function (Blueprint $table) {
+        Schema::create('Grados', function (Blueprint $table) {
             $table->id();
-            $table->string('Nombre');
-            $table->year('Fecha_inicio')->unique();
-            $table->year('Fecha_fin')->unique();
+            $table->integer('Año');
         });
     }
 
@@ -24,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('Periodos_Academicos');
+        Schema::dropIfExists('Grados');
     }
 };

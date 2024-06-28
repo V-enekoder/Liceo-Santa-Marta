@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5cac5728806c75e5d084a805c457902f",
+    "content-hash": "1c7aeec0817c584e457f8d5ad6ed278d",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -2404,16 +2404,16 @@
         },
         {
             "name": "moonshine/moonshine",
-            "version": "2.16.1",
+            "version": "2.17.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/moonshine-software/moonshine.git",
-                "reference": "4317010f5187cf54f55d0cf99cc3618a894d64c4"
+                "reference": "c98617c6c11680248a0f1ca74f986f403ee07f7b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/moonshine-software/moonshine/zipball/4317010f5187cf54f55d0cf99cc3618a894d64c4",
-                "reference": "4317010f5187cf54f55d0cf99cc3618a894d64c4",
+                "url": "https://api.github.com/repos/moonshine-software/moonshine/zipball/c98617c6c11680248a0f1ca74f986f403ee07f7b",
+                "reference": "c98617c6c11680248a0f1ca74f986f403ee07f7b",
                 "shasum": ""
             },
             "require": {
@@ -2489,7 +2489,7 @@
                     "type": "open_collective"
                 }
             ],
-            "time": "2024-06-18T14:21:59+00:00"
+            "time": "2024-06-24T07:44:12+00:00"
         },
         {
             "name": "nesbot/carbon",

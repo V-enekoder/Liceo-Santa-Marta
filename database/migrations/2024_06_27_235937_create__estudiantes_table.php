@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('Periodos_Academicos', function (Blueprint $table) {
+        Schema::create('Estudiantes', function (Blueprint $table) {
             $table->id();
+            $table->integer('Cedula')->unique();
             $table->string('Nombre');
-            $table->year('Fecha_inicio')->unique();
-            $table->year('Fecha_fin')->unique();
+            $table->string('Apellido');
+            $table->date('Fecha_Nacimiento');
         });
     }
 
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('Periodos_Academicos');
+        Schema::dropIfExists('Estudiantes');
     }
 };
