@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\CoordinadorController;
+use App\Http\Controllers\DocenteController;
+use App\Http\Controllers\RepresentanteController;
 use App\Models\coordinador;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -25,20 +28,11 @@ Route::get('/victor', function () {
     return "+ ¿Shakira shakira? \n -lolelolelole...";
 });
 
-Route::get('/prueba', function () {
-    $coordinador = new Coordinador();
-    
-    $coordinador->Cedula = 12345;
-    $coordinador->Nombre = 'Victor';
-    $coordinador->Apellido = 'Astudillo';
-    $coordinador->Telefono = '123';
-    $coordinador->Direccion = 'villa asia';
-    $coordinador->Usuario = '';
-    $coordinador->Clave = '123';
-    $coordinador->Fecha_ingreso = '2023-06-25';
-    $coordinador->Fecha_retiro = null;
+    Route::get('/dashboard/CargaNotas',[DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');
+    Route::get('/dashboard/DataSecciones',[DocenteController::class, 'verSecciones'])->name('sidebar.VerSecciones');
+    Route::get('/dashboard/DataCargaAcademica',[DocenteController::class, 'verCargaAcademica'])->name('sidebar.VerCargaAcademica');
 
-    $coordinador->save();
-    return $coordinador;
-    //return "Hola desde la prueba";
-});
+    Route::get('/dashboard/VerBoletin',[RepresentanteController::class, 'indexBoletin'])->name('boletin.index');
+    Route::get('/dashboard/VerTodoBoletin',[RepresentanteController::class, 'indexTodoBoletin'])->name('boletin.indexTodo');
+    Route::get('/dashboard/VerFicha',[RepresentanteController::class, 'verFicha'])->name('Ficha.index');
+    
