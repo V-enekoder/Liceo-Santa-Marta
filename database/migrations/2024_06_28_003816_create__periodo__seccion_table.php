@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-          Schema::create('Periodo_Seccion', function (Blueprint $table) {
+          Schema::create('periodo_seccion', function (Blueprint $table) {
             $table->id();
 
             $table->foreignId('periodo_id') 
                 ->nullable()
-                ->constrained('Periodos_Academicos')
+                ->constrained('periodo_academicos')
                 ->cascadeOnUpdate()
                 ->nullOnDelete();
             $table->foreignId('seccion_id')
                 ->nullable()
-                ->constrained('Secciones')
+                ->constrained('secciones')
                 ->cascadeOnUpdate()
                 ->nullOnDelete();              
           });
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('Periodo_Seccion');
+        Schema::dropIfExists('periodo_seccion');
     }
 };
