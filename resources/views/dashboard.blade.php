@@ -3,22 +3,24 @@
     <head>
         <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
     </head>
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="flex h-screen">
-                <!-- Sidebar -->
-              
+    <!-- Sidebar -->
 
-                <script>
-                    function toggleSubmenu(element) {
-                        const submenu = element.nextElementSibling;
-                        submenu.classList.toggle("hidden");
-                        submenu.classList.toggle("show"); // Añade 'show' al submenu visible
-                    }
-                </script>
-                <!-- Contenido principal -->
-                <div class="flex-1 p-4 ml-60">
-                    <table>
+
+    <script>
+        function toggleSubmenu(element) {
+            const submenu = element.nextElementSibling;
+            submenu.classList.toggle("hidden");
+            submenu.classList.toggle("show"); // Añade 'show' al submenu visible
+        }
+    </script>
+    <!-- Contenido principal -->
+    <div class=" p-4 ml-40">
+        <div class="flex-1 ml-20">
+            <h1 style="font-family: 'Arial', sans-serif; font-size: 30px">Menú principal</h1>
+        </div>
+
+
+        {{-- <table>
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -35,9 +37,5 @@
                                 </tr>
                             @endforeach
                         </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
+                    </table>  --}}
 </x-app-layout>
