@@ -4,6 +4,7 @@ use App\Http\Controllers\CoordinadorController;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\RepresentanteController;
 use App\Models\coordinador;
+use App\Models\Representante;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -44,3 +45,4 @@ Route::get('/dashboard/DataCargaAcademica', [DocenteController::class, 'verCarga
 Route::get('/dashboard/VerBoletin', [RepresentanteController::class, 'indexBoletin'])->name('boletin.index');
 Route::get('/dashboard/VerTodoBoletin', [RepresentanteController::class, 'indexTodoBoletin'])->name('boletin.indexTodo');
 Route::get('/dashboard/VerFicha', [RepresentanteController::class, 'verFicha'])->name('Ficha.index');
+Route::get('/dashboard/telefonos', [RepresentanteController::class, 'indexTelefonos'])->name('telefonos.index');

@@ -1,6 +1,9 @@
 <x-app-layout>
     <div>
         <h1>Telefonos</h1>
+        <pre>
+            {{$telefonos}}
+        </pre>
         <table>
             <thead>
                 <tr>
@@ -12,7 +15,7 @@
                 @foreach ($telefonos as $telefono)
                     <tr>
                         <td>{{ $telefono->representante_id }}</td>
-                        <td>{{ $telefono->numero }}</td>
+                        <td>{{ $telefono->Telefono }}</td>
                     </tr>
                 @endforeach
             </tbody>

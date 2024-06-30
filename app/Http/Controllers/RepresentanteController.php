@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Telefono;
 use Illuminate\Http\Request;
 
 class RepresentanteController extends Controller
@@ -17,6 +18,8 @@ class RepresentanteController extends Controller
     }
 
     function indexTelefonos(){
-        return view('Paginas.Representantes.telefonos');
+        $telefonos= Telefono::all();
+        return view('Paginas.Representantes.telefonos',compact('telefonos'));
     }
+    
 }
