@@ -52,3 +52,7 @@
   margin-left: auto;
   margin-right: auto;
 }
+
+.contenedor-dropdown {
+  text-align: left; /* Alinea el contenido a la izquierda */
+}
