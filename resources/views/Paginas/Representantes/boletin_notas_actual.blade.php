@@ -1,6 +1,6 @@
 <x-app-layout>
     <div>
-        <h1>Boletín de Notas</h1>
-        <!-- Aquí agregarías el contenido del boletín de notas -->
-      </div>
+        <h1 style="font-family: 'Arial', sans-serif; font-size: 35px; text-align: left">Boletín de notas</h1>
+    </div>
+
 </x-app-layout>
