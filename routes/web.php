@@ -3,7 +3,6 @@
 use App\Http\Controllers\CoordinadorController;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\RepresentanteController;
-use App\Http\Controllers\TelefonosController;
 use App\Models\coordinador;
 use App\Models\Representante;
 use App\Models\User;
@@ -46,11 +45,4 @@ Route::get('/dashboard/DataCargaAcademica', [DocenteController::class, 'verCarga
 Route::get('/dashboard/VerBoletin', [RepresentanteController::class, 'indexBoletin'])->name('boletin.index');
 Route::get('/dashboard/VerTodoBoletin', [RepresentanteController::class, 'indexTodoBoletin'])->name('boletin.indexTodo');
 Route::get('/dashboard/VerFicha', [RepresentanteController::class, 'verFicha'])->name('Ficha.index');
-<<<<<<< HEAD
 Route::get('/dashboard/telefonos', [RepresentanteController::class, 'indexTelefonos'])->name('telefonos.index');
-=======
-
-
-//Rutas de victor de prueba
-Route::get('/dashboard/telefonos', [TelefonosController::class, 'index']);
->>>>>>> cdb9dafc39b4551d0a6b704eac2399c0f9067d55
