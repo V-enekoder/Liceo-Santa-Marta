@@ -16,6 +16,10 @@ class RepresentanteController extends Controller
     function verFicha(){
         return view('Paginas.Representantes.Ficha_estudiante');
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0be567e2c67ea4c44e5a9fc107b712588ae2f385
     function indexTelefonos(){
         $telefonos= Telefono::all();
         return view('Paginas.Representantes.telefonos_representantes',compact('telefonos'));
