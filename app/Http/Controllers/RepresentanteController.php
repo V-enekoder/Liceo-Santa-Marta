@@ -15,8 +15,4 @@ class RepresentanteController extends Controller
     function verFicha(){
         return view('Paginas.Representantes.Ficha_estudiante');
     }
-
-    function indexTelefonos(){
-        return view('Paginas.Representantes.telefonos');
-    }
 }

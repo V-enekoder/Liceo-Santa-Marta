@@ -10,6 +10,6 @@ class TelefonosController extends Controller
 {
     public function index(){
         $telefonos = Telefono::all();
-        return view('Paginas.Representantes.telefonos', compact('telefonos'));
+        return view('Paginas.Telefonos.telefonos_representantes', compact('telefonos'));
     }
 }
