@@ -88,6 +88,7 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                         </li>
                         <li><a href="{{route('boletin.indexTodo')}}" class="block p-2 hover:bg-gray-800">Consulta de boletines académicos</a></li>
                         <li><a href="{{route('Ficha.index')}}" class="block p-2 hover:bg-gray-800">Ficha del estudiante</a></li>
+                        <li><a href="{{route('telefonos.index')}}" class="block p-2 hover:bg-gray-800">Telefono del representante</a></li>
                     </ul>
                 </li>
             </ul>
