@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('calificaciones', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('periodo_id')->constrained('Periodos_Academicos')->onDelete('cascade');
-            $table->foreignId('docente_id')->constrained('Docentes')->onDelete('cascade');
-            $table->foreignId('materia_id')->constrained('Materias')->onDelete('cascade');
-            $table->foreignId('estudiante_id')->constrained('Estudiantes')->onDelete('cascade');
+            $table->foreignId('periodo_id')->constrained('periodo_Academicos')->onDelete('cascade');
+            $table->foreignId('docente_id')->constrained('docentes')->onDelete('cascade');
+            $table->foreignId('materia_id')->constrained('materias')->onDelete('cascade');
+            $table->foreignId('estudiante_id')->constrained('estudiantes')->onDelete('cascade');
             $table->integer('lapso_1')->nullable();
             $table->integer('lapso_2')->nullable();
             $table->integer('lapso_3')->nullable();
