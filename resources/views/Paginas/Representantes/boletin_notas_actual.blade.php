@@ -1,6 +1,6 @@
 <x-app-layout>
-    <div>
-        <h1 style="font-family: 'Arial', sans-serif; font-size: 23px; text-align: left">Boletín de Calificaciones del alumno</h1>
+    <div class="ml-48">
+        <h1 style="font-weight: bold; font-size: 23px; text-align: center">Boletín de Calificaciones del alumno</h1>
 
         <table  class="tabla-centrada">
             <thead>
@@ -53,7 +53,7 @@
             </tbody>
         </table>
         <div class="mt-10 ">
-            <h1 style="font-weight: bold; font-size: 20px; text-align: left"> > Situación del alumno respecto al
+            <h1 style="font-weight: bold; font-size: 19px; text-align: center">  Situación del alumno respecto al
                 promedio de la sección</h1>
         </div>
 
