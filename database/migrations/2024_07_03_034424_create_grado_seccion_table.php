@@ -11,20 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-          Schema::create('periodo_seccion', function (Blueprint $table) {
+        Schema::create('grado_seccion', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('periodo_id') 
-                ->nullable()
-                ->constrained('periodo_academicos')
-                ->cascadeOnUpdate()
-                ->nullOnDelete();
+            $table->foreignId('grado_id')
+                ->constrained('grados')
+                ->cascadeOnDelete();
             $table->foreignId('seccion_id')
-                ->nullable()
                 ->constrained('secciones')
-                ->cascadeOnUpdate()
-                ->nullOnDelete();              
-          });
+                ->cascadeOnDelete();
+            $table->foreignId('periodo_id')
+                ->constrained('periodos_academicos')
+                ->cascadeOnDelete();
+        });
     }
 
     /**
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('periodo_seccion');
+        Schema::dropIfExists('grado_seccion');
     }
 };

@@ -13,18 +13,15 @@ return new class extends Migration
     {
         Schema::create('docente_materia', function (Blueprint $table) {
             $table->id();
-    
             $table->foreignId('docente_id')
-                ->nullable()
-                ->constrained('docentes')
-                ->cascadeOnUpdate()
-                ->nullOnDelete();
-    
-            $table->foreignId('materia_id') 
-                ->nullable()
-                ->constrained('materias')
-                 ->cascadeOnUpdate()
-                ->nullOnDelete();          
+                ->constrainedTo('docentes')
+                ->cascadeOnDelete();
+            $table->foreignId('materia_id')
+                ->constrainedTo('materias')
+                ->cascadeOnDelete();
+            $table->foreignId('periodo_id')
+                ->constrainedTo('periodos_academicos')
+                ->cascadeOnDelete();
         });
     }
 

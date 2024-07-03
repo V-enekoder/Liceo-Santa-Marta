@@ -62,4 +62,19 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+    
+    public function telefonos(){
+        return $this->hasMany(Telefono::class, 'user_cedula','cedula');
+    }
+
+    public function coordinador(){
+        return $this->hasOne(Coordinador::class,'user_cedula','cedula');
+    }
+    public function docente(){
+        return $this->hasOne(Docente::class,'user_cedula','cedula');
+    }
+    public function representante(){
+        return $this->hasOne(Representante::class,'user_cedula','cedula');
+    }
+
 }

@@ -18,29 +18,19 @@ class Estudiante extends Model
 
     //Relacion Uno-Mucho
 
-    public function calificaciones(): BelongsTo{
-        return $this->belongsTo(Calificacion::class);
-    }
-
     //Relacion Mucho-Mucho
 
     public function materias(){
-        return $this->belongsToMany(Materia::class, 'estudiante_materia');
-    }
-
-    public function grados(){
-        return $this->belongsToMany(Grado::class, 'estudiante_grado');
-    }
-
-    public function periodo_Academicos(){
-        return $this->belongsToMany(Periodo_Academico::class, 'estudiante_periodo');
+        return $this->belongsToMany(Materia::class, 'estudiante_materia')
+            ->withPivot('periodo_id');
     }
 
     public function representantes(){
-        return $this->belongsToMany(Representante::class, 'estudiante_representante');
+        return $this->belongsToMany(Representante::class, 'estudiante_representante')
+            ->withPivot('periodo_id');
     }
-
-    public function secciones(){
-        return $this->belongsToMany(Seccion::class, 'estudiante_seccion');
+    
+    public function grado_seccion(){
+        return $this->hasMany(GradoSeccion::class);
     }
 }

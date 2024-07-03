@@ -21,5 +21,4 @@ class RepresentanteController extends Controller
         $telefonos= Telefono::all();
         return view('Paginas.Representantes.telefonos_representantes',compact('telefonos'));
     }
-    
 }

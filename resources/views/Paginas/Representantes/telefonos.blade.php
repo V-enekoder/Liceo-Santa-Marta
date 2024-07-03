@@ -2,7 +2,7 @@
     <div>
         <h1>Telefonos</h1>
         <pre>
-            {{$telefonos}}
+            {{ $telefonos }}
         </pre>
         <table>
             <thead>

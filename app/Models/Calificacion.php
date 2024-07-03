@@ -17,19 +17,11 @@ class Calificacion extends Model
 
     //Relacion Uno-Mucho
 
-    public function docentes(): BelongsTo{
-        return $this->belongsTo(Docente::class);
+    public function docente_materia(){
+        return $this->belongsTo(DocenteMateria::class);
     }
 
-    public function estudiantes(): BelongsTo{
-        return $this->belongsTo(Estudiante::class);
-    }
-
-    public function materias(): BelongsTo{
-        return $this->belongsTo(Materia::class);
-    }
-
-    public function periodo_academicos(): BelongsTo{
-        return $this->belongsTo(Periodo_Academico::class);
+    public function estudiante_materia(){
+        return $this->belongsTo(EstudianteMateria::class);
     }
 }

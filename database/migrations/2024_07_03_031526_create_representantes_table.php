@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('estudiantes', function (Blueprint $table) {
+        Schema::create('representantes', function (Blueprint $table) {
             $table->id();
-            $table->integer('Cedula')->unique();
-            $table->string('Nombre');
-            $table->string('Apellido');
-            $table->date('Fecha_Nacimiento');
+            $table->unsignedInteger('user_cedula')->unique();
+            $table->foreign('user_cedula')
+                ->references('cedula')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('estudiantes');
+        Schema::dropIfExists('representantes');
     }
 };

@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('materias', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('grado_id')->constrained('Grados')->onDelete('cascade');
-            $table->string('Nombre');
+        Schema::create('estudiantes', function (Blueprint $table) {
+            $table->unsignedInteger('cedula')->primary();
+            $table->string('nombre');
+            $table->string('apellido');
+            $table->date('fecha_nacimiento');
+            $table->unsignedInteger('ultimo_grado_aprobado');
         });
     }
 
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('materias');
+        Schema::dropIfExists('estudiantes');
     }
 };

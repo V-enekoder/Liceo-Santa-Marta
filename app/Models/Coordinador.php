@@ -30,4 +30,10 @@ class Coordinador extends Model
     public function periodo_academicos(){
         return $this->belongsToMany(Periodo_Academico::class, 'coordinador_periodo');
     }
+
+    public function usuario(){
+        return $this->belongsTo(User::class,'user_cedula','cedula');
+    }
+
+    
 }

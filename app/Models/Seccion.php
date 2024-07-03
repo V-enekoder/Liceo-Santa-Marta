@@ -13,19 +13,10 @@ class Seccion extends Model
         'Nombre',
     ];
 
-    //Relacion Uno-Mucho
-
-    public function grados(): BelongsTo{
-        return $this->belongsTo(Grado::class);
-    }
-
     //Relación Mucho-Mucho
 
-    public function estudiantes(){
-        return $this->belongsToMany(Estudiante::class, 'estudiante_seccion');
+    public function grados(){
+        return $this->belongsToMany(Grado::class,'grado_seccion')
+            ->withPivot('periodo_id','estudiante_cedula');
     }
-    
-    public function periodo_academicos(){
-        return $this->belongsToMany(Periodo_Academico::class, 'periodo_seccion');
-    }   
 }

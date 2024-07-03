@@ -11,20 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-          Schema::create('estudiante_materia', function (Blueprint $table) {
+        Schema::create('estudiante_materia', function (Blueprint $table) {
             $table->id();
-
-            $table->foreignId('estudiante_id') 
-                ->nullable()
-                ->constrained('estudiantes')
-                ->cascadeOnUpdate()
-                ->nullOnDelete();
+            $table->unsignedInteger('estudiante_cedula');
+            $table->foreign('estudiante_cedula')
+                ->references('cedula')
+                ->on('estudiantes');
             $table->foreignId('materia_id')
-                ->nullable()
                 ->constrained('materias')
-                ->cascadeOnUpdate()
-                ->nullOnDelete();              
-          });
+                ->cascadeOnDelete();
+            $table->foreignId('periodo_id')
+                ->constrained('periodos_academicos')
+                ->cascadeOnDelete();
+        });
     }
 
     /**

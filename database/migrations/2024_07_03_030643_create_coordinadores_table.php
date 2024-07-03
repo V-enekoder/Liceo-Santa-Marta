@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,16 +13,13 @@ return new class extends Migration
     {
         Schema::create('coordinadores', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(User::class);
-            $table->integer('Cedula')->unique();
-            $table->string('Nombre');
-            $table->string('Apellido');
-            $table->string('Telefono');
-            $table->string('Direccion');
-            $table->string('Usuario')->unique();
-            $table->string('Clave');
-            $table->date('Fecha_ingreso');
-            $table->date('Fecha_retiro')->nullable();
+            $table->date('fecha_ingreso');
+            $table->date('fecha_retiro')->nullable();
+            $table->unsignedInteger('user_cedula')->unique();
+            $table->foreign('user_cedula')
+                ->references('cedula')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

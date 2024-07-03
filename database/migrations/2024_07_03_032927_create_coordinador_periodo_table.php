@@ -11,22 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-
-          Schema::create('coordinador_periodo', function (Blueprint $table) {
+        Schema::create('coordinador_periodo', function (Blueprint $table) {
             $table->id();
-            
             $table->foreignId('coordinador_id')
-                ->nullable()
                 ->constrained('coordinadores')
-                ->cascadeOnUpdate()
-                ->nullOnDelete();        
-
-            $table->foreignId('periodo_id') 
-                ->nullable()
-                ->constrained('periodo_academicos')
-                ->cascadeOnUpdate()
-                ->nullOnDelete();
-          });
+                ->cascadeOnDelete();
+            $table->foreignId('periodo_id')
+                ->constrained('periodos_academicos')
+                ->cascadeOnDelete();
+        });
     }
 
     /**

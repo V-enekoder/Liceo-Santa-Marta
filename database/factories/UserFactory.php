@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Team;
 use App\Models\User;
+use App\Models\Rol;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -26,7 +27,26 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $roles = Rol::pluck('id')->toArray(); // Obtén los IDs de todos los roles
+
         return [
+            'cedula' => $this->faker->unique()->randomNumber(6),
+            'rol_id' => $this->faker->randomElement($roles), // Asigna un rol aleatorio
+            'nombre' => $this->faker->firstName,
+            'apellido' => $this->faker->lastName,
+            'email' => $this->faker->unique()->safeEmail,
+            'email_verified_at' => now(),
+            'clave' => bcrypt('password'),
+            'direccion' => $this->faker->address,
+            'activo' => $this->faker->boolean,
+            'remember_token' => Str::random(10),
+            'current_team_id' => null,
+            'profile_photo_path' => null,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ];
+    
+        /*return [
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
@@ -36,7 +56,7 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
             'profile_photo_path' => null,
             'current_team_id' => null,
-        ];
+        ];*/
     }
 
     /**
