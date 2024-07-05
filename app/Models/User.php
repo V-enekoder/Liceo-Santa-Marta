@@ -18,15 +18,19 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
+    const COORDINADOR = 1;
+    const DOCENTE = 2;
+    const REPRESENTANTE = 3;
     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
+    protected $primaryKey = 'cedula'; // Define la clave primaria
+
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'cedula', 'rol_id', 'nombre', 'apellido', 'email', 'email_verified_at',
+        'clave', 'direccion', 'activo', 'remember_token', 'current_team_id', 'profile_photo_path',
     ];
 
     /**

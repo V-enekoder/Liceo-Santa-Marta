@@ -46,3 +46,4 @@ Route::get('/dashboard/VerBoletin', [RepresentanteController::class, 'indexBolet
 Route::get('/dashboard/VerTodoBoletin', [RepresentanteController::class, 'indexTodoBoletin'])->name('boletin.indexTodo');
 Route::get('/dashboard/VerFicha', [RepresentanteController::class, 'verFicha'])->name('Ficha.index');
 Route::get('/dashboard/telefonos', [RepresentanteController::class, 'indexTelefonos'])->name('telefonos.index');
+
