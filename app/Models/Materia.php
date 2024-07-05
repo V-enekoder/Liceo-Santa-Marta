@@ -15,25 +15,19 @@ class Materia extends Model
 
     //Relacion Uno-Mucho
 
-    public function calificaciones(): BelongsTo{
-        return $this->belongsTo(Calificacion::class);
-    }
-
-    public function grados(): BelongsTo{
+    public function grado(){
         return $this->belongsTo(Grado::class);
     }
 
     //Relación Mucho-Mucho
 
     public function docentes(){
-        return $this->belongsToMany(Docente::class, 'materia_docente');
+        return $this->belongsToMany(Docente::class, 'materia_docente')
+            ->withPivot('periodo_id');
     }
 
     public function estudiantes(){
-        return $this->belongsToMany(Estudiante::class, 'estudiante_materia');
-    }
-
-    public function periodo_academicos(){
-        return $this->belongsToMany(Periodo_Academico::class, 'materia_periodo');
+        return $this->belongsToMany(Estudiante::class, 'estudiante_materia')
+            ->withPivot('periodo_id');
     }
 }

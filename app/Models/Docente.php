@@ -21,17 +21,14 @@ class Docente extends Model
 
     //Relacion Uno-Mucho
 
-    public function calificaciones(): BelongsTo{
-        return $this->belongsTo(Calificacion::class);
-    }
-
     //Relación Mucho-Mucho
     
     public function materias(){
-        return $this->belongsToMany(Materia::class, 'materia_docente');
+        return $this->belongsToMany(Materia::class, 'docente_materia')
+            ->withPivot('periodo_id');
     }
 
-    public function periodo_academicos(){
-        return $this->belongsToMany(Periodo_Academico::class, 'docente_periodo');
+    public function usuario(){
+        return $this->belongsTo(User::class,'user_cedula','cedula');
     }
 }

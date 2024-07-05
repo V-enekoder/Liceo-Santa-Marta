@@ -18,11 +18,10 @@ class RepresentanteFactory extends Factory
 
     public function definition(): array
     {
+        $user = User::factory()->create();
+
         return [
-            'user_id' => User::factory(),
-            'Nombre' => $this->faker->firstName,
-            'Apellido' => $this->faker->lastName,
-            'Direccion' => $this->faker->address,
+            'user_cedula' => $user->cedula,
         ];
     }
 }

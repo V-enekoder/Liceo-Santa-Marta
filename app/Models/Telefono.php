@@ -14,7 +14,7 @@ class Telefono extends Model
     ];
 
     public function representante(){
-        return $this->belongsTo(Representante::class, 'id');
+        return $this->belongsTo(User::class,'user_cedula' ,'cedula');
     }
 
 }

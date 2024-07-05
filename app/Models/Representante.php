@@ -18,10 +18,10 @@ class Representante extends Model
     //Relacion Mucho-Mucho
 
     public function estudiantes(){
-        return $this->belongsToMany(Estudiante::class, 'estudiante_representante');
+        return $this->belongsToMany(Estudiante::class, 'estudiante_representante')
+            ->withPivot('periodo_id');
     }
-    
-    public function telefonos(){
-        return $this->hasMany(Telefono::class, 'representante_id');
+    public function usuario(){
+        return $this->belongsTo(User::class,'user_cedula','cedula');
     }
 }

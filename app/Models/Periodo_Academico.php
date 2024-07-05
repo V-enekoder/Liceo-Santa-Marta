@@ -15,35 +15,26 @@ class Periodo_Academico extends Model
         'Fecha_fin'
     ]; 
     
-    //Relación Uno-Mucho
-    
-    public function calificaciones(): HasMany{
-        return $this->hasMany(Calificacion::class);
-    }    
-    
         //Relación Mucho-Mucho
 
     public function coordinadores(){
         return $this->belongsToMany(Coordinador::class, 'coordinador_periodo');
     }
 
-    public function docentes(){
-        return $this->belongsToMany(Docente::class, 'docente_periodo');
+    public function docente_materia(){
+        return $this->hasMany(DocenteMateria::class);
     }
 
-    public function estudiantes(){
-        return $this->belongsToMany(Estudiante::class, 'estudiante_periodo');
+    public function estudiante_materia(){
+        return $this->hasMany(EstudianteMateria::class);
     }
 
-    public function grados(){
-        return $this->belongsToMany(Grado::class, 'grado_periodo');
+    public function estudiante_representante(){
+        return $this->hasMany(EstudianteRepresentante::class);
+    }
+    
+    public function grado_seccion(){
+        return $this->hasMany(GradoSeccion::class);
     }
 
-    public function materias(){
-        return $this->belongsToMany(Materia::class, 'materia_periodo');
-    }
-
-    public function secciones(){
-        return $this->belongsToMany(Seccion::class, 'periodo_seccion');
-    }       
 }

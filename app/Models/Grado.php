@@ -15,21 +15,12 @@ class Grado extends Model
 
     //Relacion Uno-Mucho
 
-    public function materias(): BelongsTo{
-        return $this->belongsTo(Materia::class);
+    public function materias(){
+        return $this->hasMany(Materia::class);
     }
 
-    public function secciones(): BelongsTo{
-        return $this->belongsTo(Seccion::class);
-    }
-
-    //Relación Mucho-Mucho
-
-    public function estudiantes(){
-        return $this->belongsToMany(Estudiante::class, 'estudiante_grado');
-    }
-
-    public function periodo_academicos(){
-        return $this->belongsToMany(Periodo_Academico::class, 'grado_periodo');
+    public function secciones(){
+        return $this->belongsToMany(Seccion::class,'grado_seccion')
+            ->withPivot('periodo_id','estudiante_cedula');
     }
 }
