@@ -84,11 +84,14 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                         x-transition:leave="transition ease-in duration-75"
                         x-transition:leave-start="transform opacity-100 scale-100"
                         x-transition:leave-end="transform opacity-0 scale-95" class="submenu ml-4 space-y-2">
-                        <li><a href="{{route('boletin.index')}}" class="block p-2 hover:bg-gray-800">Ver boletin de calificaciones</a>
+                        <li><a href="{{ route('boletin.index') }}" class="block p-2 hover:bg-gray-800">Ver boletin de
+                                calificaciones</a>
                         </li>
-                        <li><a href="{{route('boletin.indexTodo')}}" class="block p-2 hover:bg-gray-800">Consulta de boletines académicos</a></li>
-                        <li><a href="{{route('Ficha.index')}}" class="block p-2 hover:bg-gray-800">Ficha del estudiante</a></li>
-                        <li><a href="{{route('telefonos.index')}}" class="block p-2 hover:bg-gray-800">Telefono del representante</a></li>
+                        <li><a href="{{ route('boletin.indexTodo') }}" class="block p-2 hover:bg-gray-800">Consulta de
+                                boletines académicos</a></li>
+                        <li><a href="{{ route('Ficha.index') }}" class="block p-2 hover:bg-gray-800">Ficha del
+                                estudiante</a></li>
+
                     </ul>
                 </li>
             </ul>

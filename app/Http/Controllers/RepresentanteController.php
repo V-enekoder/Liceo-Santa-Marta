@@ -17,8 +17,4 @@ class RepresentanteController extends Controller
         return view('Paginas.Representantes.Ficha_estudiante');
     }
 
-    function indexTelefonos(){
-        $telefonos= Telefono::all();
-        return view('Paginas.Representantes.telefonos_representantes',compact('telefonos'));
-    }
 }
