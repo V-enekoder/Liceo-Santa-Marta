@@ -40,6 +40,7 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                                 class="block p-2 hover:bg-gray-800">Modificación datos de Docente</a></li>
                         <li><a href="{{ route('sidebar.materias') }}" class="block p-2 hover:bg-gray-800">Modificar
                                 datos de materias</a></li>
+                                <li><a href="{{ route('sidebar.cargaAcademica') }}" class="block p-2 hover:bg-gray-800">Crear carga académica</a></li>
 
                     </ul>
                 </li>

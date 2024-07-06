@@ -30,5 +30,8 @@ class CoordinadorController extends Controller
 
         return view('Paginas.Coordinadores.Materias',);
     }
+    function crearCargaAcademica(){
+        return view('Paginas.Coordinadores.Carga_academica',);
+    }
 
 }
