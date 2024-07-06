@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('estudiantes', function (Blueprint $table) {
-            $table->unsignedInteger('cedula')->primary();
+            $table->id();
+            $table->unsignedInteger('cedula');
             $table->string('nombre');
             $table->string('apellido');
             $table->date('fecha_nacimiento');

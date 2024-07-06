@@ -13,11 +13,9 @@ return new class extends Migration
     {
         Schema::create('estudiante_representante', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('estudiante_cedula');
-            $table->foreign('estudiante_cedula')
-                ->references('cedula')
-                ->on('estudiantes')
-                ->onDelete('cascade'); 
+            $table->foreignId('estudiante_id')
+            ->constrained('estudiantes')
+            ->cascadeOnDelete();
             $table->foreignId('representante_id')
                 ->constrained('representantes')
                 ->onDelete('cascade'); 
