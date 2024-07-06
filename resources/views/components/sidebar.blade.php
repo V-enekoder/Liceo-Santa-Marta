@@ -124,8 +124,6 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                             <li><a href="{{ route('Ficha.index') }}" class="block p-2 hover:bg-gray-800">Ficha del
                                     estudiante</a></li>
                         @endcan
-                        <li><a href="{{ route('telefonos.index') }}" class="block p-2 hover:bg-gray-800">Telefono del
-                                representante</a></li>
                     </ul>
                 </li>
             </ul>
