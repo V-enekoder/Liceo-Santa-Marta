@@ -13,11 +13,10 @@ return new class extends Migration
     {
         Schema::create('docentes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_cedula')->unique();
-            $table->foreign('user_cedula')
-                ->references('cedula')
-                ->on('users')
-                ->onDelete('cascade');
+            $table->foreignId('user_id')
+                ->unique()
+                ->constrained('users')
+                ->cascadeOnDelete();
         });
     }
 

@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void{
         Schema::create('users', function (Blueprint $table) {
-            $table->unsignedInteger('cedula')->primary();
-            $table->foreignId('rol_id')->constrained('roles')->onDelete('cascade');
+            $table->id();
+            $table->unsignedInteger('cedula')->unique();
+            $table->foreignId('rol_id')->default(3)->constrained('roles')->onDelete('cascade');
             $table->string('nombre');
             $table->string('apellido');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('clave');
-            $table->string('direccion');
-            $table->boolean('activo');
+            $table->string('password');
+            $table->string('direccion')->nullable();
+            $table->boolean('activo')->default(true);
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();

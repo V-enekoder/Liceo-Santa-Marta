@@ -11,7 +11,7 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
             </a>
             <hr class="mt-3 border-t border-white">
             <ul class="space-y-4">
-                @if (true)
+                @can ('es_coordinador')
                     <li x-data="{ open: false }">
                         <a href="#"
                             class="mt-10 font-semibold text-xl font p-2 hover:bg-gray-700 flex items-center justify-between"
@@ -47,8 +47,8 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
 
                         </ul>
                     </li>
-                @endif
-                @if (true)
+                @endcan
+                @can ('es_docente')
                     <li x-data="{ open: false }">
                         <a href="#"
                             class="p-2 font-semibold text-xl hover:bg-gray-700 flex items-center justify-between"
@@ -75,8 +75,8 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                                     carga académica</a></li>
                         </ul>
                     </li>
-                @endif
-                @if (true)
+                @endcan
+                @can ('es_representante')
                     <li x-data="{ open: false }">
                         <a href="#" class=" p-2 font-semibold hover:bg-gray-700 flex items-center justify-between"
                             style="font-size: 19px" @click="open = !open">
@@ -105,7 +105,7 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
 
                         </ul>
                     </li>
-                @endif
+                @endcan
             </ul>
         </div>
     </div>

@@ -1000,9 +1000,10 @@
                             <div class="pt-3 sm:pt-5">
                                 <h2 class="text-2xl font-bold text-black">Visualización de notas</h2>
                                 <p class="mt-4 text-black text-sm/relaxed">
-                                    Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript
-                                    development. Check them out, see for yourself, and massively level up your
-                                    development skills in the process.
+                                    Podrás ver las calificaciones por asignaturas y lapsos, así como
+                                    comentarios y observaciones de los profesores. Te proporcionaremos una visión
+                                    detallada de tu rendimiento académico, lo que te permitirá identificar tus
+                                    fortalezas y áreas de mejora.
                                 </p>
                             </div>
                         </a>
@@ -1014,9 +1015,11 @@
                                 <h2 class="text-2xl font-bold text-black">Cargas acádemicas</h2>
 
                                 <p class="mt-4 text-black text-sm/relaxed">
-                                    Laravel News is a community driven portal and newsletter aggregating all of the
-                                    latest and most important news in the Laravel ecosystem, including new package
-                                    releases and tutorials.
+                                    Explora los cursos disponibles, conoce los contenidos curriculares. Además,
+                                    encontrarás información sobre los docentes y su
+                                    experiencia en cada área. Nos enorgullece ofrecer una carga académica rigurosa y
+                                    estimulante que prepare a nuestros estudiantes para enfrentar los desafíos del mundo
+                                    actual y futuro.
                                 </p>
                             </div>
                         </a>
@@ -1027,9 +1030,11 @@
                             <div class="pt-3 sm:pt-5">
                                 <h2 class="text-2xl font-bold text-black">Nuevos periodos acádemicos</h2>
                                 <p class="mt-4 text-black text-sm/relaxed">
-                                    Laravel News is a community driven portal and newsletter aggregating all of the
-                                    latest and most important news in the Laravel ecosystem, including new package
-                                    releases and tutorials.
+                                    Información relevante sobre los próximos períodos académicos en nuestro colegio.
+                                    Mantente al tanto de las fechas clave, eventos especiales, actividades
+                                    extracurriculares y cambios importantes en nuestro calendario escolar. Este espacio
+                                    te brindará los detalles necesarios para planificar tu participación y aprovechar al
+                                    máximo cada periodo académico
                                 </p>
                             </div>
                         </a>
@@ -1040,4 +1045,5 @@
     </div>
     </div>
 </body>
+
 </html>

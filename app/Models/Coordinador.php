@@ -32,7 +32,7 @@ class Coordinador extends Model
     }
 
     public function usuario(){
-        return $this->belongsTo(User::class,'user_cedula','cedula');
+        return $this->belongsTo(User::class);
     }
 
     
