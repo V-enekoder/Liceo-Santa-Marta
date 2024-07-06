@@ -35,6 +35,7 @@ Route::get('/dashboard/dataRepresentantes', [coordinadorController::class, 'modi
 Route::get('/dashboard/dataEstudiantes', [coordinadorController::class, 'modificarEstudiantes'])->name('sidebar.modiestudiantes');
 Route::get('/dashboard/dataDocentes', [coordinadorController::class, 'modificarDocentes'])->name('sidebar.modidocentes');
 Route::get('/dashboard/dataMaterias', [coordinadorController::class, 'modificarMaterias'])->name('sidebar.materias');
+Route::get('/dashboard/CargaAcademica', [coordinadorController::class, 'crearCargaAcademica'])->name('sidebar.cargaAcademica');
 
 //ruta de vistas para los docentes
 Route::get('/dashboard/CargaNotas', [DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');
