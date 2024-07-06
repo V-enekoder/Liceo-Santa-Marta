@@ -57,7 +57,7 @@
                                             <td>ISEA GARCIA</td>
                                             <td><div id="observation"><input class="form-control" value=""></div></td>
                                             <td>
-                                                <button type="refresh" class="btn bottom-success">
+                                                <button id="open-alert-changes" class="btn bottom-success">
                                                     <i class="fa-solid fa-window-restore"></i> </span>
                                                 </button>
                                             </td>
@@ -169,6 +169,13 @@
                 </div>
             </div>
         </div>
+
+        <dialog id="alert-changes">
+            <h1 class="h1Advertencia">¡ADVERTENCIA!</h1>
+            <p>Estás a punto de guardar/modificar datos importantes, ¿seguro/a que quieres realizar esta acción?</p>
+            <p class="text-black-alert">   Si no deseas realizar los cambios presiona la tecla "Esc" o "Escape"</p>
+            <button id="close-alert-changes" class="btn btn-confirm form-control text-default">Confirmar cambios</button>
+        </dialog>
 
 
     </div>
