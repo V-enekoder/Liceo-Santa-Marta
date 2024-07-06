@@ -13,13 +13,9 @@ return new class extends Migration
     {
         Schema::create('coordinadores', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha_ingreso');
+            $table->foreignId('user_id')->unique()->constrained('users')->cascadeOnDelete();
+            $table->date('fecha_ingreso'); //Talvez poner NOW()
             $table->date('fecha_retiro')->nullable();
-            $table->unsignedInteger('user_cedula')->unique();
-            $table->foreign('user_cedula')
-                ->references('cedula')
-                ->on('users')
-                ->onDelete('cascade');
         });
     }
 

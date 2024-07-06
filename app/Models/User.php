@@ -26,11 +26,20 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $primaryKey = 'cedula'; // Define la clave primaria
+    //protected $primaryKey = 'cedula'; // Define la clave primaria
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
     protected $fillable = [
-        'cedula', 'rol_id', 'nombre', 'apellido', 'email', 'email_verified_at',
-        'clave', 'direccion', 'activo', 'remember_token', 'current_team_id', 'profile_photo_path',
+        'nombre',
+        'apellido',
+        'cedula',
+        'email',
+        'direccion',
+        'password'
     ];
 
     /**

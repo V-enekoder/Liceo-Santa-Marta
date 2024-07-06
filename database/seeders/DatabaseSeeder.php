@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        //Se ejecuta con php artisan db:seed
         $this->call(RolesSeeder::class);
-        $this->call(UserSeeder::class);
     }
 }
