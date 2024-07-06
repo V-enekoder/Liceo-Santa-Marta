@@ -106,3 +106,267 @@
   color: white;
 }
 
+/* Cargar Notas CSS */
+
+.h1Docente{
+  font-size: 34px;
+  text-shadow: 0 0 BLACK;
+  text-align: left;
+  padding-bottom: 9px;
+  margin: 40px 0 20px;
+  border-bottom: 1px solid #d3d2d2;
+  width: 1280px;
+}
+
+.col-lg-4 {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.panel-heading {
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+  color: #333;
+  background-color: #f5f5f5;
+  border-color: #ddd;
+}
+
+.panel-default {
+  border-color: #ddd !important;
+}
+
+.panel {
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+  width: 430px;
+}
+
+.panel-body {
+  padding: 20px;
+  margin-top: -20px;
+}
+
+.text-default-black{
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  font-weight: 700;
+  display: flex;
+}
+
+.text-default-black{
+  display: inline-block;
+  max-width: 100%;
+  margin-bottom: 5px;
+  display: flex;
+}
+
+.input-group {
+  position: relative;
+  display: table;
+  border-collapse: separate;
+  display: flex;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  height: 34px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  color: #555;
+  background-color: #fff;
+  background-image: none;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+  -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+  -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+  transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.text-table-head {
+  display: flex;
+  font-size: 18px;
+}
+
+.btn-success {
+  color: #fff;
+  background-color: #5cb85c;
+  border-color: #4cae4c;
+  margin-left: 6px;
+  font-size: 16px;
+}
+
+.btn-success:hover {
+  color: #fff;
+  background-color: #449d44;
+  border-color: #398439;
+}
+
+.ajuste-tablas {
+  display: flex;
+  flex-direction: row;
+}
+
+.col-lg-8 {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.panel-carga {
+  width: 800px !important;
+  margin-left: 50px;
+}
+
+.row {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.col-sm-6 {
+  width: 50%;
+}
+
+.d-flex{
+  display: flex;
+}
+
+.support-flex {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.odd {
+  background-color: #f9f9f9;
+}
+
+.even {
+  background-color: #ffffff;
+}
+
+.input-sm {
+  height: 30px !important;
+  padding: 5px 10px;
+  font-size: 14px;
+  border-radius: 3px;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+select.input-sm {
+  height: 30px !important;
+}
+
+.table-bordered {
+  border: 1px solid #ddd;
+}
+
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+}
+
+table {
+  background-color: transparent;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.info-table-head {
+  line-height: 2;
+  border-top: 0;
+  vertical-align: bottom !important;
+  border-bottom: 1px solid #ddd;
+  border: 1px solid #ddd;
+}
+
+.col-sm-12{
+  position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+.table-height{
+  height: 8px !important;
+}
+
+td {
+  display: table-cell;
+  vertical-align: inherit;
+  unicode-bidi: isolate;
+}
+
+tbody {
+  line-height: 2.5;
+}
+
+.table-bordered>tbody>tr>td, .table-bordered>tbody>tr>th, .table-bordered>tfoot>tr>td, .table-bordered>tfoot>tr>th, .table-bordered>thead>tr>td, .table-bordered>thead>tr>th {
+  border: 1px solid #ddd;
+}
+
+.panel-carga-seccion {
+  width: 900px !important;
+  margin-left: 30px;
+}
+
+.bottom-success {
+  font-size: 19px;
+  border-radius: .5rem;
+  color: #fff;
+  background: #5cb85c;
+  border: 5px solid #5cb85c;
+  height: 35px;
+  width: 35px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+}
+
+.bottom-success:hover {
+  color: #fff;
+  background: #4f9e4f;
+  border: #4f9e4f;
+}
+
+.panel-carga-academica {
+  width: 1280px !important;
+}
+
+.padding-carga{
+    position: relative;
+    min-height: 1px;
+    padding-right: 35px;
+    padding-left: 35px;
+}
+
+.status-activo {
+  color: white;
+  text-shadow: 0 0 WHITE;
+  background: #5cb85cba;
+}
+
+.status-finalizado {
+  color: white;
+  text-shadow: 0 0 WHITE;
+  background: #b85c5cba;
+}
