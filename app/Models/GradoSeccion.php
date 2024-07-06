@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class GradoSeccion extends Model{
     use HasFactory;
-
+    protected $table = 'grado_seccion';
     public function grado(){
         return $this->belongsTo(Grado::class);
     }

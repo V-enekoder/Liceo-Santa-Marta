@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Calificacion extends Model
 {
     use HasFactory;
-    protected $table = 'calificaciones';
+    protected $table = 'calificaciones'; //verificar esto
     protected $fillable = [
         'lapso_1',
         'lapso_2',

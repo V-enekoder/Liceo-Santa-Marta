@@ -18,6 +18,7 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
+    protected $table = 'users';
     const COORDINADOR = 1;
     const DOCENTE = 2;
     const REPRESENTANTE = 3;
@@ -77,17 +78,17 @@ class User extends Authenticatable
     }
     
     public function telefonos(){
-        return $this->hasMany(Telefono::class, 'user_cedula','cedula');
+        return $this->hasMany(Telefono::class);
     }
 
     public function coordinador(){
-        return $this->hasOne(Coordinador::class,'user_cedula','cedula');
+        return $this->hasOne(Coordinador::class);
     }
     public function docente(){
-        return $this->hasOne(Docente::class,'user_cedula','cedula');
+        return $this->hasOne(Docente::class);
     }
     public function representante(){
-        return $this->hasOne(Representante::class,'user_cedula','cedula');
+        return $this->hasOne(Representante::class);
     }
 
 }

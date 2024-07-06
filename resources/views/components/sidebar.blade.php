@@ -56,13 +56,14 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                                     class="block p-2 hover:bg-gray-800">Modificación datos de Docente</a></li>
                         @endcan
 
-                        @can('Modificar_materias')
+                        @can('modificar_materias')
                             <li><a href="{{ route('sidebar.materias') }}" class="block p-2 hover:bg-gray-800">Modificar
                                     datos de materias</a></li>
                         @endcan
-
-                        <li><a href="{{ route('sidebar.cargaAcademica') }}" class="block p-2 hover:bg-gray-800">Crear
-                                carga académica</a></li>
+                        @can('asignar_carga_academica')
+                            <li><a href="{{ route('sidebar.cargaAcademica') }}" class="block p-2 hover:bg-gray-800">Crear
+                                    carga académica</a></li>
+                        @endcan
                     </ul>
                 </li>
                 <li x-data="{ open: false }">
