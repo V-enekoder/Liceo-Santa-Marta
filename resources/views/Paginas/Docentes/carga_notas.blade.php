@@ -123,7 +123,15 @@
                                 </table>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-success form-control text-default">Cargar notas de lapso</button>
+                        <button id="open-alert-changes" class="btn btn-success form-control text-default">Cargar notas de lapso</button>
+
+                        <dialog id="alert-changes">
+                            <h1 class="h1Advertencia">¡ADVERTENCIA!</h1>
+                            <p>Estás a punto de guardar/modificar datos importantes, ¿seguro/a que quieres realizar esta acción?</p>
+                            <p class="text-black-alert">   Si no deseas realizar los cambios presiona la tecla "Esc" o "Escape"</p>
+                            <button id="close-alert-changes" class="btn btn-confirm form-control text-default">Confirmar cambios</button>
+                        </dialog>
+
                             </div>
                         </div>
                     </div>

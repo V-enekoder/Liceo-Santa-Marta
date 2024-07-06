@@ -206,16 +206,16 @@
 
 .btn-success {
   color: #fff;
-  background-color: #5cb85c;
-  border-color: #4cae4c;
+  background-color: #3b82f6;
+  border-color: #3b82f6;
   margin-left: 6px;
   font-size: 16px;
 }
 
 .btn-success:hover {
   color: #fff;
-  background-color: #449d44;
-  border-color: #398439;
+  background-color: #1d4ed8;
+  border-color: #1d4ed8;
 }
 
 .ajuste-tablas {
@@ -331,8 +331,8 @@ tbody {
   font-size: 19px;
   border-radius: .5rem;
   color: #fff;
-  background: #5cb85c;
-  border: 5px solid #5cb85c;
+  background: #3b82f6;
+  border: 5px solid #3b82f6;
   height: 35px;
   width: 35px;
   text-align: center;
@@ -344,8 +344,8 @@ tbody {
 
 .bottom-success:hover {
   color: #fff;
-  background: #4f9e4f;
-  border: #4f9e4f;
+  background: #1d4ed8;
+  border: #1d4ed8;
 }
 
 .panel-carga-academica {
@@ -362,11 +362,55 @@ tbody {
 .status-activo {
   color: white;
   text-shadow: 0 0 WHITE;
-  background: #5cb85cba;
+  background: #3b83f6d2;
 }
 
 .status-finalizado {
   color: white;
   text-shadow: 0 0 WHITE;
-  background: #b85c5cba;
+  background: #f86868d0;
+}
+
+.h1Advertencia{
+  font-size: 34px;
+  text-shadow: 0 0 BLACK;
+  text-align: center;
+  padding-bottom: 9px;
+  margin: 40px 0 20px;
+  border-bottom: 1px solid #d3d2d2;
+  width: 100%px;
+}
+
+#alert-changes{
+  max-width: 30%;
+  height: 30%;
+  border-radius: 0.6rem;
+}
+
+#alert-changes::backdrop{
+  background-color: rgba(0,0,0,.55);
+}
+
+.btn-confirm {
+  color: #fff;
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+  margin-left: 6px;
+  font-size: 16px;
+  width: 170px;
+  margin-left: 200px;
+  margin-top: 20px;
+}
+
+.btn-confirm:hover {
+  color: #fff;
+  background-color: #1d4ed8;
+  border-color: #1d4ed8;
+}
+
+.text-black-alert{
+  text-align: center;
+  font-size: 16px;
+  text-shadow: 0 0 black;
+  font-weight: bold;
 }
