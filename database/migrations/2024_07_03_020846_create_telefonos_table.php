@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('telefonos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('user_cedula');
-            $table->foreign('user_cedula')->references('cedula')->on('users')->onDelete('cascade');
+            $table->foreignId('user_id')->constrainedTo('users')->onDelete('cascade');
             $table->string('numero_telefonico');
         });
     }
