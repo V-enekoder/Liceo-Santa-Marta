@@ -10,10 +10,11 @@ class Estudiante extends Model
     use HasFactory;
     protected $table = 'estudiantes';
     protected $fillable = [
-        'Cedula',
-        'Nombre',
-        'Apellido',
-        'Fecha_Nacimiento',
+        'cedula',
+        'nombre',
+        'apellido',
+        'fecha_nacimiento',
+        'ultimo_grado_aprobado',
     ];
 
     //Relacion Uno-Mucho

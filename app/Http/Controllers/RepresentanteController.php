@@ -8,15 +8,15 @@ use Illuminate\Support\Facades\Gate;
 class RepresentanteController extends Controller
 {
     function indexBoletin(){
-        Gate::authorize('ver_boletin');
+        //Gate::authorize('ver_boletin');
         return view('Paginas.Representantes.boletin_notas_actual',);
     }
     function indexTodoBoletin(){
-        Gate::authorize('ver_boletin');
+        //Gate::authorize('ver_boletin');
         return view('Paginas.Representantes.notas_finales');
     }
     function verFicha(){
-        Gate::authorize('ver_ficha');
+        //Gate::authorize('ver_ficha');
         return view('Paginas.Representantes.Ficha_estudiante');
     }
 }
