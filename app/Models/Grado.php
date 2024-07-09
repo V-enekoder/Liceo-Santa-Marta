@@ -21,6 +21,6 @@ class Grado extends Model
 
     public function secciones(){
         return $this->belongsToMany(Seccion::class,'grado_seccion')
-            ->withPivot('periodo_id','estudiante_cedula');
+            ->withPivot('periodo_id','estudiante_id');
     }
 }

@@ -22,6 +22,6 @@ class Representante extends Model
             ->withPivot('periodo_id');
     }
     public function usuario(){
-        return $this->belongsTo(User::class,'user_cedula','cedula');
+        return $this->belongsTo(User::class);
     }
 }
