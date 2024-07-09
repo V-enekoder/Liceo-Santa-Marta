@@ -9,15 +9,7 @@ class Docente extends Model
 {
     use HasFactory;
     protected $table = 'docentes';
-    protected $fillable = [
-        'Cedula',
-        'Nombre',
-        'Apellido',
-        'Telefono',
-        'Direccion',
-        'Usuario',
-        'Clave',
-    ];
+    protected $fillable = ['user_id'];
 
     //Relacion Uno-Mucho
 
