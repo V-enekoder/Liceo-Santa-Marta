@@ -13,6 +13,12 @@ class DocenteMateria extends Model
 
     protected $fillable = ['docente_id', 'materia_id', 'periodo_id'];
 
+        //Relaciones Uno-Muchos
+    public function calificaciones(){
+        return $this->hasMany(Calificacion::class);
+    }
+    
+    //Relaciones Muchos-Uno
     public function docente(){
         return $this->belongsTo(Docente::class);
     }
@@ -23,9 +29,5 @@ class DocenteMateria extends Model
 
     public function periodo(){
         return $this->belongsTo(Periodo_Academico::class);
-    }
-
-    public function calificaciones(){
-        return $this->hasMany(Calificacion::class);
     }
 }

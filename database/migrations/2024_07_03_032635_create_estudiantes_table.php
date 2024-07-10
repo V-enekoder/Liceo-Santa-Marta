@@ -14,8 +14,10 @@ return new class extends Migration
         Schema::create('estudiantes', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('cedula');
-            $table->string('nombre');
-            $table->string('apellido');
+            $table->string('primer_nombre');
+            $table->string('segundo_nombre')->nullable();
+            $table->string('primer_apellido');
+            $table->string('segundo_apellido')->nullable();
             $table->date('fecha_nacimiento');
             $table->unsignedInteger('ultimo_grado_aprobado');
         });

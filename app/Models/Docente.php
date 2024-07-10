@@ -10,17 +10,15 @@ class Docente extends Model
     use HasFactory;
     protected $table = 'docentes';
     protected $fillable = ['user_id'];
-
-    //Relacion Uno-Mucho
-
-    //Relación Mucho-Mucho
+    
+    //Relaciones Uno-Uno
+    public function usuario(){
+        return $this->belongsTo(User::class);
+    }
+    //Relaciones Muchos-Muchos
     
     public function materias(){
         return $this->belongsToMany(Materia::class, 'docente_materia')
             ->withPivot('periodo_id');
-    }
-
-    public function usuario(){
-        return $this->belongsTo(User::class);
     }
 }

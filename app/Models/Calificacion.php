@@ -13,10 +13,10 @@ class Calificacion extends Model
         'lapso_1',
         'lapso_2',
         'lapso_3',
+        'promedio',
     ];
 
-    //Relacion Uno-Mucho
-
+    //Relaciones Muchos-Uno
     public function docente_materia(){
         return $this->belongsTo(DocenteMateria::class);
     }

@@ -11,13 +11,15 @@ class Representante extends Model
     protected $table = 'representantes';
     protected $fillable = ['user_id']; 
 
-    //Relacion Mucho-Mucho
+    //Relaciones Uno-Uno
+    public function usuario(){
+        return $this->belongsTo(User::class);
+    }
+    //Relaciones Muchos-Muchos
 
     public function estudiantes(){
         return $this->belongsToMany(Estudiante::class, 'estudiante_representante')
             ->withPivot('periodo_id');
     }
-    public function usuario(){
-        return $this->belongsTo(User::class);
-    }
+
 }

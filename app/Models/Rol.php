@@ -11,4 +11,9 @@ class Rol extends Model{
     protected $fillable = ['nombre'];
 
     use HasFactory;
+
+    //Relaciones Uno-Muchos
+    public function usuarios(){
+        return $this->hasMany(User::class);
+    }
 }
