@@ -30,39 +30,28 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                         x-transition:leave-end="transform opacity-0 scale-95" class="submenu ml-4 space-y-2">
                         x-transition:leave-end="transform opacity-0 scale-95" class="submenu ml-4 space-y-2">
 
-                        @can('crear_periodo')
-                            <li><a href="{{ route('sidebar.periodos') }}" class="block p-2 hover:bg-gray-800">Crear período
-                                    acádemico</a></li>
-                        @endcan
+                        {{-- @can('es_coordinador') --}}
+                        <li><a href="{{ route('sidebar.periodos') }}" class="block p-2 hover:bg-gray-800">Crear período
+                                acádemico</a></li>
 
+                        <li><a href="{{ route('sidebar.notas') }}" class="block p-2 hover:bg-gray-800">Modificar
+                                notas</a></li>
 
-                        @can('modificar_notas')
-                            <li><a href="{{ route('sidebar.notas') }}" class="block p-2 hover:bg-gray-800">Modificar
-                                    notas</a></li>
-                        @endcan
+                        <li><a href="{{ route('sidebar.modirepresentantes') }}"
+                                class="block p-2 hover:bg-gray-800">modificación de datos representante</a> </li>
 
-                        @can('modificar_representante')
-                            <li><a href="{{ route('sidebar.modirepresentantes') }}"
-                                    class="block p-2 hover:bg-gray-800">modificación de datos representante</a> </li>
-                        @endcan
+                        <li><a href="{{ route('sidebar.modiestudiantes') }}"
+                                class="block p-2 hover:bg-gray-800">modificación de datos estudiante</a> </li>
 
-                        @can('modificar_estudiante')
-                            <li><a href="{{ route('sidebar.modiestudiantes') }}"
-                                    class="block p-2 hover:bg-gray-800">modificación de datos estudiante</a> </li>
-                        @endcan
+                        <li><a href="{{ route('sidebar.modidocentes') }}"
+                                class="block p-2 hover:bg-gray-800">Modificación datos de Docente</a></li>
 
-                        @can('modificar_docente')
-                            <li><a href="{{ route('sidebar.modidocentes') }}"
-                                    class="block p-2 hover:bg-gray-800">Modificación datos de Docente</a></li>
-                        @endcan
-
-                        @can('Modificar_materias')
-                            <li><a href="{{ route('sidebar.materias') }}" class="block p-2 hover:bg-gray-800">Modificar
-                                    datos de materias</a></li>
-                        @endcan
+                        <li><a href="{{ route('sidebar.materias') }}" class="block p-2 hover:bg-gray-800">Modificar
+                                datos de materias</a></li>
 
                         <li><a href="{{ route('sidebar.cargaAcademica') }}" class="block p-2 hover:bg-gray-800">Crear
                                 carga académica</a></li>
+                        {{-- @endcan --}}
                     </ul>
                 </li>
                 <li x-data="{ open: false }">
@@ -82,19 +71,16 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                         x-transition:leave="transition ease-in duration-75"
                         x-transition:leave-start="transform opacity-100 scale-100"
                         x-transition:leave-end="transform opacity-0 scale-95" class="submenu ml-4 space-y-2">
-                        @can('cargar_notas')
-                            <li><a href="{{ route('sidebar.CargaNotas') }}" class="block p-2 hover:bg-gray-800">Cargar
-                                    notas</a></li>
-                        @endcan
+                        {{-- @can('es_docente') --}}
+                        <li><a href="{{ route('sidebar.CargaNotas') }}" class="block p-2 hover:bg-gray-800">Cargar
+                                notas</a></li>
 
-                        @can('ver_secciones')
-                            <li><a href="{{ route('sidebar.VerSecciones') }}" class="block p-2 hover:bg-gray-800">Ver
-                                    secciones de clases</a></li>
-                        @endcan
-                        @can('ver_carga_academica')
-                            <li><a href="{{ route('sidebar.VerCargaAcademica') }}" class="block p-2 hover:bg-gray-800">Mi
-                                    carga académica</a></li>
-                        @endcan
+                        <li><a href="{{ route('sidebar.VerSecciones') }}" class="block p-2 hover:bg-gray-800">Ver
+                                secciones de clases</a></li>
+
+                        <li><a href="{{ route('sidebar.VerCargaAcademica') }}" class="block p-2 hover:bg-gray-800">Mi
+                                carga académica</a></li>
+                        {{-- @endcan --}}
                     </ul>
                 </li>
                 <li x-data="{ open: false }">
@@ -113,17 +99,16 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                         x-transition:leave="transition ease-in duration-75"
                         x-transition:leave-start="transform opacity-100 scale-100"
                         x-transition:leave-end="transform opacity-0 scale-95" class="submenu ml-4 space-y-2">
-                        @can('ver_boletin')
-                            <li><a href="{{ route('boletin.index') }}" class="block p-2 hover:bg-gray-800">Ver boletin de
-                                    calificaciones</a>
-                            </li>
-                            <li><a href="{{ route('boletin.indexTodo') }}" class="block p-2 hover:bg-gray-800">Consulta de
-                                    boletines académicos</a></li>
-                        @endcan
-                        @can('ver_ficha')
-                            <li><a href="{{ route('Ficha.index') }}" class="block p-2 hover:bg-gray-800">Ficha del
-                                    estudiante</a></li>
-                        @endcan
+                        {{-- @can('es_representante') --}}
+                        <li><a href="{{ route('boletin.index') }}" class="block p-2 hover:bg-gray-800">Ver boletin de
+                                calificaciones</a>
+                        </li>
+                        <li><a href="{{ route('boletin.indexTodo') }}" class="block p-2 hover:bg-gray-800">Consulta de
+                                boletines académicos</a></li>
+
+                        <li><a href="{{ route('Ficha.index') }}" class="block p-2 hover:bg-gray-800">Ficha del
+                                estudiante</a></li>
+                        {{-- @endcan --}}
                     </ul>
                 </li>
             </ul>

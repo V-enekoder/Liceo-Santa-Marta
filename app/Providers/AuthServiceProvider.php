@@ -22,9 +22,6 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        /*Gate::define('ver_representados', fn (User $user) =>
-            $user->rol_id == User::REPRESENTANTE
-        );*/
         
         Gate::define('ver_boletin', fn (User $user) =>
             $user->rol_id == User::REPRESENTANTE
@@ -57,11 +54,31 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('modificar_estudiante', fn (User $user) =>
             $user->rol_id == User::COORDINADOR
         );
-        Gate::define('Modificar_materias', fn (User $user) =>
+        Gate::define('modificar_materias', fn (User $user) =>
             $user->rol_id == User::COORDINADOR
         );
         Gate::define('modificar_docente', fn (User $user) =>
             $user->rol_id == User::COORDINADOR
+        );
+
+        Gate::define('asignar_carga_academica', fn (User $user) =>
+            $user->rol_id == User::COORDINADOR
+        );
+
+        Gate::define('es_administrador', fn (User $user) =>
+            $user->rol_id == User::ADMINISTRADOR
+        );
+
+        Gate::define('es_coordinador', fn (User $user) =>
+            $user->rol_id == User::COORDINADOR
+        );
+
+            Gate::define('es_docente', fn (User $user) =>
+        $user->rol_id == User::DOCENTE
+        );
+
+            Gate::define('es_representante', fn (User $user) =>
+        $user->rol_id == User::REPRESENTANTE
         );
     }
 }

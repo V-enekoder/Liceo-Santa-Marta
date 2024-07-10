@@ -10,11 +10,12 @@ class Telefono extends Model
     use HasFactory;
     protected $table = 'telefonos';
     protected $fillable = [
-        'Telefono',
+        'user_id',
+        'Telefono'
     ];
 
     public function representante(){
-        return $this->belongsTo(User::class,'user_cedula' ,'cedula');
+        return $this->belongsTo(User::class);
     }
 
 }

@@ -11,8 +11,8 @@ class Periodo_Academico extends Model
     protected $table = 'periodos_academicos';
     protected $fillable=[
         'Nombre',
-        'año_inicio',
-        'año_fin'
+        'Fecha_inicio',
+        'Fecha_fin'
     ]; 
     
         //Relación Mucho-Mucho

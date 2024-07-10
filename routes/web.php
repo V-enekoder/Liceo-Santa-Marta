@@ -46,3 +46,8 @@ Route::get('/dashboard/DataCargaAcademica', [DocenteController::class, 'verCarga
 Route::get('/dashboard/VerBoletin', [RepresentanteController::class, 'indexBoletin'])->name('boletin.index');
 Route::get('/dashboard/VerTodoBoletin', [RepresentanteController::class, 'indexTodoBoletin'])->name('boletin.indexTodo');
 Route::get('/dashboard/VerFicha', [RepresentanteController::class, 'verFicha'])->name('Ficha.index');
+
+//Route::post('/usuarios', [CoordinadorController::class, 'crear_usuario']);
+//Route::post('/periodos-academicos', [CoordinadorController::class, 'crear_periodo_academico']);
+//Route::post('/coordinador/telefono-por-cedula', [RepresentanteController::class, 'agregar_telefono']);
+//Route::post('/coordinador/crear-estudiante', [CoordinadorController::class, 'crear_estudiante']);
