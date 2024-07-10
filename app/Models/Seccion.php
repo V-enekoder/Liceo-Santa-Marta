@@ -10,13 +10,18 @@ class Seccion extends Model
     use HasFactory;
     protected $table = 'secciones';
     protected $fillable = [
-        'Nombre',
+        'grado_periodo_id',
+        'nombre',
+        'alumnos_inscritos',
+        'capacidad'
     ];
 
-    //Relación Mucho-Mucho
-
-    public function grados(){
-        return $this->belongsToMany(Grado::class,'grado_seccion')
-            ->withPivot('periodo_id','estudiante_id');
+    //Relaciones Muchos-Uno
+    public function grado_periodo(){
+        return $this->belongsTo(GradoPeriodo::class);
+    }
+    //Relaciones Muchos-Muchos
+    public function estudiantes(){
+        return $this->belongsToMany(Estudiante::class, 'estudiante_seccion');
     }
 }

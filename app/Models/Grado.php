@@ -12,15 +12,13 @@ class Grado extends Model
     protected $fillable = [
         'Año',
     ];
-
-    //Relacion Uno-Mucho
-
+    //Relaciones Uno-Muchos
     public function materias(){
         return $this->hasMany(Materia::class);
     }
+    //Relaciones Muchos-Muchos
 
-    public function secciones(){
-        return $this->belongsToMany(Seccion::class,'grado_seccion')
-            ->withPivot('periodo_id','estudiante_id');
+    public function grados(){
+        return $this->belongsToMany(Periodo_Academico::class,'GradoPeriodo');
     }
 }

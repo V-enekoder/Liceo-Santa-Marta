@@ -11,8 +11,10 @@ class Estudiante extends Model
     protected $table = 'estudiantes';
     protected $fillable = [
         'cedula',
-        'nombre',
-        'apellido',
+        'primer_nombre',
+        'segundo_nombre',
+        'primer_apellido',
+        'segundo_apellido',
         'fecha_nacimiento',
         'ultimo_grado_aprobado',
     ];
@@ -21,9 +23,7 @@ class Estudiante extends Model
         'fecha_nacimiento'
     ];
 
-    //Relacion Uno-Mucho
-
-    //Relacion Mucho-Mucho
+    //Relaciones Muchos-Muchos
 
     public function materias(){
         return $this->belongsToMany(Materia::class, 'estudiante_materia')
@@ -34,8 +34,7 @@ class Estudiante extends Model
         return $this->belongsToMany(Representante::class, 'estudiante_representante')
             ->withPivot('periodo_id');
     }
-    
-    public function grado_seccion(){
-        return $this->hasMany(GradoSeccion::class);
+    public function secciones(){
+        return $this->belongsToMany(Seccion::class, 'estudiante_seccion');
     }
 }

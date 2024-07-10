@@ -13,7 +13,7 @@ class Telefono extends Model
         'user_id',
         'Telefono'
     ];
-
+    //Relaciones Muchos-Uno
     public function representante(){
         return $this->belongsTo(User::class);
     }

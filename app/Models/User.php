@@ -78,10 +78,7 @@ class User extends Authenticatable
         ];
     }
     
-    public function telefonos(){
-        return $this->hasMany(Telefono::class);
-    }
-
+    //Relaciones Uno-Uno
     public function coordinador(){
         return $this->hasOne(Coordinador::class);
     }
@@ -91,5 +88,15 @@ class User extends Authenticatable
     public function representante(){
         return $this->hasOne(Representante::class);
     }
+    
+    //Relaciones Uno-Muchos
+    public function telefonos(){
+        return $this->hasMany(Telefono::class);
+    }
+
+    public function rol(){
+        return $this->belongsTo(Rol::class);
+    }
+
 
 }

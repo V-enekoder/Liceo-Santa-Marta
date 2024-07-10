@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class EstudianteRepresentante extends Model{
     use HasFactory;
     protected $table = 'estudiante_representante';
+    
+    //Relaciones Muchos-Uno
     public function estudiante(){
         return $this->belongsTo(Estudiante::class);
     }

@@ -19,14 +19,15 @@ class Coordinador extends Model
         'fecha_retiro',
     ];
 
-    //Relaciones Muchos a Muchos
+    //Relaciones Uno-Uno
 
-    public function periodo_academicos(){
-        return $this->belongsToMany(Periodo_Academico::class, 'coordinador_periodo');
-    }
-
+    
     public function usuario(){
         return $this->belongsTo(User::class);
+    }
+    //Relaciones Muchos-Muchos
+    public function periodo_academicos(){
+        return $this->belongsToMany(Periodo_Academico::class, 'coordinador_periodo');
     }
 
     

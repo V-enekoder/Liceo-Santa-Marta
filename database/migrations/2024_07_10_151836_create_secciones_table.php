@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('secciones', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('grado_periodo_id')
+                ->constrainedTo('grado_periodo')
+                ->CascadeOnDelete();
             $table->string('nombre');
             $table->integer('alumnos_inscritos')->default(0);
             $table->integer('capacidad')->default(40);

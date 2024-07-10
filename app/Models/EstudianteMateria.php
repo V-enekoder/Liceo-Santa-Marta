@@ -10,6 +10,11 @@ class EstudianteMateria extends Model{
 
     protected $table = 'estudiante_materia';
 
+    //Relaciones Uno-Muchos
+    public function calificaciones(){
+        return $this->hasMany(Calificacion::class);
+    }
+    //Relaciones Muchos-Uno
     public function estudiante(){
         return $this->belongsTo(Estudiante::class);
     }
@@ -20,9 +25,5 @@ class EstudianteMateria extends Model{
 
     public function periodo(){
         return $this->belongsTo(Periodo_Academico::class);
-    }
-
-    public function calificaciones(){
-        return $this->hasMany(Calificacion::class);
     }
 }

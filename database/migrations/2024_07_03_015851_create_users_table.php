@@ -13,17 +13,19 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('cedula')->unique();
-            $table->foreignId('rol_id')->default(3)->constrained('roles')->onDelete('cascade');
-            $table->string('nombre');
-            $table->string('apellido');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
+            $table->foreignId('rol_id')->default(4)->constrained('roles')->onDelete('cascade');
+            $table->string('primer_nombre');
+            $table->string('segundo_nombre')->nullable();
+            $table->string('primer_apellido');
+            $table->string('segundo_apellido')->nullable();
+            $table->string('email')->unique()->nullable();
+            //$table->timestamp('email_verified_at')->nullable();
+            $table->string('password')->nullable();
             $table->string('direccion')->nullable();
             $table->boolean('activo')->default(true);
             $table->rememberToken();
-            $table->foreignId('current_team_id')->nullable();
-            $table->string('profile_photo_path', 2048)->nullable();
+            //$table->foreignId('current_team_id')->nullable();
+            //$table->string('profile_photo_path', 2048)->nullable();
             $table->timestamps();
         });
 
