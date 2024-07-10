@@ -9,11 +9,7 @@ class Representante extends Model
 {
     use HasFactory;
     protected $table = 'representantes';
-    protected $fillable = [
-        'Nombre',
-        'Apellido',
-        'Direccion',
-    ]; 
+    protected $fillable = ['user_id']; 
 
     //Relacion Mucho-Mucho
 
@@ -22,6 +18,6 @@ class Representante extends Model
             ->withPivot('periodo_id');
     }
     public function usuario(){
-        return $this->belongsTo(User::class,'user_cedula','cedula');
+        return $this->belongsTo(User::class);
     }
 }

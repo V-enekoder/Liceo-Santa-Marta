@@ -18,9 +18,11 @@ class User extends Authenticatable
     use Notifiable;
     use TwoFactorAuthenticatable;
 
-    const COORDINADOR = 1;
-    const DOCENTE = 2;
-    const REPRESENTANTE = 3;
+    protected $table = 'users';
+    const ADMINISTRADOR = 1; // Define los tipos de roles
+    const COORDINADOR = 2;
+    const DOCENTE = 3;
+    const REPRESENTANTE = 4;
     /**
      * The attributes that are mass assignable.
      *
@@ -77,17 +79,17 @@ class User extends Authenticatable
     }
     
     public function telefonos(){
-        return $this->hasMany(Telefono::class, 'user_cedula','cedula');
+        return $this->hasMany(Telefono::class);
     }
 
     public function coordinador(){
-        return $this->hasOne(Coordinador::class,'user_cedula','cedula');
+        return $this->hasOne(Coordinador::class);
     }
     public function docente(){
-        return $this->hasOne(Docente::class,'user_cedula','cedula');
+        return $this->hasOne(Docente::class);
     }
     public function representante(){
-        return $this->hasOne(Representante::class,'user_cedula','cedula');
+        return $this->hasOne(Representante::class);
     }
 
 }

@@ -35,6 +35,7 @@ Route::get('/dashboard/dataRepresentantes', [coordinadorController::class, 'modi
 Route::get('/dashboard/dataEstudiantes', [coordinadorController::class, 'modificarEstudiantes'])->name('sidebar.modiestudiantes');
 Route::get('/dashboard/dataDocentes', [coordinadorController::class, 'modificarDocentes'])->name('sidebar.modidocentes');
 Route::get('/dashboard/dataMaterias', [coordinadorController::class, 'modificarMaterias'])->name('sidebar.materias');
+Route::get('/dashboard/CargaAcademica', [coordinadorController::class, 'crearCargaAcademica'])->name('sidebar.cargaAcademica');
 
 //ruta de vistas para los docentes
 Route::get('/dashboard/CargaNotas', [DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');
@@ -45,5 +46,8 @@ Route::get('/dashboard/DataCargaAcademica', [DocenteController::class, 'verCarga
 Route::get('/dashboard/VerBoletin', [RepresentanteController::class, 'indexBoletin'])->name('boletin.index');
 Route::get('/dashboard/VerTodoBoletin', [RepresentanteController::class, 'indexTodoBoletin'])->name('boletin.indexTodo');
 Route::get('/dashboard/VerFicha', [RepresentanteController::class, 'verFicha'])->name('Ficha.index');
-Route::get('/dashboard/telefonos', [RepresentanteController::class, 'indexTelefonos'])->name('telefonos.index');
 
+//Route::post('/usuarios', [CoordinadorController::class, 'crear_usuario']);
+//Route::post('/periodos-academicos', [CoordinadorController::class, 'crear_periodo_academico']);
+//Route::post('/coordinador/telefono-por-cedula', [RepresentanteController::class, 'agregar_telefono']);
+//Route::post('/coordinador/crear-estudiante', [CoordinadorController::class, 'crear_estudiante']);
