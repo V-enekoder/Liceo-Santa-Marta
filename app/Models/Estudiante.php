@@ -17,6 +17,10 @@ class Estudiante extends Model
         'ultimo_grado_aprobado',
     ];
 
+    protected $dates = [
+        'fecha_nacimiento'
+    ];
+
     //Relacion Uno-Mucho
 
     //Relacion Mucho-Mucho

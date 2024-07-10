@@ -48,3 +48,6 @@ Route::get('/dashboard/VerTodoBoletin', [RepresentanteController::class, 'indexT
 Route::get('/dashboard/VerFicha', [RepresentanteController::class, 'verFicha'])->name('Ficha.index');
 
 //Route::post('/usuarios', [CoordinadorController::class, 'crear_usuario']);
+//Route::post('/periodos-academicos', [CoordinadorController::class, 'crear_periodo_academico']);
+//Route::post('/coordinador/telefono-por-cedula', [RepresentanteController::class, 'agregar_telefono']);
+//Route::post('/coordinador/crear-estudiante', [CoordinadorController::class, 'crear_estudiante']);
