@@ -19,9 +19,10 @@ class User extends Authenticatable
     use TwoFactorAuthenticatable;
 
     protected $table = 'users';
-    const COORDINADOR = 1;
-    const DOCENTE = 2;
-    const REPRESENTANTE = 3;
+    const ADMINISTRADOR = 1; // Define los tipos de roles
+    const COORDINADOR = 2;
+    const DOCENTE = 3;
+    const REPRESENTANTE = 4;
     /**
      * The attributes that are mass assignable.
      *

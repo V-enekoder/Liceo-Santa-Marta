@@ -10,7 +10,8 @@ class Telefono extends Model
     use HasFactory;
     protected $table = 'telefonos';
     protected $fillable = [
-        'Telefono',
+        'user_id',
+        'Telefono'
     ];
 
     public function representante(){

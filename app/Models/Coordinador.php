@@ -14,15 +14,9 @@ class Coordinador extends Model
     use HasFactory;
     protected $table = 'coordinadores';
     protected $fillable = [
-        'Cedula',
-        'Nombre',
-        'Apellido',
-        'Telefono',
-        'Direccion',
-        'Usuario',
-        'Clave',
-        'Fecha_ingreso',
-        'Fecha_retiro',
+        'user_id',
+        'fecha_ingreso',
+        'fecha_retiro',
     ];
 
     //Relaciones Muchos a Muchos

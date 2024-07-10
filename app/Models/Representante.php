@@ -9,11 +9,7 @@ class Representante extends Model
 {
     use HasFactory;
     protected $table = 'representantes';
-    protected $fillable = [
-        'Nombre',
-        'Apellido',
-        'Direccion',
-    ]; 
+    protected $fillable = ['user_id']; 
 
     //Relacion Mucho-Mucho
 

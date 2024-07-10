@@ -18,6 +18,7 @@ class RolesSeeder extends Seeder
     public function run(){
         // Define los roles predeterminados
         $roles = [
+            ['nombre'=> 'Administrador'],
             ['nombre' => 'Coordinador'],
             ['nombre' => 'Docente'],
             ['nombre' => 'Representante'],
