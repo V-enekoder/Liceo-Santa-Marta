@@ -57,3 +57,7 @@ Route::get('/dashboard/VerFicha', [RepresentanteController::class, 'verFicha'])-
 //Route::post('/modifica_nota', [CoordinadorController::class, 'modificar_nota'])
 //Route::post('/mostrar_docente', [CoordinadorController::class, 'mostrarDocentePorCedula'])
 //Route::post('/mostrar_estudiante', [CoordinadorController::class, 'mostrarEstudiantePorCedula'])
+//Route::get('/coordinador/representante/{cedula}', [CoordinadorController::class, 'mostrarRepresentantePorCedula']);
+//Route::post('/coordinador/vincular', [CoordinadorController::class, 'vincularEstudianteRepresentante']);
+//Route::post('/coordinador/eliminar-representante', [CoordinadorController::class, 'eliminarRepresentante']);
+//Route::post('/coordinador/ficha_estudiante', [CoordinadorController::class, 'mostrarFichaEstudiante']);

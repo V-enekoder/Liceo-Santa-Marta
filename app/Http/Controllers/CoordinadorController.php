@@ -18,6 +18,7 @@ use App\Models\DocenteMateria;
 use App\Models\EstudianteMateria;
 use App\Models\EstudianteRepresentante;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class CoordinadorController extends Controller{
     function crearPeriodos(){
@@ -325,7 +326,6 @@ public function crear_estudiante(Request $request)
         try {
             // Buscar al estudiante por su cédula
             $estudiante = Estudiante::where('cedula', $cedula)->firstOrFail();
-
             // Retornar los datos del estudiante en formato JSON
             return response()->json([
                 'estudiante' => $estudiante
@@ -337,5 +337,342 @@ public function crear_estudiante(Request $request)
             ], 404);
         }
     }
+    /**
+     * TODO implementar tambien con telefonos
+     * Summary of mostrarRepresentantePorCedula
+     * @param mixed $cedula
+     * @return mixed|\Illuminate\Http\JsonResponse
+     */
+    public function mostrarRepresentantePorCedula($cedula)
+    {
+        try {
+            // Buscar al representante por su cédula y rol de representante (rol_id = 4)
+            $representante = User::where('cedula', $cedula)
+                                ->where('rol_id', 4)
+                                ->firstOrFail();
+
+            // Retornar los datos del representante en formato JSON
+            return response()->json([
+                'representante' => $representante
+            ], 200);
+        } catch (\Exception $e) {
+            // Manejar el error si no se encuentra el representante
+            return response()->json([
+                'error' => 'No se encontró al representante con la cédula proporcionada.'
+            ], 404);
+        }
+    }
+
+    public function vincularEstudianteRepresentante(Request $request)
+    {
+        $request->validate([
+            'cedula_representante' => 'required|integer',
+            'cedula_estudiante' => 'required|integer',
+            'periodo_id' => 'required|integer|exists:periodos_academicos,id',
+        ]);
+
+        try {
+            // Buscar el representante por su cédula
+            $user = User::where('cedula', $request->cedula_representante)
+                ->where('rol_id', 4)
+                ->firstOrFail();
+            $representante = Representante::where('user_id', $user->id)->firstOrFail();
+
+            // Buscar el estudiante por su cédula
+            $estudiante = Estudiante::where('cedula', $request->cedula_estudiante)->firstOrFail();
+
+            // Vincular al estudiante y representante en el período académico
+            $estudianteRepresentante = EstudianteRepresentante::create([
+                'estudiante_id' => $estudiante->id,
+                'representante_id' => $representante->id,
+                'periodo_id' => $request->periodo_id,
+            ]);
+
+            return response()->json([
+                'message' => 'Estudiante y representante vinculados exitosamente.',
+                'data' => $estudianteRepresentante,
+            ], 201);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error al vincular el estudiante y representante: ' . $e->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function eliminarRepresentante(Request $request)
+    {
+        $request->validate([
+            'cedula_representante' => 'required|integer',
+            'cedula_estudiante' => 'required|integer',
+            'periodo_id' => 'required|integer|exists:periodos_academicos,id',
+        ]);
+
+        try {
+            // Buscar el representante por su cédula
+            $user = User::where('cedula', $request->cedula_representante)
+                ->where('rol_id', 4)
+                ->firstOrFail();
+            $representante = Representante::where('user_id', $user->id)->firstOrFail();
+
+            // Buscar el estudiante por su cédula
+            $estudiante = Estudiante::where('cedula', $request->cedula_estudiante)->firstOrFail();
+
+            // Buscar el registro en la tabla intermedia
+            $registro = EstudianteRepresentante::where('estudiante_id', $estudiante->id)
+                                                ->where('representante_id', $representante->id)
+                                                ->where('periodo_id', $request->periodo_id)
+                                                ->first();
+
+            if (!$registro) {
+                return response()->json([
+                    'error' => 'No se encontró el registro para el estudiante, representante y período proporcionados.'
+                ], 404);
+            }
+
+            // Verificar si el estudiante tiene otros representantes en el mismo período
+            $otrosRepresentantes = EstudianteRepresentante::where('estudiante_id', $estudiante->id)
+                ->where('periodo_id', $request->periodo_id)
+                ->where('representante_id', '!=', $representante->id)
+                ->count();
+            
+            /**
+             * TODO Comprobar los efectos de la eliminación en cascada
+             */
+            if ($otrosRepresentantes > 0) {
+                // Eliminar el registro
+                $registro->delete();
+                $representante->delete();
+                $user->delete();
+
+                return response()->json([
+                    'message' => 'El representante ha sido eliminado exitosamente del período académico para este estudiante.'
+                ], 200);
+            } else {
+                return response()->json([
+                    'error' => 'No se puede eliminar al representante porque el estudiante no tiene otros representantes en este período.'
+                ], 400);
+            }
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error al realizar la operación: ' . $e->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function mostrarFichaEstudiante(Request $request)
+    {
+        $request->validate([
+            'cedula_estudiante' => 'required|integer',
+            'periodo_id' => 'required|integer|exists:periodos_academicos,id',
+        ]);
+
+        try {
+            // Buscar al estudiante por su cédula
+            $estudiante = Estudiante::where('cedula', $request->cedula_estudiante)->firstOrFail();
+
+            // Buscar los representantes del estudiante en el período especificado
+            $representantes = EstudianteRepresentante::where('estudiante_id', $estudiante->id)
+                ->where('periodo_id', $request->periodo_id)
+                ->with(['representante.user.telefonos'])
+                ->get()
+                ->map(function ($registro) {
+                    return [
+                        'representante' => $registro->representante->user,
+                        'telefonos' => $registro->representante->user->telefonos->pluck('numero_telefonico'),
+                    ];
+                });
+
+            // Retornar la información del estudiante y sus representantes
+            return response()->json([
+                'estudiante' => $estudiante,
+                'representantes' => $representantes,
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error al realizar la operación: ' . $e->getMessage(),
+            ], 400);
+        }
+    }
+
+/**
+ * TODO comprobar funcionamiento
+ */
+
+    public function mostrar_carga_academica(Request $request)
+    {
+        $request->validate([
+            'cedula_docente' => 'required|integer',
+            'periodo_id' => 'required|integer|exists:periodos_academicos,id',
+        ]);
+
+        try {
+            // Buscar al docente por su cédula
+            $user = User::where('cedula', $request->cedula_docente)->firstOrFail();
+            $docente = Docente::where('user_id', $user->id)->firstOrFail();
+
+            // Buscar las materias asignadas al docente en el período especificado
+            $materiasAsignadas = Materia::whereHas('docentes', function ($query) use ($docente, $request) {
+                $query->where('docente_id', $docente->id)
+                ->where('periodo_id', $request->periodo_id);
+                })
+                ->with('docentes')
+                ->get();
+
+            // Retornar la información del docente y las materias asignadas
+            return response()->json([
+                'docente' => $docente,
+                'materias' => $materiasAsignadas,
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error al realizar la operación: ' . $e->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function obtenerSeccionesDisponibles(Request $request)
+    {
+        $request->validate([
+            'grado_id' => 'required|integer|exists:grados,id',
+            'periodo_id' => 'required|integer|exists:periodos_academicos,id',
+        ]);
+
+        try {
+            // Buscar el grado y periodo en la tabla grado_periodo
+            $gradoPeriodo = GradoPeriodo::where('grado_id', $request->grado_id)
+                ->where('periodo_id', $request->periodo_id)
+                ->firstOrFail();
+
+            // Buscar las secciones asociadas a ese grado y periodo
+            $secciones = Seccion::where('grado_periodo_id', $gradoPeriodo->id)->get();
+
+            // Retornar las secciones disponibles
+            return response()->json([
+                'secciones' => $secciones,
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error al realizar la operación: ' . $e->getMessage(),
+            ], 400);
+        }
+    }
+
+    public function inscribirEstudianteEnSeccion(Request $request)
+    {
+        $request->validate([
+            'seccion_id' => 'required|integer|exists:secciones,id',
+            'cedula_estudiante' => 'required|integer|exists:estudiantes,cedula',
+        ]);
+
+        try {
+            // Buscar la sección por su ID
+            $seccion = Seccion::findOrFail($request->seccion_id);
+
+            // Verificar si el número de inscritos es menor a la capacidad
+            if ($seccion->alumnos_inscritos >= $seccion->capacidad) {
+                return response()->json([
+                    'error' => 'La sección ha alcanzado su capacidad máxima.',
+                ], 400);
+            }
+
+            // Buscar al estudiante por su cédula
+            $estudiante = Estudiante::where('cedula', $request->cedula_estudiante)->firstOrFail();
+
+            // Verificar si el estudiante ya está inscrito en la sección
+            $existeInscripcion = DB::table('estudiante_seccion')
+                ->where('estudiante_id', $estudiante->id)
+                ->where('seccion_id', $seccion->id)
+                ->exists();
+
+            if ($existeInscripcion) {
+                return response()->json([
+                    'error' => 'El estudiante ya está inscrito en esta sección.',
+                ], 400);
+            }
+
+            // Inscribir al estudiante en la sección
+            DB::table('estudiante_seccion')->insert([
+                'estudiante_id' => $estudiante->id,
+                'seccion_id' => $seccion->id,
+            ]);
+
+            // Incrementar el número de alumnos inscritos en la sección
+            $seccion->increment('alumnos_inscritos');
+
+            return response()->json([
+                'message' => 'El estudiante ha sido inscrito exitosamente en la sección.',
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error al realizar la operación: ' . $e->getMessage(),
+            ], 400);
+        }
+    }
+
+/**
+Version con transaccion
+public function inscribirEstudianteEnSeccion(Request $request)
+{
+    $request->validate([
+        'seccion_id' => 'required|integer|exists:secciones,id',
+        'cedula_estudiante' => 'required|integer|exists:estudiantes,cedula',
+    ]);
+
+    try {
+        // Buscar la sección por su ID
+        $seccion = Seccion::findOrFail($request->seccion_id);
+
+        // Verificar si el número de inscritos es menor a la capacidad
+        if ($seccion->alumnos_inscritos >= $seccion->capacidad) {
+            return response()->json([
+                'error' => 'La sección ha alcanzado su capacidad máxima.',
+            ], 400);
+        }
+
+        // Buscar al estudiante por su cédula
+        $estudiante = Estudiante::where('cedula', $request->cedula_estudiante)->firstOrFail();
+
+        // Verificar si el estudiante ya está inscrito en la sección
+        $existeInscripcion = DB::table('estudiante_seccion')
+            ->where('estudiante_id', $estudiante->id)
+            ->where('seccion_id', $seccion->id)
+            ->exists();
+
+        if ($existeInscripcion) {
+            return response()->json([
+                'error' => 'El estudiante ya está inscrito en esta sección.',
+            ], 400);
+        }
+
+        // Iniciar una transacción para asegurar la atomicidad de las operaciones
+        DB::transaction(function () use ($estudiante, $seccion) {
+            // Inscribir al estudiante en la sección
+            DB::table('estudiante_seccion')->insert([
+                'estudiante_id' => $estudiante->id,
+                'seccion_id' => $seccion->id,
+            ]);
+
+            // Incrementar el número de alumnos inscritos en la sección
+            $seccion->increment('alumnos_inscritos');
+        });
+
+        return response()->json([
+            'message' => 'El estudiante ha sido inscrito exitosamente en la sección.',
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'Error al realizar la operación: ' . $e->getMessage(),
+        ], 400);
+    }
+}  
+ */
+
 
 }
