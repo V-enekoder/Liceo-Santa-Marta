@@ -222,12 +222,12 @@
 
                 <dialog id="add-representante">
                     <h1 class="h1Advertencia">¡ADVERTENCIA!</h1>
-                    <p>Estás a punto de agregar en la tabla un nuevo representante, ¿seguro/a que quieres realizar esta acción?</p>
+                    <p>Estás a punto de agregar en la tabla un nuevo estudiante, ¿seguro/a que quieres realizar esta acción?</p>
                     <p class="text-black-alert">   Si no deseas realizar los cambios presiona la tecla "Esc" o "Escape"</p>
     
                     <div class="col-lg-8 panel-agregar-datos">
                         <div class="panel panel-default panel-agregar-datos">
-                            <div class="panel-heading text-table-head">Informacion del representante</div>
+                            <div class="panel-heading text-table-head">Informacion del estudiante</div>
                                         <div class="col-sm-12 padding-carga">
                                             <table width="100%"
                                                 class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline"
@@ -237,12 +237,14 @@
                                                         <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 100px;">Cedula</th>
                                                         <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 300px;">Nombre</th>
                                                         <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 300px;">Apellido</th>
-                                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 300px;">Dirección</th>
+                                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 130px;">Fecha de nacimiento</th>
+                                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 80px;">Ult. Grado</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr role="row" class="odd">
                                                         <th> <div class="casilla_editora"> <input class="form-control" value=""></div> </th>
+                                                        <td> <div class="casilla_editora"> <input class="form-control" value=""></div> </td>
                                                         <td> <div class="casilla_editora"> <input class="form-control" value=""></div> </td>
                                                         <td> <div class="casilla_editora"> <input class="form-control" value=""></div> </td>
                                                         <td> <div class="casilla_editora"> <input class="form-control" value=""></div> </td>
