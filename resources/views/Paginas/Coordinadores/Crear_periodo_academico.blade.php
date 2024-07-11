@@ -2,11 +2,11 @@
     <div class="flex justify-between items-center mb-4">
         <h1 class="text-2xl font-bold">Períodos Académicos</h1>
         <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            <i class="fas fa-plus mr-2"></i> Agregar Período
+            <button id="crearPeriodo">Crear Período Académico</button>
         </a>
     </div>
 
-    <div class="container mx-auto px-4">
+    <div class="container mx-auto px-4 mt-6">
         <table class="table-auto w-full">
             <thead>
                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
@@ -42,32 +42,13 @@
             </tbody>
         </table>
     </div>
-</x-app-layout>
-
-{{--
-
-<!-- archivo.blade.php -->
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Crear Período Académico</title>
-</head>
-<body>
-    <div>
-        <h1>Crear Período Académico</h1>
-        <button id="crearPeriodo">Crear Período Académico</button>
-    </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#crearPeriodo').click(function() {
                 $.ajax({
-                    url: '{{ route('coordinador.crearPeriodoAcademico') }}',
+                    url: '{{ route('sidebar.periodos') }}',
                     type: 'POST',
                     dataType: 'json',
                     headers: {
@@ -84,8 +65,5 @@
             });
         });
     </script>
-</body>
-</html>
+</x-app-layout>
 
-
---}}

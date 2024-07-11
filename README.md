@@ -1,3 +1,49 @@
+# PASOS PARA LA INSTALACION y EJECUCION DEL SISTEMA
+### 1. Bajar el repositorio mediante la terminal 
+```
+git clone https://github.com/V-enekoder/Liceo-Santa-Marta.git
+```
+### 2. Tener xampp instalado
+Link de descarga: https://www.apachefriends.org/es/index.html
+##### 2.1 abrir xampp y ejecutar la BD
+![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/503fb38e-369f-40e1-9728-e135471f511f)
+![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/3e1e9fd4-7772-45b3-b1ca-23bdc2cbd9b8)
+### 3. Abrir terminal en el proyecto y ejecutar paso a paso los siguientes comandos:
+```
+npm install
+npm run build
+composer update
+php artisan migrate
+```
+### 4. Reparar error 500 no se encuentra el servidor:
+```
+composer install
+mv .env.example .env
+php artisan cache:clear
+composer dump-autoload
+php artisan key:generate
+```
+### 5. Modificar archivo **.env**:
+##### 5.1 Ubicar el archivo **.env**
+![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/8f6a48be-2753-458f-b388-032833ec6d6f)
+##### 5.2 Ingresar y buscar la línea **SESSION_DRIVER**
+![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/03208291-1de9-4599-99d2-6e70b2290d20)
+##### 5.3 Cambiar el valor _database_ por ***file***
+![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/138d3bb4-7e04-4f87-8b85-b23e8dc4598e)
+
+## [FINAL] Ejecución del servidor:
+_Una sola vez_
+```
+php artisan db:seed
+```
+_Cada vez que se quiera iniciar_
+```
+php artisan serve
+```
+![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/88a70398-fb6c-49f0-96c3-bf85600aa8ae)
+![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/60650598-21b8-4eaf-b7c5-51a9bcd6498e)
+
+#ABOUT LARAVEL
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -64,3 +110,8 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+
+    

@@ -28,7 +28,6 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                         x-transition:leave="transition ease-in duration-75"
                         x-transition:leave-start="transform opacity-100 scale-100"
                         x-transition:leave-end="transform opacity-0 scale-95" class="submenu ml-4 space-y-2">
-                        x-transition:leave-end="transform opacity-0 scale-95" class="submenu ml-4 space-y-2">
 
                         {{-- @can('es_coordinador') --}}
                         <li><a href="{{ route('sidebar.periodos') }}" class="block p-2 hover:bg-gray-800">Crear período
