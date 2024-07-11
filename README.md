@@ -96,6 +96,9 @@ php artisan key:generate
 php artisan db:seed 
 php artisan serve
 ```
+![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/88a70398-fb6c-49f0-96c3-bf85600aa8ae)
+![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/60650598-21b8-4eaf-b7c5-51a9bcd6498e)
+
 
 
 
