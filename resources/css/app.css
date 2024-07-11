@@ -523,3 +523,34 @@ tbody {
   height: 45%;
   border-radius: 0.6rem;
 }
+
+.bottom-delete {
+  font-size: 19px;
+  border-radius: .5rem;
+  color: #fff;
+  background: #f63b3b;
+  border: 5px solid #f63b3b;
+  height: 35px;
+  width: 35px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
+}
+
+.bottom-delete:hover {
+  color: #fff;
+  background: #d81d1d;
+  border: #d81d1d;
+}
+
+#alert-deletedata{
+  max-width: 30%;
+  height: 30%;
+  border-radius: 0.6rem;
+}
+
+#alert-deletedata::backdrop{
+  background-color: rgba(0,0,0,.55);
+}
