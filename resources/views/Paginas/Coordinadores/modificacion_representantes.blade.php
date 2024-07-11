@@ -45,6 +45,9 @@
                                             <button id="open-alert-edit" class="btn bottom-success">
                                                 <i class="fa-solid fa-pencil"></i>
                                             </button>
+                                            <button id="open-alert-deletedata" class="btn bottom-delete">
+                                                <i class="fa-solid fa-box-archive"></i>
+                                            </button>
                                         </td>
                                     </tr>
                                     <tr role="row" class="even">
@@ -53,8 +56,11 @@
                                         <td>SALVADOR PEREZ</td>
                                         <td>Las Lomas</td>
                                         <td>
-                                            <button type="refresh" class="btn bottom-success">
+                                            <button id="open-alert-edit" class="btn bottom-success">
                                                 <i class="fa-solid fa-pencil"></i>
+                                            </button>
+                                            <button id="open-alert-deletedata" class="btn bottom-delete">
+                                                <i class="fa-solid fa-box-archive"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -64,8 +70,11 @@
                                         <td>RODRIGUEZ HERNANDEZ</td>
                                         <td>Core 8 sin asfalto</td>
                                         <td>
-                                            <button type="refresh" class="btn bottom-success">
+                                            <button id="open-alert-edit" class="btn bottom-success">
                                                 <i class="fa-solid fa-pencil"></i>
+                                            </button>
+                                            <button id="open-alert-deletedata" class="btn bottom-delete">
+                                                <i class="fa-solid fa-box-archive"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -75,8 +84,11 @@
                                         <td>PACHECO FUENTES</td>
                                         <td>Unare I</td>
                                         <td>
-                                            <button type="refresh" class="btn bottom-success">
+                                            <button id="open-alert-edit" class="btn bottom-success">
                                                 <i class="fa-solid fa-pencil"></i>
+                                            </button>
+                                            <button id="open-alert-deletedata" class="btn bottom-delete">
+                                                <i class="fa-solid fa-box-archive"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -86,8 +98,11 @@
                                         <td>MILLAN</td>
                                         <td>Las garzas</td>
                                         <td>
-                                            <button type="refresh" class="btn bottom-success">
+                                            <button id="open-alert-edit" class="btn bottom-success">
                                                 <i class="fa-solid fa-pencil"></i>
+                                            </button>
+                                            <button id="open-alert-deletedata" class="btn bottom-delete">
+                                                <i class="fa-solid fa-box-archive"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -97,8 +112,11 @@
                                         <td>MISOGINO ESCONTIGO</td>
                                         <td>Caracas</td>
                                         <td>
-                                            <button type="refresh" class="btn bottom-success">
+                                            <button id="open-alert-edit" class="btn bottom-success">
                                                 <i class="fa-solid fa-pencil"></i>
+                                            </button>
+                                            <button id="open-alert-deletedata" class="btn bottom-delete">
+                                                <i class="fa-solid fa-box-archive"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -111,6 +129,8 @@
                                             <button id="open-alert-edit" class="btn bottom-success">
                                                 <i class="fa-solid fa-pencil"></i>
                                             </button>
+                                            <button id="open-alert-deletedata" class="btn bottom-delete">
+                                                <i class="fa-solid fa-box-archive"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -227,6 +247,16 @@
                     </dialog>
 
                     <!-- FIN AGREGAR -->
+
+
+                <!--- ELIMINAR -->
+                <dialog id="alert-deletedata">
+                    <h1 class="h1Advertencia" style="color: red">¡IMPORTANTE!</h1>
+                    <p>Estás a punto de eliminar datos importantes, ¿seguro/a que quieres realizar esta acción?</p>
+                    <p class="text-black-alert" style="color: red">   Si no deseas realizar los cambios presiona la tecla "Esc" o "Escape"</p>
+                    <button id="close-alert-deletedata" class="btn btn-confirm form-control text-default">Confirmar cambios</button>
+                </dialog>
+                <!-- FIN ELIMINAR -->
 
             
             
