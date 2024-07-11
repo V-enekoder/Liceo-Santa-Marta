@@ -51,3 +51,9 @@ Route::get('/dashboard/VerFicha', [RepresentanteController::class, 'verFicha'])-
 //Route::post('/periodos-academicos', [CoordinadorController::class, 'crear_periodo_academico']);
 //Route::post('/coordinador/telefono-por-cedula', [RepresentanteController::class, 'agregar_telefono']);
 //Route::post('/coordinador/crear-estudiante', [CoordinadorController::class, 'crear_estudiante']);
+//Route::post('/materia', [CoordinadorController::class, 'crear_materia']);
+//Route::post('/crear-seccion', [CoordinadorController::class, 'crearSeccion']);
+//Route::post('/asignar_carga', [CoordinadorController::class, 'asignarCargaAcademica'])
+//Route::post('/modifica_nota', [CoordinadorController::class, 'modificar_nota'])
+//Route::post('/mostrar_docente', [CoordinadorController::class, 'mostrarDocentePorCedula'])
+//Route::post('/mostrar_estudiante', [CoordinadorController::class, 'mostrarEstudiantePorCedula'])

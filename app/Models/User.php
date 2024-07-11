@@ -36,9 +36,12 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'nombre',
-        'apellido',
+        'rol_id',
         'cedula',
+        'primer_nombre',
+        'segundo_nombre',
+        'primer_apellido',
+        'segundo_apellido',
         'email',
         'direccion',
         'password'
@@ -97,6 +100,4 @@ class User extends Authenticatable
     public function rol(){
         return $this->belongsTo(Rol::class);
     }
-
-
 }

@@ -37,5 +37,4 @@ class Periodo_Academico extends Model
     public function grados(){
         return $this->belongsToMany(Grado::class,'GradoPeriodo');
     }
-
 }
