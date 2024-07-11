@@ -17,6 +17,7 @@ use App\Models\Materia;
 use App\Models\DocenteMateria;
 use App\Models\EstudianteMateria;
 use App\Models\EstudianteRepresentante;
+use App\Models\EstudianteSeccion;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
@@ -92,7 +93,7 @@ class CoordinadorController extends Controller{
         return response()->json(['user' => $user], 201);
     }
 
-     public function crear_periodo_academico(Request $request){
+    public function crear_periodo_academico(Request $request){
         // Obtener el último periodo académico creado
         $ultimoPeriodo = Periodo_Academico::orderBy('año_fin', 'desc')->first();
 
@@ -247,58 +248,93 @@ public function crear_estudiante(Request $request)
         ], 201);
     }
 
-    /*public function modificar_nota(Request $request)
+/**
+ * Summary of obtenerCalificacion
+ * *Esta funcion sirve para primero encontrar la nota y 
+ * *luego modificarla en la siguiente
+ */
+public function obtenerCalificacion(Request $request)
+{
+    $request->validate([
+        'cedula_docente' => 'required|integer',
+        'periodo_id' => 'required|integer|exists:periodos_academicos,id',
+        'materia_id' => 'required|integer|exists:materias,id',
+        'cedula_estudiante' => 'required|integer',
+    ]);
+
+    try {
+        // Buscar al docente por su cédula
+        $userDocente = User::where('cedula', $request->cedula_docente)->firstOrFail();
+        $docente = Docente::where('user_id', $userDocente->id)->firstOrFail();
+
+        // Buscar al estudiante por su cédula
+        $estudiante = Estudiante::where('cedula', $request->cedula_estudiante)->firstOrFail();
+
+        // Buscar el registro docente_materia
+        $docenteMateria = DocenteMateria::where('docente_id', $docente->id)
+                                        ->where('materia_id', $request->materia_id)
+                                        ->where('periodo_id', $request->periodo_id)
+                                        ->firstOrFail();
+
+        // Buscar la calificación del estudiante en la materia y periodo especificados
+        $calificacion = Calificacion::where('docente_materia_id', $docenteMateria->id)
+                                    ->where('estudiante_id', $estudiante->id)
+                                    ->firstOrFail();
+
+        // Retornar la calificación
+        return response()->json([
+            'calificacion' => $calificacion,
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'Error al realizar la operación: ' . $e->getMessage(),
+        ], 400);
+    }
+}
+
+
+    public function modificarCalificacion(Request $request)
     {
-        // Validar los datos recibidos
         $request->validate([
-            'cedula' => 'required|string|size:10', // Asumiendo cédula venezolana
-            'materia_id' => 'required|integer|exists:materias,id',
-            'periodo_id' => 'required|integer|exists:periodos_academicos,id',
-            'lapso' => 'required|integer|between:1,3', // Lapsos válidos del 1 al 3
-            'nota' => 'required|integer|min:1|max:20', // Suponiendo un rango de notas de 0 a 20
+            'calificacion_id' => 'required|integer|exists:calificaciones,id',
+            'lapso_1' => 'nullable|integer|min:0|max:20',
+            'lapso_2' => 'nullable|integer|min:0|max:20',
+            'lapso_3' => 'nullable|integer|min:0|max:20',
         ]);
 
         try {
-            // Buscar al estudiante por su cédula
-            $estudiante = User::where('cedula', $request->cedula)->firstOrFail();
+            // Buscar la calificación por su ID
+            $calificacion = Calificacion::findOrFail($request->calificacion_id);
 
-            // Buscar o crear la relación estudiante_materia para el periodo y materia especificados
-            $estudianteMateria = EstudianteMateria::firstOrCreate([
-                'estudiante_id' => $estudiante->id,
-                'materia_id' => $request->materia_id,
-                'periodo_id' => $request->periodo_id,
-            ]);
-
-            // Buscar la calificación correspondiente al estudiante_materia y periodo
-            $calificacion = Calificacion::where('estudiante_materia_id', $estudianteMateria->id)
-                ->where('lapso_' . $request->lapso, '!=', null)
-                ->first();
-
-            // Si no existe la calificación, crear un nuevo registro
-            if (!$calificacion) {
-                $calificacion = new Calificacion();
-                $calificacion->estudiante_materia_id = $estudianteMateria->id;
+            // Actualizar los lapsos si están presentes en el request
+            if ($request->has('lapso_1')) {
+                $calificacion->lapso_1 = $request->lapso_1;
+            }
+            if ($request->has('lapso_2')) {
+                $calificacion->lapso_2 = $request->lapso_2;
+            }
+            if ($request->has('lapso_3')) {
+                $calificacion->lapso_3 = $request->lapso_3;
             }
 
-            // Modificar la nota del lapso especificado
-            $calificacion->{'lapso_' . $request->lapso} = $request->nota;
-
-            // Calcular y actualizar el promedio
+            // Calcular el promedio (asumiendo un promedio simple)
             $calificacion->promedio = ($calificacion->lapso_1 + $calificacion->lapso_2 + $calificacion->lapso_3) / 3;
 
-            // Guardar el registro de calificación
+            // Guardar los cambios
             $calificacion->save();
 
             return response()->json([
-                'message' => 'Nota modificada exitosamente',
-                'calificacion' => $calificacion
+                'message' => 'Calificación actualizada exitosamente.',
+                'calificacion' => $calificacion,
             ], 200);
+
         } catch (\Exception $e) {
             return response()->json([
-                'error' => 'Error al modificar la nota: ' . $e->getMessage()
-            ], 500);
+                'error' => 'Error al realizar la operación: ' . $e->getMessage(),
+            ], 400);
         }
-    }*/
+    }
 
     public function mostrarDocentePorCedula($cedula)
     {
@@ -673,6 +709,125 @@ public function inscribirEstudianteEnSeccion(Request $request)
     }
 }  
  */
+
+    public function crearCalificaciones(Request $request)
+    {
+        $request->validate([
+            'seccion_id' => 'required|integer|exists:secciones,id',
+            'cedula_estudiante' => 'required|integer|exists:estudiantes,cedula',
+        ]);
+
+        try {
+            // Buscar al estudiante por su cédula
+            $estudiante = Estudiante::where('cedula', $request->cedula_estudiante)->firstOrFail();
+
+            // Buscar la sección por su ID
+            $seccion = Seccion::findOrFail($request->seccion_id);
+
+            // Buscar el grado y el periodo en la tabla grado_periodo
+            $gradoPeriodo = GradoPeriodo::findOrFail($seccion->grado_periodo_id);
+            $gradoId = $gradoPeriodo->grado_id;
+            $periodoId = $gradoPeriodo->periodo_id;
+
+            // Buscar todas las materias correspondientes a ese grado
+            $materias = Materia::where('grado_id', $gradoId)->get();
+
+            // Para cada materia, buscar el docente correspondiente en el periodo actual
+            foreach ($materias as $materia) {
+                $docenteMateria = DocenteMateria::where('materia_id', $materia->id)
+                                ->where('periodo_id', $periodoId)
+                                ->first();
+
+                if ($docenteMateria) {
+                    // Crear la calificación del estudiante para esa materia
+                    Calificacion::create([
+                        'docente_materia_id' => $docenteMateria->id,
+                        'estudiante_id' => $estudiante->id,
+                        'lapso_1' => 0,
+                        'lapso_2' => 0,
+                        'lapso_3' => 0,
+                        'promedio' => 0,
+                    ]);
+                }
+            }
+
+            return response()->json([
+                'message' => 'Calificaciones creadas exitosamente.',
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'error' => 'Error al realizar la operación: ' . $e->getMessage(),
+            ], 400);
+        }
+    }
+
+public function obtenerReporteNotas(Request $request)
+{
+    $request->validate([
+        'seccion_id' => 'required|integer|exists:secciones,id',
+        'periodo_id' => 'required|integer|exists:periodos_academicos,id',
+        'materia_id' => 'required|integer|exists:materias,id',
+    ]);
+
+    try {
+        // Buscar la sección
+        $seccion = Seccion::findOrFail($request->seccion_id);
+
+        // Buscar los estudiantes de la sección
+        $estudiantesSeccion = EstudianteSeccion::where('seccion_id', $seccion->id)->get();
+
+        if ($estudiantesSeccion->isEmpty()) {
+            return response()->json([
+                'error' => 'No hay estudiantes en esta sección.'
+            ], 404);
+        }
+
+        // Buscar las calificaciones de los estudiantes en la materia y periodo especificados
+        $calificaciones = Calificacion::whereIn('estudiante_id', $estudiantesSeccion->pluck('estudiante_id'))
+                                        ->where('docente_materia_id', function ($query) use ($request) {
+                                            $query->select('id')
+                                                ->from('docente_materia')
+                                                ->where('materia_id', $request->materia_id)
+                                                ->where('periodo_id', $request->periodo_id)
+                                                ->limit(1);
+                                        })
+                                        ->get();
+
+        if ($calificaciones->isEmpty()) {
+            return response()->json([
+                'error' => 'No hay calificaciones para los estudiantes en esta materia y periodo.'
+            ], 404);
+        }
+
+        // Calcular estadísticas
+        $totalEstudiantes = $calificaciones->count();
+        $totalAprobados = $calificaciones->filter(function ($calificacion) {
+            return $calificacion->promedio >= 10; // Asumiendo que la nota de aprobación es 10
+        })->count();
+
+        $totalReprobados = $totalEstudiantes - $totalAprobados;
+        $porcentajeAprobados = ($totalAprobados / $totalEstudiantes) * 100;
+        $porcentajeReprobados = ($totalReprobados / $totalEstudiantes) * 100;
+        $promedioGeneral = $calificaciones->avg('promedio');
+
+        // Retornar el reporte
+        return response()->json([
+            'total_estudiantes' => $totalEstudiantes,
+            'total_aprobados' => $totalAprobados,
+            'porcentaje_aprobados' => $porcentajeAprobados,
+            'total_reprobados' => $totalReprobados,
+            'porcentaje_reprobados' => $porcentajeReprobados,
+            'promedio_general' => $promedioGeneral,
+            'calificaciones' => $calificaciones,
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'Error al realizar la operación: ' . $e->getMessage(),
+        ], 400);
+    }
+}
 
 
 }
