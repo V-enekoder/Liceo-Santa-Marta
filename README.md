@@ -67,5 +67,25 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 
 # PASOS PARA LA INSTALACION y EJECUCION DEL SISTEMA
-1. Bajar el repositorio mediante la terminal con el link
-'''asjnasas'''
+### Ejecución del servidor:
+```
+php artisan serve
+```
+1. Bajar el repositorio mediante la terminal ```git clone https://github.com/V-enekoder/Liceo-Santa-Marta.git```
+2. Abrir terminal en el proyecto y ejecutar paso a paso los siguientes comandos:
+```
+npm install
+npm run build
+composer update
+php artisan migrate
+```
+3. Reparar error 500 no se encuentra el servidor:
+```
+composer install
+mv .env.example .env
+php artisan cache:clear
+composer dump-autoload
+php artisan key:generate
+```
+    ### 3.1 modificar archivo.env
+    
