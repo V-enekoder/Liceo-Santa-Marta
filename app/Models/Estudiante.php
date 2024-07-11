@@ -22,14 +22,11 @@ class Estudiante extends Model
     protected $dates = [
         'fecha_nacimiento'
     ];
-
-    //Relaciones Muchos-Muchos
-
-    public function materias(){
-        return $this->belongsToMany(Materia::class, 'estudiante_materia')
-            ->withPivot('periodo_id');
+    //Relaciones Uno-Muchos
+    public function calificaciones(){
+        return $this->hasMany(Calificacion::class);
     }
-
+    //Relaciones Muchos-Muchos
     public function representantes(){
         return $this->belongsToMany(Representante::class, 'estudiante_representante')
             ->withPivot('periodo_id');

@@ -20,10 +20,6 @@ class Periodo_Academico extends Model
         return $this->hasMany(DocenteMateria::class);
     }
 
-    public function estudiante_materia(){
-        return $this->hasMany(EstudianteMateria::class);
-    }
-
     public function estudiante_representante(){
         return $this->hasMany(EstudianteRepresentante::class);
     }

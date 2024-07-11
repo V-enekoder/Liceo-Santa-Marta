@@ -247,7 +247,7 @@ public function crear_estudiante(Request $request)
         ], 201);
     }
 
-    public function modificar_nota(Request $request)
+    /*public function modificar_nota(Request $request)
     {
         // Validar los datos recibidos
         $request->validate([
@@ -298,7 +298,7 @@ public function crear_estudiante(Request $request)
                 'error' => 'Error al modificar la nota: ' . $e->getMessage()
             ], 500);
         }
-    }
+    }*/
 
     public function mostrarDocentePorCedula($cedula)
     {

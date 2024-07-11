@@ -96,7 +96,7 @@ class User extends Authenticatable
     public function telefonos(){
         return $this->hasMany(Telefono::class);
     }
-
+    //Relaciones Muchos-Uno
     public function rol(){
         return $this->belongsTo(Rol::class);
     }
