@@ -83,7 +83,7 @@ php artisan cache:clear
 composer dump-autoload
 php artisan key:generate
 ```
-### 4. Modificar archivo **.env**
+### 4. Modificar archivo **.env**:
 ##### 1. Ubicar el archivo **.env**
 ![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/8f6a48be-2753-458f-b388-032833ec6d6f)
 ##### 2. Ingresar y buscar la línea **SESSION_DRIVER**
