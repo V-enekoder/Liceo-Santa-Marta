@@ -24,18 +24,22 @@ Route::middleware([
     })->name('dashboard');
 });
 
-/*Route::get('/victor','app\Http\Controllers\TelefonosController@index' /*function () {
-return "+ ¿Shakira shakira? \n -lolelolelole...";
-});*/
-
 //rutas de vistas para los coordinadores, aun falta añadir la de secciones y creo que otra pero aun no se ha añadido
-Route::get('/dashboard/periodos', [coordinadorController::class, 'crearPeriodos'])->name('sidebar.periodos');
-Route::get('/dashboard/dataNotas', [coordinadorController::class, 'modificarNotas'])->name('sidebar.notas');
-Route::get('/dashboard/dataRepresentantes', [coordinadorController::class, 'modificarRepresentantes'])->name('sidebar.modirepresentantes');
-Route::get('/dashboard/dataEstudiantes', [coordinadorController::class, 'modificarEstudiantes'])->name('sidebar.modiestudiantes');
-Route::get('/dashboard/dataDocentes', [coordinadorController::class, 'modificarDocentes'])->name('sidebar.modidocentes');
-Route::get('/dashboard/dataMaterias', [coordinadorController::class, 'modificarMaterias'])->name('sidebar.materias');
-Route::get('/dashboard/CargaAcademica', [coordinadorController::class, 'crearCargaAcademica'])->name('sidebar.cargaAcademica');
+
+
+// Ruta para mostrar el formulario de creación de periodo académico
+Route::get('/dashboard/periodos', [CoordinadorController::class, 'ver_periodos'])
+            ->name('sidebar.periodos');
+//Ruta para crear periodo y sus vinculaciones
+Route::post('/dashboard/periodos', [CoordinadorController::class, 'crear_periodo_academico'])
+                ->name('crear_periodo_academico');
+
+Route::get('/dashboard/dataNotas', [CoordinadorController::class, 'modificarNotas'])->name('sidebar.notas');
+Route::get('/dashboard/dataRepresentantes', [CoordinadorController::class, 'modificarRepresentantes'])->name('sidebar.modirepresentantes');
+Route::get('/dashboard/dataEstudiantes', [CoordinadorController::class, 'modificarEstudiantes'])->name('sidebar.modiestudiantes');
+Route::get('/dashboard/dataDocentes', [CoordinadorController::class, 'modificarDocentes'])->name('sidebar.modidocentes');
+Route::get('/dashboard/dataMaterias', [CoordinadorController::class, 'modificarMaterias'])->name('sidebar.materias');
+Route::get('/dashboard/CargaAcademica', [CoordinadorController::class, 'crearCargaAcademica'])->name('sidebar.cargaAcademica');
 
 //ruta de vistas para los docentes
 Route::get('/dashboard/CargaNotas', [DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');
@@ -49,7 +53,8 @@ Route::get('/dashboard/VerFicha', [RepresentanteController::class, 'verFicha'])-
 
 //Route::post('/usuarios', [CoordinadorController::class, 'crear_usuario']);
 //Route::post('/periodos-academicos', [CoordinadorController::class, 'crear_periodo_academico']);
-Route::post('/coordinador/crear_periodo_academico', [CoordinadorController::class, 'crear_periodo_academico'])->name('coordinador.crear_periodo_academico');
+//Route::post('/coordinador/Crear_periodo_academico', [CoordinadorController::class, 'crear_periodo_academico'])
+//    ->name('coordinador.crear.periodo.academico');
 //Route::post('/coordinador/telefono-por-cedula', [RepresentanteController::class, 'agregar_telefono']);
 //Route::post('/coordinador/crear-estudiante', [CoordinadorController::class, 'crear_estudiante']);
 //Route::post('/materia', [CoordinadorController::class, 'crear_materia']);

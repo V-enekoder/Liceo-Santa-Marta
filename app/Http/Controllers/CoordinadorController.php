@@ -6,6 +6,8 @@ use Illuminate\Auth\Middleware\Authorize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Models\Calificacion;
+use App\Models\Coordinador;
+use App\Models\CoordinadorPeriodo;
 use App\Models\User;
 use App\Models\Representante;
 use App\Models\Docente;
@@ -18,14 +20,16 @@ use App\Models\DocenteMateria;
 use App\Models\EstudianteMateria;
 use App\Models\EstudianteRepresentante;
 use App\Models\EstudianteSeccion;
+use App\Models\Grado;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 
 class CoordinadorController extends Controller{
-    function crearPeriodos(){
+    function ver_periodos(){
         //Gate::authorize('crear_periodos');
         return view('Paginas.Coordinadores.Crear_periodo_academico',);
     }
+
     function modificarNotas(){
         //Gate::authorize('modificar_notas');
         return view('Paginas.Coordinadores.modificacion_notas',);
@@ -93,7 +97,8 @@ class CoordinadorController extends Controller{
         return response()->json(['user' => $user], 201);
     }
 
-    public function crear_periodo_academico(Request $request){
+    public function crear_periodo_academico(Request $request)
+    {
         // Obtener el último periodo académico creado
         $ultimoPeriodo = Periodo_Academico::orderBy('año_fin', 'desc')->first();
 
@@ -115,9 +120,46 @@ class CoordinadorController extends Controller{
             'año_fin' => $año_fin
         ]);
 
-        return response()->json(['periodo_academico' => $periodoAcademico], 201);
+        if ($periodoAcademico) {
+            // Llamar a la función para vincular grados
+            $this->vincular_grados($periodoAcademico);
+
+            // Llamar a la función para vincular coordinadores
+            $this->vincular_coordinadores($periodoAcademico);
+
+            return redirect()->back()->with('success', 'Periodo académico creado exitosamente.');
+        } else
+            return redirect()->back()->with('error', 'Hubo un problema al crear el periodo académico.');
     }
-public function crear_estudiante(Request $request)
+    
+    private function vincular_grados($periodoAcademico)
+    {
+        // Obtener todos los grados existentes
+        $grados = Grado::all();
+
+        // Vincular cada grado al periodo académico creado
+        foreach ($grados as $grado) {
+            GradoPeriodo::create([
+                'grado_id' => $grado->id,
+                'periodo_id' => $periodoAcademico->id
+            ]);
+        }
+    }
+
+    private function vincular_coordinadores($periodoAcademico)
+    {
+        // Obtener todos los coordinadores cuya fecha de retiro es NULL
+        $coordinadores = Coordinador::whereNull('fecha_retiro')->get();
+
+        // Vincular cada coordinador al periodo académico creado
+        foreach ($coordinadores as $coordinador) {
+            CoordinadorPeriodo::create([
+                'coordinador_id' => $coordinador->id,
+                'periodo_id' => $periodoAcademico->id
+            ]);
+        }
+    }
+    public function crear_estudiante(Request $request)
     {
         // Validación de los datos de entrada
         $request->validate([

@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Periodo_Academico extends Model
 {
     use HasFactory;
+
     protected $table = 'periodos_academicos';
+    public $timestamps = false;
     protected $fillable=[
-        'Nombre',
+        'nombre',
         'año_inicio',
         'año_fin'
     ]; 
