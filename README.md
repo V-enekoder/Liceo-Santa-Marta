@@ -32,18 +32,20 @@ php artisan key:generate
 ![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/138d3bb4-7e04-4f87-8b85-b23e8dc4598e)
 
 ## [FINAL] Ejecución del servidor:
-_Una sola vez_
+_Una sola vez previo a la ejecución del servidor_
 ```
 php artisan db:seed
 ```
-_Cada vez que se quiera iniciar_
+_Cada vez que se quiera iniciar el servidor_
 ```
 php artisan serve
 ```
 ![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/88a70398-fb6c-49f0-96c3-bf85600aa8ae)
 ![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/60650598-21b8-4eaf-b7c5-51a9bcd6498e)
+![image](https://github.com/user-attachments/assets/2170f528-6b6f-4b68-8b3b-53fc62c7ffe8)
 
-#ABOUT LARAVEL
+--------------------------------------------------------
+# ABOUT LARAVEL
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
