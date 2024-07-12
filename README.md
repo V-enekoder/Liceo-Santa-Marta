@@ -28,22 +28,24 @@ php artisan key:generate
 ![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/8f6a48be-2753-458f-b388-032833ec6d6f)
 ##### 5.2 Ingresar y buscar la línea **SESSION_DRIVER**
 ![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/03208291-1de9-4599-99d2-6e70b2290d20)
-##### 5.3 Cambiar el valor _database_ por ***file***
+##### 5.3 Cambiar el valor _database_ por ***file*** [database ---> file]
 ![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/138d3bb4-7e04-4f87-8b85-b23e8dc4598e)
 
 ## [FINAL] Ejecución del servidor:
-_Una sola vez_
+_Una sola vez previo a la ejecución del servidor_
 ```
 php artisan db:seed
 ```
-_Cada vez que se quiera iniciar_
+_Cada vez que se quiera iniciar el servidor_
 ```
 php artisan serve
 ```
-![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/88a70398-fb6c-49f0-96c3-bf85600aa8ae)
+![image](https://github.com/user-attachments/assets/2170f528-6b6f-4b68-8b3b-53fc62c7ffe8)
 ![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/60650598-21b8-4eaf-b7c5-51a9bcd6498e)
 
-#ABOUT LARAVEL
+
+--------------------------------------------------------
+# DOCUMENTACION DE LARAVEL 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
