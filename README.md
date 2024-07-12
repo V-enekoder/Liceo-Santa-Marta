@@ -40,12 +40,12 @@ _Cada vez que se quiera iniciar el servidor_
 ```
 php artisan serve
 ```
-![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/88a70398-fb6c-49f0-96c3-bf85600aa8ae)
-![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/60650598-21b8-4eaf-b7c5-51a9bcd6498e)
 ![image](https://github.com/user-attachments/assets/2170f528-6b6f-4b68-8b3b-53fc62c7ffe8)
+![image](https://github.com/V-enekoder/Liceo-Santa-Marta/assets/108310642/60650598-21b8-4eaf-b7c5-51a9bcd6498e)
+
 
 --------------------------------------------------------
-# ABOUT LARAVEL
+# DOCUMENTACION DE LARAVEL 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
