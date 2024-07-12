@@ -10,6 +10,8 @@ class Calificacion extends Model
     use HasFactory;
     protected $table = 'calificaciones'; //verificar esto
     protected $fillable = [
+        'docente_materia_id',
+        'estudiante_id',
         'lapso_1',
         'lapso_2',
         'lapso_3',
@@ -18,10 +20,11 @@ class Calificacion extends Model
 
     //Relaciones Muchos-Uno
     public function docente_materia(){
-        return $this->belongsTo(DocenteMateria::class);
+        return $this->belongsTo(DocenteMateria::class)
+            ->withPivot('periodo_id');
     }
 
-    public function estudiante_materia(){
-        return $this->belongsTo(EstudianteMateria::class);
+    public function estudiante(){
+        return $this->belongsTo(Estudiante::class);
     }
 }

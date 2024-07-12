@@ -53,3 +53,21 @@ document.addEventListener("DOMContentLoaded", () => {
         console.error('No se encontraron todos los elementos necesarios en el DOM.');
     }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    const openadddeletedata = document.querySelector("#open-alert-deletedata");
+    const closeadddeletedata = document.querySelector("#close-alert-deletedata");
+    const adddeletedata = document.querySelector("#alert-deletedata");
+
+    if (openadddeletedata && closeadddeletedata && adddeletedata) {
+        openadddeletedata.addEventListener("click", () => {
+            adddeletedata.showModal();
+        });
+
+        closeadddeletedata.addEventListener("click", () => {
+            adddeletedata.close();
+        });
+    } else {
+        console.error('No se encontraron todos los elementos necesarios en el DOM.');
+    }
+});

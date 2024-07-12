@@ -52,3 +52,13 @@ Route::get('/dashboard/VerFicha', [RepresentanteController::class, 'verFicha'])-
 Route::post('/coordinador/crear_periodo_academico', [CoordinadorController::class, 'crear_periodo_academico'])->name('coordinador.crear_periodo_academico');
 //Route::post('/coordinador/telefono-por-cedula', [RepresentanteController::class, 'agregar_telefono']);
 //Route::post('/coordinador/crear-estudiante', [CoordinadorController::class, 'crear_estudiante']);
+//Route::post('/materia', [CoordinadorController::class, 'crear_materia']);
+//Route::post('/crear-seccion', [CoordinadorController::class, 'crearSeccion']);
+//Route::post('/asignar_carga', [CoordinadorController::class, 'asignarCargaAcademica'])
+//Route::post('/modifica_nota', [CoordinadorController::class, 'modificar_nota'])
+//Route::post('/mostrar_docente', [CoordinadorController::class, 'mostrarDocentePorCedula'])
+//Route::post('/mostrar_estudiante', [CoordinadorController::class, 'mostrarEstudiantePorCedula'])
+//Route::get('/coordinador/representante/{cedula}', [CoordinadorController::class, 'mostrarRepresentantePorCedula']);
+//Route::post('/coordinador/vincular', [CoordinadorController::class, 'vincularEstudianteRepresentante']);
+//Route::post('/coordinador/eliminar-representante', [CoordinadorController::class, 'eliminarRepresentante']);
+//Route::post('/coordinador/ficha_estudiante', [CoordinadorController::class, 'mostrarFichaEstudiante']);

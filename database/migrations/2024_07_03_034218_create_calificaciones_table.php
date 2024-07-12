@@ -16,15 +16,16 @@ return new class extends Migration
             $table->foreignId('docente_materia_id')
                 ->constrained('docente_materia')
                 ->cascadeOnDelete();
-            $table->foreignId('estudiante_materia_id')
-                ->constrained('estudiante_materia')
-                ->cascadeOnDelete();
+            $table->foreignId('estudiante_id')
+                ->constrained('estudiantes')
+                ->cascadeOnDelete();                
             $table->unsignedInteger('lapso_1')->default(0);
             $table->unsignedInteger('lapso_2')->default(0);
             $table->unsignedInteger('lapso_3')->default(0);
             $table->unsignedInteger('promedio')->default(0);
         });
     }
+
     /**
      * Reverse the migrations.
      */

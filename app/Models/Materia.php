@@ -24,9 +24,4 @@ class Materia extends Model
         return $this->belongsToMany(Docente::class, 'materia_docente')
             ->withPivot('periodo_id');
     }
-
-    public function estudiantes(){
-        return $this->belongsToMany(Estudiante::class, 'estudiante_materia')
-            ->withPivot('periodo_id');
-    }
 }

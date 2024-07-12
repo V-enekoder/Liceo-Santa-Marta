@@ -13,7 +13,7 @@ class DocenteMateria extends Model
 
     protected $fillable = ['docente_id', 'materia_id', 'periodo_id'];
 
-        //Relaciones Uno-Muchos
+    //Relaciones Uno-Muchos
     public function calificaciones(){
         return $this->hasMany(Calificacion::class);
     }
