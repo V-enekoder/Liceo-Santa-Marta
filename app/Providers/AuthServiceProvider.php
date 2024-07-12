@@ -73,12 +73,12 @@ class AuthServiceProvider extends ServiceProvider
             $user->rol_id == User::COORDINADOR
         );
 
-            Gate::define('es_docente', fn (User $user) =>
-        $user->rol_id == User::DOCENTE
+        Gate::define('es_docente', fn (User $user) =>
+            $user->rol_id == User::DOCENTE
         );
 
-            Gate::define('es_representante', fn (User $user) =>
-        $user->rol_id == User::REPRESENTANTE
+        Gate::define('es_representante', fn (User $user) =>
+            $user->rol_id == User::REPRESENTANTE
         );
     }
 }
