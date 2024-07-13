@@ -20,6 +20,7 @@ php artisan migrate
 ```
 composer require moonshine/moonshine
 ```
+***Instalación***
 ```
 php artisan moonshine:install
 ```
