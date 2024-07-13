@@ -9,6 +9,7 @@ class Docente extends Model
 {
     use HasFactory;
     protected $table = 'docentes';
+    public $timestamps = false;
     protected $fillable = ['user_id'];
     
     //Relaciones Uno-Uno

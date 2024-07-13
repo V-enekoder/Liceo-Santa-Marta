@@ -9,6 +9,7 @@ class Seccion extends Model
 {
     use HasFactory;
     protected $table = 'secciones';
+    public $timestamps = false;
     protected $fillable = [
         'grado_periodo_id',
         'nombre',

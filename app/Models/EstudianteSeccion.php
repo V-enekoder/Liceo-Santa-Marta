@@ -9,6 +9,13 @@ class EstudianteSeccion extends Model
 {
     use HasFactory;
 
+    protected $table = 'estudiant_seccion';
+
+    public $timestamps = false;
+    protected $fillable =[
+        'estudiante_id',
+        'seccion_id',
+    ];
 //Relaciones Muchos-Uno
 
     public function estudiante(){

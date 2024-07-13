@@ -7,12 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Coordinador extends Model
 {
-
-    public $timestamps = false;
-
-
     use HasFactory;
     protected $table = 'coordinadores';
+    public $timestamps = false;
     protected $fillable = [
         'user_id',
         'fecha_ingreso',

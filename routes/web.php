@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\CoordinadorController;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\RepresentanteController;
@@ -33,6 +34,23 @@ Route::get('/dashboard/periodos', [CoordinadorController::class, 'ver_periodos']
 //Ruta para crear periodo y sus vinculaciones
 Route::post('/dashboard/periodos', [CoordinadorController::class, 'crear_periodo_academico'])
                 ->name('crear_periodo_academico');
+
+Route::get('/dashboard/crear-estudiante', [CoordinadorController::class, 'mostrar_plantilla']);
+Route::post('/dashboard/crear-estudiante', [CoordinadorController::class, 'crear_estudiante']);
+
+Route::get('/dashboard/crear-usuario', [CoordinadorController::class, 'mostrar_formulario_crear_usuario']);
+Route::post('/dashboard/crear-usuario', [CoordinadorController::class, 'crear_usuario']);
+
+Route::get('/dashboard/crear_usuario', [AdministradorController::class, 'mostrar_formulario_crear_usuario']);
+Route::post('/dashboard/crear_usuario', [AdministradorController::class, 'crear_usuario']);
+
+//Rutas para gestionar coordinadores
+
+Route::get('/dashboard/crear-seccion', [CoordinadorController::class, 'mostrarFormularioCrearSeccion']);
+Route::post('/dashboard/crear-seccion', [CoordinadorController::class, 'crearSeccion']);
+
+
+
 
 Route::get('/dashboard/dataNotas', [CoordinadorController::class, 'modificarNotas'])->name('sidebar.notas');
 Route::get('/dashboard/dataRepresentantes', [CoordinadorController::class, 'modificarRepresentantes'])->name('sidebar.modirepresentantes');

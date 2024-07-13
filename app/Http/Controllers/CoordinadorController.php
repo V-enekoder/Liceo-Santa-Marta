@@ -21,8 +21,13 @@ use App\Models\EstudianteMateria;
 use App\Models\EstudianteRepresentante;
 use App\Models\EstudianteSeccion;
 use App\Models\Grado;
+use App\Models\Rol;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+
 
 class CoordinadorController extends Controller{
     function ver_periodos(){
@@ -54,48 +59,57 @@ class CoordinadorController extends Controller{
         return view('Paginas.Coordinadores.Carga_academica',);
     }
 
-    public function crear_usuario(Request $request){
+    public function mostrar_formulario_crear_usuario()
+    {
+        // Filtrar roles con id 3 y 4
+        $roles = Rol::whereIn('id', [3, 4])->get();
+        return view('Paginas.Coordinadores.crear_usuario', compact('roles'));
+    }
+
+    public function crear_usuario(Request $request)
+    {
         $validatedData = $request->validate([
             'cedula' => 'required|integer|unique:users',
             'rol_id' => 'required|integer|exists:roles,id',
-            'nombre' => 'required|string|max:255',
-            'apellido' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'primer_nombre' => 'required|string|max:255',
+            'segundo_nombre' => 'nullable|string|max:255',
+            'primer_apellido' => 'required|string|max:255',
+            'segundo_apellido' => 'nullable|string|max:255',
+            'email' => 'nullable|string|email|max:255|unique:users',
+            'password' => 'nullable|string|min:8|confirmed',
             'direccion' => 'nullable|string|max:255',
             'activo' => 'boolean',
-            //'current_team_id' => 'nullable|integer|exists:teams,id',
-            //'profile_photo_path' => 'nullable|string|max:2048'
         ]);
 
         // Crear usuario
         $user = User::create([
             'cedula' => $validatedData['cedula'],
             'rol_id' => $validatedData['rol_id'],
-            'nombre' => $validatedData['nombre'],
-            'apellido' => $validatedData['apellido'],
+            'primer_nombre' => $validatedData['primer_nombre'],
+            'segundo_nombre' => $validatedData['segundo_nombre'],
+            'primer_apellido' => $validatedData['primer_apellido'],
+            'segundo_apellido' => $validatedData['segundo_apellido'],
             'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
+            'password' => isset($validatedData['password']) ? Hash::make($validatedData['password']) : null,
             'direccion' => $validatedData['direccion'],
-            'activo' => $validatedData['activo'] ?? true,
-            //'current_team_id' => $validatedData['current_team_id'],
-            //'profile_photo_path' => $validatedData['profile_photo_path']
+            'activo' => true,
         ]);
 
         if ($user->rol_id == 3) {
-            $docente = Docente::create([
+            Docente::create([
                 'user_id' => $user->id
-        ]);
+            ]);
         }
-        // Si el rol_id es 4, crear representante
+
         if ($user->rol_id == 4) {
-            $representante = Representante::create([
+            Representante::create([
                 'user_id' => $user->id
             ]);
         }
 
         return response()->json(['user' => $user], 201);
     }
+
 
     public function crear_periodo_academico(Request $request)
     {
@@ -126,7 +140,10 @@ class CoordinadorController extends Controller{
 
             // Llamar a la función para vincular coordinadores
             $this->vincular_coordinadores($periodoAcademico);
-
+            //Vincular docentes y vincular representantes
+                // Llamar a la función para crear secciones por grado
+            $this->crearSeccionesPorGrados($periodoAcademico);
+            
             return redirect()->back()->with('success', 'Periodo académico creado exitosamente.');
         } else
             return redirect()->back()->with('error', 'Hubo un problema al crear el periodo académico.');
@@ -159,13 +176,47 @@ class CoordinadorController extends Controller{
             ]);
         }
     }
+    
+    private function crearSeccionesPorGrados(Periodo_Academico $periodoAcademico)
+    {
+        // Obtener todos los grados
+        $grados = Grado::all();
+
+        // Letras de las secciones
+        $letras = ['A', 'B', 'C'];
+
+        foreach ($grados as $grado) {
+            foreach ($letras as $letra) {
+                Seccion::create([
+                    'grado_periodo_id' => $this->obtenerGradoPeriodoId($grado->id, $periodoAcademico->id),
+                    'nombre' => $letra,
+                    'alumnos_inscritos' => 0,
+                    'capacidad' => 40 // Puedes ajustar según tus necesidades
+                ]);
+            }
+        }
+    }
+
+    private function obtenerGradoPeriodoId($gradoId, $periodoId)
+    {
+        return GradoPeriodo::where('grado_id', $gradoId)
+            ->where('periodo_id', $periodoId)
+            ->value('id');
+    }
+
+    public function mostrar_plantilla()
+    {
+        return view('Paginas.Coordinadores.crear_estudiante');
+    }
     public function crear_estudiante(Request $request)
     {
         // Validación de los datos de entrada
         $request->validate([
             'cedula' => 'required|integer|unique:estudiantes,cedula',
-            'nombre' => 'required|string|max:255',
-            'apellido' => 'required|string|max:255',
+            'primer_nombre' => 'required|string|max:255',
+            'segundo_nombre' => 'nullable|string|max:255',
+            'primer_apellido' => 'required|string|max:255',
+            'segundo_apellido' => 'nullable|string|max:255',
             'fecha_nacimiento' => 'required|date',
             'ultimo_grado_aprobado' => 'required|integer'
         ]);
@@ -173,14 +224,18 @@ class CoordinadorController extends Controller{
         // Crear el nuevo estudiante
         $estudiante = Estudiante::create([
             'cedula' => $request->cedula,
-            'nombre' => $request->nombre,
-            'apellido' => $request->apellido,
+            'primer_nombre' => $request->primer_nombre,
+            'segundo_nombre' => $request->segundo_nombre,
+            'primer_apellido' => $request->primer_apellido,
+            'segundo_apellido' => $request->segundo_apellido,
             'fecha_nacimiento' => $request->fecha_nacimiento,
             'ultimo_grado_aprobado' => $request->ultimo_grado_aprobado
         ]);
 
         return response()->json(['message' => 'Estudiante creado correctamente', 'estudiante' => $estudiante], 201);
     }
+
+
     public function crear_materia(Request $request)
     {
         // Validar los datos de entrada
@@ -202,34 +257,84 @@ class CoordinadorController extends Controller{
         ], 201);
     }
 
+    public function mostrarFormularioCrearSeccion(Request $request)
+    {
+        $grados = Grado::all();
+        $periodos = Periodo_Academico::all();
+        $nombre = 'A'; // Valor predeterminado en caso de que no se hayan seleccionado grado y periodo
+
+        if ($request->has(['grado_id', 'periodo_id'])) {
+            $gradoPeriodo = GradoPeriodo::where('grado_id', $request->grado_id)
+                                        ->where('periodo_id', $request->periodo_id)
+                                        ->first();
+
+            if ($gradoPeriodo) {
+                $ultimaSeccion = Seccion::where('grado_periodo_id', $gradoPeriodo->id)->orderBy('id', 'desc')->first();
+
+                if ($ultimaSeccion) {
+                    $ultimoNombre = $ultimaSeccion->nombre;
+                    $nombre = chr(ord($ultimoNombre) + 1);
+                }
+            }
+        }
+
+        return view('Paginas.Coordinadores.crear_seccion', compact('grados', 'periodos', 'nombre'));
+    }
     public function crearSeccion(Request $request)
     {
-        // Validar los datos recibidos
-        $request->validate([
-            'grado_id' => 'required|integer|exists:grados,id',
-            'periodo_id' => 'required|integer|exists:periodos,id',
-            'nombre' => 'required|string|max:255',
-            'capacidad' => 'integer|min:1'
-        ]);
+        try {
+            // Validar los datos recibidos
+            $validatedData = $request->validate([
+                'grado_id' => 'required|integer|exists:grados,id',
+                'periodo_id' => 'required|integer|exists:periodos_academicos,id',
+                'capacidad' => 'integer|min:1'
+            ]);
 
-        // Buscar el ID de grado_periodo correspondiente
-        $gradoPeriodo = GradoPeriodo::where('grado_id', $request->grado_id)
-                                    ->where('periodo_id', $request->periodo_id)
-                                    ->firstOrFail();
+            // Buscar el ID de grado_periodo correspondiente
+            $gradoPeriodo = GradoPeriodo::where('grado_id', $validatedData['grado_id'])
+                                        ->where('periodo_id', $validatedData['periodo_id'])
+                                        ->firstOrFail();
 
-        // Crear la nueva sección en la base de datos
-        $seccion = Seccion::create([
-            'grado_periodo_id' => $gradoPeriodo->id,
-            'nombre' => $request->nombre,
-            'alumnos_inscritos' => 0,
-            'capacidad' => $request->capacidad ?? 40, // Asigna 40 si no se proporciona capacidad
-        ]);
+            // Obtener la última sección creada para este grado_periodo
+            $ultimaSeccion = Seccion::where('grado_periodo_id', $gradoPeriodo->id)->orderBy('id', 'desc')->first();
 
-        return response()->json([
-            'message' => 'Sección creada exitosamente',
-            'seccion' => $seccion
-        ], 201);
+            // Asignar la siguiente letra en orden alfabético
+            if ($ultimaSeccion) {
+                $ultimoNombre = $ultimaSeccion->nombre;
+                $nuevoNombre = chr(ord($ultimoNombre) + 1);
+            } else {
+                $nuevoNombre = 'A';
+            }
+
+            // Crear la nueva sección en la base de datos
+            $seccion = Seccion::create([
+                'grado_periodo_id' => $gradoPeriodo->id,
+                'nombre' => $nuevoNombre,
+                'alumnos_inscritos' => 0,
+                'capacidad' => $validatedData['capacidad'] ?? 40, // Asigna 40 si no se proporciona capacidad
+            ]);
+
+            return response()->json([
+                'message' => 'Sección creada exitosamente',
+                'seccion' => $seccion
+            ], 201);
+        } catch (ValidationException $e) {
+            return response()->json([
+                'message' => 'Errores de validación',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'message' => 'Grado o periodo no encontrado'
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Ocurrió un error al crear la sección',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
+
     //Se asigna una materia al profesor
     public function asignarCargaAcademica(Request $request)
     {

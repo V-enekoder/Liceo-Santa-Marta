@@ -8,7 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class EstudianteRepresentante extends Model{
     use HasFactory;
     protected $table = 'estudiante_representante';
-    
+    public $timestamps = false;
+    protected $fillable = [
+        'estudiante_id',
+        'representante_id',
+        'periodo_academico_id',
+    ];
+
     //Relaciones Muchos-Uno
     public function estudiante(){
         return $this->belongsTo(Estudiante::class);

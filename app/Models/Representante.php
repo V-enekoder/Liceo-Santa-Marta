@@ -9,6 +9,7 @@ class Representante extends Model
 {
     use HasFactory;
     protected $table = 'representantes';
+    public $timestamps = false;
     protected $fillable = ['user_id']; 
 
     //Relaciones Uno-Uno

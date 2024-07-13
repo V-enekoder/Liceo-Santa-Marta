@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Calificacion extends Model
 {
     use HasFactory;
-    protected $table = 'calificaciones'; //verificar esto
+    protected $table = 'calificaciones'; 
+    public $timestamps = false;
     protected $fillable = [
         'docente_materia_id',
         'estudiante_id',

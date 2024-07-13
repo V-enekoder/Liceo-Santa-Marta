@@ -10,6 +10,7 @@ class DocenteMateria extends Model
     use HasFactory;
 
     protected $table = 'docente_materia';
+    public $timestamps = false;
 
     protected $fillable = ['docente_id', 'materia_id', 'periodo_id'];
 

@@ -9,8 +9,9 @@ class Grado extends Model
 {
     use HasFactory;
     protected $table = 'grados';
+    public $timestamps = false;
     protected $fillable = [
-        'Año',
+        'año',
     ];
     //Relaciones Uno-Muchos
     public function materias(){

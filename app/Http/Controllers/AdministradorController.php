@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Docente;
 use App\Models\Representante;
+use App\Models\Rol;
 use App\Models\Coordinador;
 
 use Illuminate\Support\Facades\Hash;
@@ -13,71 +14,62 @@ use Illuminate\Http\Request;
 
 class AdministradorController extends Controller
 {
-    function crear_coordinador(){
-        //Gate::authorize('crear_coordinador');
-        //return view('Paginas.Administradores.crear_coordinador',);
+    public function mostrar_formulario_crear_usuario()
+    {
+        // Filtrar roles con id 3 y 4
+        $roles = Rol::whereIn('id', [2,3, 4])->get();
+        return view('Paginas.Coordinadores.crear_usuario', compact('roles'));
     }
 
-public function crear_usuario(Request $request)
-{
-    $validatedData = $request->validate([
-        'cedula' => 'required|integer|unique:users',
-        'rol_id' => 'required|integer|exists:roles,id',
-        'nombre' => 'required|string|max:255',
-        'apellido' => 'required|string|max:255',
-        'email' => 'required|string|email|max:255|unique:users',
-        'password' => 'required|string|min:8|confirmed',
-        'direccion' => 'nullable|string|max:255',
-        'activo' => 'boolean',
-        //'current_team_id' => 'nullable|integer|exists:teams,id',
-        //'profile_photo_path' => 'nullable|string|max:2048'
-    ]);
+    public function crear_usuario(Request $request)
+    {
+        $validatedData = $request->validate([
+            'cedula' => 'required|integer|unique:users',
+            'rol_id' => 'required|integer|exists:roles,id',
+            'primer_nombre' => 'required|string|max:255',
+            'segundo_nombre' => 'nullable|string|max:255',
+            'primer_apellido' => 'required|string|max:255',
+            'segundo_apellido' => 'nullable|string|max:255',
+            'email' => 'nullable|string|email|max:255|unique:users',
+            'password' => 'nullable|string|min:8|confirmed',
+            'direccion' => 'nullable|string|max:255',
+            'activo' => 'boolean',
+        ]);
 
-    try {
         // Crear usuario
         $user = User::create([
             'cedula' => $validatedData['cedula'],
             'rol_id' => $validatedData['rol_id'],
-            'nombre' => $validatedData['nombre'],
-            'apellido' => $validatedData['apellido'],
+            'primer_nombre' => $validatedData['primer_nombre'],
+            'segundo_nombre' => $validatedData['segundo_nombre'],
+            'primer_apellido' => $validatedData['primer_apellido'],
+            'segundo_apellido' => $validatedData['segundo_apellido'],
             'email' => $validatedData['email'],
-            'password' => Hash::make($validatedData['password']),
+            'password' => isset($validatedData['password']) ? Hash::make($validatedData['password']) : null,
             'direccion' => $validatedData['direccion'],
-            'activo' => $validatedData['activo'] ?? true,
-            //'current_team_id' => $validatedData['current_team_id'],
-            //'profile_photo_path' => $validatedData['profile_photo_path']
+            'activo' => true,
         ]);
-        
-        if ($user->rol_id == 2) {
-            $coordinador = Coordinador::create([
+
+        if($user->rol_id == 2){
+            Coordinador::create([
                 'user_id' => $user->id,
-                'fecha_ingreso' => now(),
-                'fecha_retiro' => null
+                'fecha_ingreso' => now() // Fecha actual como fecha de ingreso
             ]);
         }
 
-
-        // Si el rol_id es 3, crear docente
         if ($user->rol_id == 3) {
-            $docente = Docente::create([
+            Docente::create([
                 'user_id' => $user->id
             ]);
         }
 
-        // Si el rol_id es 4, crear representante
         if ($user->rol_id == 4) {
-            $representante = Representante::create([
+            Representante::create([
                 'user_id' => $user->id
             ]);
         }
-
-        
 
         return response()->json(['user' => $user], 201);
-    } catch (\Exception $e) {
-        return response()->json(['error' => 'Error al crear el usuario: ' . $e->getMessage()], 400);
     }
-}
-
-
+        //Gestionar usuarios
 }
