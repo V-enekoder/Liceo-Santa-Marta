@@ -12,7 +12,7 @@ Link de descarga: https://www.apachefriends.org/es/index.html
 ```
 npm install
 npm run build
-composer update
+composer update --with-all-dependencies
 php artisan migrate
 ```
 ### 4. Agregar Moonshine al Proyecto:
