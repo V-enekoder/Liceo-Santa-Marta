@@ -23,3 +23,4 @@ class Docente extends Model
             ->withPivot('periodo_id');
     }
 }
+
