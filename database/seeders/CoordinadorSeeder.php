@@ -14,7 +14,13 @@ class CoordinadorSeeder extends Seeder
      */
     public function run(): void
     {
-        $userIds = User::pluck('id')->toArray();
+        for ($i = 0; $i < 10; $i++) {
+            $user = \App\Models\User::factory()->withRole(2)->create(); // Asigna rol_id 2
+            \app\Models\Coordinador::factory()->withUser($user->id)->create();
+            }
+
+
+    /*    $userIds = User::pluck('id')->toArray();
         $coordinadores = [
             [
                 'user_id' => $userIds[1],
@@ -51,6 +57,6 @@ class CoordinadorSeeder extends Seeder
         //Insertar 
         foreach ($coordinadores as $coordinadorData) {
             Coordinador::insert($coordinadorData);
-        }
+        }*/
     }
 }

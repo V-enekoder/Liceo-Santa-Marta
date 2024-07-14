@@ -33,7 +33,7 @@ Route::get('/dashboard/periodos', [CoordinadorController::class, 'ver_periodos']
             ->name('sidebar.periodos');
 //Ruta para crear periodo y sus vinculaciones
 Route::post('/dashboard/periodos', [CoordinadorController::class, 'crear_periodo_academico'])
-                ->name('crear_periodo_academico');
+            ->name('crear_periodo_academico');
 
 Route::get('/dashboard/crear-estudiante', [CoordinadorController::class, 'mostrar_plantilla']);
 Route::post('/dashboard/crear-estudiante', [CoordinadorController::class, 'crear_estudiante']);
@@ -59,15 +59,32 @@ Route::get('/dashboard/dataDocentes', [CoordinadorController::class, 'modificarD
 Route::get('/dashboard/dataMaterias', [CoordinadorController::class, 'modificarMaterias'])->name('sidebar.materias');
 Route::get('/dashboard/CargaAcademica', [CoordinadorController::class, 'crearCargaAcademica'])->name('sidebar.cargaAcademica');
 
+Route::get('/dashboard/asignar-carga', [DocenteController::class, 'mostrarFormularioAsignarCarga'])
+    ->name('sidebar.formulario_carga_academica');
+Route::post('/dashboard/asignar-carga', [DocenteController::class, 'asignarCargaAcademica'])
+    ->name('asignar_carga_academica');
+
 //ruta de vistas para los docentes
 Route::get('/dashboard/CargaNotas', [DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');
-Route::get('/dashboard/DataSecciones', [DocenteController::class, 'verSecciones'])->name('sidebar.VerSecciones');
+//Route::get('/dashboard/DataSecciones', [DocenteController::class, 'verSecciones'])->name('sidebar.VerSecciones');
 Route::get('/dashboard/DataCargaAcademica', [DocenteController::class, 'verCargaAcademica'])->name('sidebar.VerCargaAcademica');
+
+Route::get('/dashboard/cambiar-contrasena', [DocenteController::class, 'showCambiarContrasenaForm'])
+    ->name('sidebar.mostrar_cambiar_clave');
+Route::post('/dashboard/cambiar-contrasena', [DocenteController::class, 'cambiarContrasenaDocente'])
+    ->name('cambiar_clave');
+
+
+
 
 //Ruta de vistas para los representantes 
 Route::get('/dashboard/VerBoletin', [RepresentanteController::class, 'indexBoletin'])->name('boletin.index');
 Route::get('/dashboard/VerTodoBoletin', [RepresentanteController::class, 'indexTodoBoletin'])->name('boletin.indexTodo');
 Route::get('/dashboard/VerFicha', [RepresentanteController::class, 'verFicha'])->name('Ficha.index');
+
+
+
+
 
 //Route::post('/usuarios', [CoordinadorController::class, 'crear_usuario']);
 //Route::post('/periodos-academicos', [CoordinadorController::class, 'crear_periodo_academico']);

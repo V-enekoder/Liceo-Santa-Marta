@@ -335,65 +335,6 @@ class CoordinadorController extends Controller{
         }
     }
 
-    //Se asigna una materia al profesor
-    public function asignarCargaAcademica(Request $request)
-    {
-        // Validar los datos recibidos
-        $request->validate([
-            'cedula' => 'required|string|max:20',
-            'materia_id' => 'required|integer|exists:materias,id',
-            'periodo_id' => 'required|integer|exists:periodos_academicos,id',
-        ]);
-
-        // Buscar al docente por su cédula
-        $docente = Docente::where('cedula', $request->cedula)->firstOrFail();
-
-        // Crear el registro en la tabla docente_materia
-        $docenteMateria = DocenteMateria::create([
-            'docente_id' => $docente->id,
-            'materia_id' => $request->materia_id,
-            'periodo_id' => $request->periodo_id,
-        ]);
-
-        return response()->json([
-            'message' => 'Carga académica asignada correctamente',
-            'docente_materia' => $docenteMateria
-        ], 201);
-    }
-//se asignan varias
-
-    public function asignarCargaAcademica1(Request $request)
-    {
-        // Validar los datos recibidos
-        $request->validate([
-            'cedula' => 'required|string|size:10', // Asumiendo cédula venezolana
-            'materias' => 'required|array',
-            'materias.*' => 'integer|exists:materias,id',
-            'periodo_id' => 'required|integer|exists:periodos_academicos,id',
-        ]);
-
-        // Buscar el docente por su número de cédula
-        $docente = Docente::where('cedula', $request->cedula)->firstOrFail();
-
-        // Asignar las materias al docente en el periodo académico actual
-        foreach ($request->materias as $materiaId) {
-            // Verificar si ya existe la asignación docente-materia en el periodo actual
-            $existeAsignacion = $docente->materias()
-                ->where('materia_id', $materiaId)
-                ->where('periodo_id', $request->periodo_id)
-                ->exists();
-
-            if (!$existeAsignacion) {
-                // Crear el registro en la tabla docente_materia
-                $docente->materias()->attach($materiaId, ['periodo_id' => $request->periodo_id]);
-            }
-        }
-
-        return response()->json([
-            'message' => 'Carga académica asignada correctamente al docente',
-            'docente' => $docente->load('materias') // Opcional: Cargar las materias asignadas al docente
-        ], 201);
-    }
 
 /**
  * Summary of obtenerCalificacion

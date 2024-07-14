@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
     public function run(): void
     {
 //                  15 USUARIOS DEFINIDOS
-        $users = [
+        /*$users = [
             [
                 'rol_id' => 2,
                 'cedula' => '7815456',
@@ -185,6 +185,6 @@ class UserSeeder extends Seeder
         // Inserta los registros utilizando el modelo User
         foreach ($users as $userData) {
             User::insert($userData);
-        }
+        }*/
     }
 }
