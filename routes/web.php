@@ -66,7 +66,7 @@ Route::post('/dashboard/asignar-carga', [DocenteController::class, 'asignarCarga
 
 //ruta de vistas para los docentes
 Route::get('/dashboard/CargaNotas', [DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');
-//Route::get('/dashboard/DataSecciones', [DocenteController::class, 'verSecciones'])->name('sidebar.VerSecciones');
+Route::get('/dashboard/DataSecciones', [DocenteController::class, 'verSecciones'])->name('sidebar.VerSecciones');
 Route::get('/dashboard/DataCargaAcademica', [DocenteController::class, 'verCargaAcademica'])->name('sidebar.VerCargaAcademica');
 
 Route::get('/dashboard/cambiar-contrasena', [DocenteController::class, 'showCambiarContrasenaForm'])
