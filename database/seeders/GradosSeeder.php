@@ -14,7 +14,7 @@ class GradosSeeder extends Seeder
         $años = ['1', '2', '3', '4', '5'];
 
         foreach ($años as $año) {
-            Grado::create([
+            Grado::insert([
                 'año' => $año,
             ]);
         }
