@@ -69,7 +69,12 @@ Route::get('/dashboard/asignar-carga', [DocenteController::class, 'mostrarFormul
 Route::post('/dashboard/asignar-carga', [DocenteController::class, 'asignarCargaAcademica'])
     ->name('asignar_carga_academica');
 
-
+Route::get('/dashboard/inscribir-estudiante', [EstudianteController::class, 'mostrarFormularioInscripcion'])
+    ->name('sidebar.inscribir');
+Route::post('/dashboard/inscribir-estudiante', [EstudianteController::class, 'obtenerSecciones'])
+    ->name('obtener_secciones');
+Route::post('/dashboard/inscribir_estudiante', [EstudianteController::class, 'inscribirEstudianteEnSeccion'])
+    ->name('inscribir_estudiante');
 
 //ruta de vistas para los docentes
 Route::get('/dashboard/CargaNotas', [DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');

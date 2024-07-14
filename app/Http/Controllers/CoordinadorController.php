@@ -206,37 +206,6 @@ class CoordinadorController extends Controller{
             ->value('id');
     }
 
-    public function mostrar_plantilla()
-    {
-        return view('Paginas.Coordinadores.crear_estudiante');
-    }
-    public function crear_estudiante(Request $request)
-    {
-        // Validación de los datos de entrada
-        $request->validate([
-            'cedula' => 'required|integer|unique:estudiantes,cedula',
-            'primer_nombre' => 'required|string|max:255',
-            'segundo_nombre' => 'nullable|string|max:255',
-            'primer_apellido' => 'required|string|max:255',
-            'segundo_apellido' => 'nullable|string|max:255',
-            'fecha_nacimiento' => 'required|date',
-            'ultimo_grado_aprobado' => 'required|integer'
-        ]);
-
-        // Crear el nuevo estudiante
-        $estudiante = Estudiante::create([
-            'cedula' => $request->cedula,
-            'primer_nombre' => $request->primer_nombre,
-            'segundo_nombre' => $request->segundo_nombre,
-            'primer_apellido' => $request->primer_apellido,
-            'segundo_apellido' => $request->segundo_apellido,
-            'fecha_nacimiento' => $request->fecha_nacimiento,
-            'ultimo_grado_aprobado' => $request->ultimo_grado_aprobado
-        ]);
-
-        return response()->json(['message' => 'Estudiante creado correctamente', 'estudiante' => $estudiante], 201);
-    }
-
     public function mostrarFormularioCrearSeccion(Request $request)
     {
         $grados = Grado::all();
@@ -565,42 +534,6 @@ public function obtenerCalificacion(Request $request)
         }
     }
 
-    public function mostrarFichaEstudiante(Request $request)
-    {
-        $request->validate([
-            'cedula_estudiante' => 'required|integer',
-            'periodo_id' => 'required|integer|exists:periodos_academicos,id',
-        ]);
-
-        try {
-            // Buscar al estudiante por su cédula
-            $estudiante = Estudiante::where('cedula', $request->cedula_estudiante)->firstOrFail();
-
-            // Buscar los representantes del estudiante en el período especificado
-            $representantes = EstudianteRepresentante::where('estudiante_id', $estudiante->id)
-                ->where('periodo_id', $request->periodo_id)
-                ->with(['representante.user.telefonos'])
-                ->get()
-                ->map(function ($registro) {
-                    return [
-                        'representante' => $registro->representante->user,
-                        'telefonos' => $registro->representante->user->telefonos->pluck('numero_telefonico'),
-                    ];
-                });
-
-            // Retornar la información del estudiante y sus representantes
-            return response()->json([
-                'estudiante' => $estudiante,
-                'representantes' => $representantes,
-            ], 200);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Error al realizar la operación: ' . $e->getMessage(),
-            ], 400);
-        }
-    }
-
 /**
  * TODO comprobar funcionamiento
  */
@@ -666,118 +599,6 @@ public function obtenerCalificacion(Request $request)
         }
     }
 
-    public function inscribirEstudianteEnSeccion(Request $request)
-    {
-        $request->validate([
-            'seccion_id' => 'required|integer|exists:secciones,id',
-            'cedula_estudiante' => 'required|integer|exists:estudiantes,cedula',
-        ]);
-
-        try {
-            // Buscar la sección por su ID
-            $seccion = Seccion::findOrFail($request->seccion_id);
-
-            // Verificar si el número de inscritos es menor a la capacidad
-            if ($seccion->alumnos_inscritos >= $seccion->capacidad) {
-                return response()->json([
-                    'error' => 'La sección ha alcanzado su capacidad máxima.',
-                ], 400);
-            }
-
-            // Buscar al estudiante por su cédula
-            $estudiante = Estudiante::where('cedula', $request->cedula_estudiante)->firstOrFail();
-
-            // Verificar si el estudiante ya está inscrito en la sección
-            $existeInscripcion = DB::table('estudiante_seccion')
-                ->where('estudiante_id', $estudiante->id)
-                ->where('seccion_id', $seccion->id)
-                ->exists();
-
-            if ($existeInscripcion) {
-                return response()->json([
-                    'error' => 'El estudiante ya está inscrito en esta sección.',
-                ], 400);
-            }
-
-            // Inscribir al estudiante en la sección
-            DB::table('estudiante_seccion')->insert([
-                'estudiante_id' => $estudiante->id,
-                'seccion_id' => $seccion->id,
-            ]);
-
-            // Incrementar el número de alumnos inscritos en la sección
-            $seccion->increment('alumnos_inscritos');
-
-            return response()->json([
-                'message' => 'El estudiante ha sido inscrito exitosamente en la sección.',
-            ], 200);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Error al realizar la operación: ' . $e->getMessage(),
-            ], 400);
-        }
-    }
-
-/**
-Version con transaccion
-public function inscribirEstudianteEnSeccion(Request $request)
-{
-    $request->validate([
-        'seccion_id' => 'required|integer|exists:secciones,id',
-        'cedula_estudiante' => 'required|integer|exists:estudiantes,cedula',
-    ]);
-
-    try {
-        // Buscar la sección por su ID
-        $seccion = Seccion::findOrFail($request->seccion_id);
-
-        // Verificar si el número de inscritos es menor a la capacidad
-        if ($seccion->alumnos_inscritos >= $seccion->capacidad) {
-            return response()->json([
-                'error' => 'La sección ha alcanzado su capacidad máxima.',
-            ], 400);
-        }
-
-        // Buscar al estudiante por su cédula
-        $estudiante = Estudiante::where('cedula', $request->cedula_estudiante)->firstOrFail();
-
-        // Verificar si el estudiante ya está inscrito en la sección
-        $existeInscripcion = DB::table('estudiante_seccion')
-            ->where('estudiante_id', $estudiante->id)
-            ->where('seccion_id', $seccion->id)
-            ->exists();
-
-        if ($existeInscripcion) {
-            return response()->json([
-                'error' => 'El estudiante ya está inscrito en esta sección.',
-            ], 400);
-        }
-
-        // Iniciar una transacción para asegurar la atomicidad de las operaciones
-        DB::transaction(function () use ($estudiante, $seccion) {
-            // Inscribir al estudiante en la sección
-            DB::table('estudiante_seccion')->insert([
-                'estudiante_id' => $estudiante->id,
-                'seccion_id' => $seccion->id,
-            ]);
-
-            // Incrementar el número de alumnos inscritos en la sección
-            $seccion->increment('alumnos_inscritos');
-        });
-
-        return response()->json([
-            'message' => 'El estudiante ha sido inscrito exitosamente en la sección.',
-        ], 200);
-
-    } catch (\Exception $e) {
-        return response()->json([
-            'error' => 'Error al realizar la operación: ' . $e->getMessage(),
-        ], 400);
-    }
-}  
- */
-
     public function crearCalificaciones(Request $request)
     {
         $request->validate([
@@ -829,73 +650,70 @@ public function inscribirEstudianteEnSeccion(Request $request)
             ], 400);
         }
     }
+    public function obtenerReporteNotas(Request $request)
+    {
+        $request->validate([
+            'seccion_id' => 'required|integer|exists:secciones,id',
+            'periodo_id' => 'required|integer|exists:periodos_academicos,id',
+            'materia_id' => 'required|integer|exists:materias,id',
+        ]);
 
-public function obtenerReporteNotas(Request $request)
-{
-    $request->validate([
-        'seccion_id' => 'required|integer|exists:secciones,id',
-        'periodo_id' => 'required|integer|exists:periodos_academicos,id',
-        'materia_id' => 'required|integer|exists:materias,id',
-    ]);
+        try {
+            // Buscar la sección
+            $seccion = Seccion::findOrFail($request->seccion_id);
 
-    try {
-        // Buscar la sección
-        $seccion = Seccion::findOrFail($request->seccion_id);
+            // Buscar los estudiantes de la sección
+            $estudiantesSeccion = EstudianteSeccion::where('seccion_id', $seccion->id)->get();
 
-        // Buscar los estudiantes de la sección
-        $estudiantesSeccion = EstudianteSeccion::where('seccion_id', $seccion->id)->get();
+            if ($estudiantesSeccion->isEmpty()) {
+                return response()->json([
+                    'error' => 'No hay estudiantes en esta sección.'
+                ], 404);
+            }
 
-        if ($estudiantesSeccion->isEmpty()) {
+            // Buscar las calificaciones de los estudiantes en la materia y periodo especificados
+            $calificaciones = Calificacion::whereIn('estudiante_id', $estudiantesSeccion->pluck('estudiante_id'))
+                ->where('docente_materia_id', function ($query) use ($request) {
+                    $query->select('id')
+                        ->from('docente_materia')
+                        ->where('materia_id', $request->materia_id)
+                        ->where('periodo_id', $request->periodo_id)
+                        ->limit(1);
+                })
+                ->get();
+
+            if ($calificaciones->isEmpty()) {
+                return response()->json([
+                    'error' => 'No hay calificaciones para los estudiantes en esta materia y periodo.'
+                ], 404);
+            }
+
+            // Calcular estadísticas
+            $totalEstudiantes = $calificaciones->count();
+            $totalAprobados = $calificaciones->filter(function ($calificacion) {
+                return $calificacion->promedio >= 10; // Asumiendo que la nota de aprobación es 10
+            })->count();
+
+            $totalReprobados = $totalEstudiantes - $totalAprobados;
+            $porcentajeAprobados = ($totalAprobados / $totalEstudiantes) * 100;
+            $porcentajeReprobados = ($totalReprobados / $totalEstudiantes) * 100;
+            $promedioGeneral = $calificaciones->avg('promedio');
+
+            // Retornar el reporte
             return response()->json([
-                'error' => 'No hay estudiantes en esta sección.'
-            ], 404);
-        }
+                'total_estudiantes' => $totalEstudiantes,
+                'total_aprobados' => $totalAprobados,
+                'porcentaje_aprobados' => $porcentajeAprobados,
+                'total_reprobados' => $totalReprobados,
+                'porcentaje_reprobados' => $porcentajeReprobados,
+                'promedio_general' => $promedioGeneral,
+                'calificaciones' => $calificaciones,
+            ], 200);
 
-        // Buscar las calificaciones de los estudiantes en la materia y periodo especificados
-        $calificaciones = Calificacion::whereIn('estudiante_id', $estudiantesSeccion->pluck('estudiante_id'))
-                                        ->where('docente_materia_id', function ($query) use ($request) {
-                                            $query->select('id')
-                                                ->from('docente_materia')
-                                                ->where('materia_id', $request->materia_id)
-                                                ->where('periodo_id', $request->periodo_id)
-                                                ->limit(1);
-                                        })
-                                        ->get();
-
-        if ($calificaciones->isEmpty()) {
+        } catch (\Exception $e) {
             return response()->json([
-                'error' => 'No hay calificaciones para los estudiantes en esta materia y periodo.'
-            ], 404);
-        }
-
-        // Calcular estadísticas
-        $totalEstudiantes = $calificaciones->count();
-        $totalAprobados = $calificaciones->filter(function ($calificacion) {
-            return $calificacion->promedio >= 10; // Asumiendo que la nota de aprobación es 10
-        })->count();
-
-        $totalReprobados = $totalEstudiantes - $totalAprobados;
-        $porcentajeAprobados = ($totalAprobados / $totalEstudiantes) * 100;
-        $porcentajeReprobados = ($totalReprobados / $totalEstudiantes) * 100;
-        $promedioGeneral = $calificaciones->avg('promedio');
-
-        // Retornar el reporte
-        return response()->json([
-            'total_estudiantes' => $totalEstudiantes,
-            'total_aprobados' => $totalAprobados,
-            'porcentaje_aprobados' => $porcentajeAprobados,
-            'total_reprobados' => $totalReprobados,
-            'porcentaje_reprobados' => $porcentajeReprobados,
-            'promedio_general' => $promedioGeneral,
-            'calificaciones' => $calificaciones,
-        ], 200);
-
-    } catch (\Exception $e) {
-        return response()->json([
-            'error' => 'Error al realizar la operación: ' . $e->getMessage(),
-        ], 400);
+                'error' => 'Error al realizar la operación: ' . $e->getMessage(),
+            ], 400);
+        }       
     }
-}
-
-
 }
