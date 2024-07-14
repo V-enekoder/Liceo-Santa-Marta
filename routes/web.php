@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\CoordinadorController;
 use App\Http\Controllers\DocenteController;
+use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\RepresentanteController;
 use App\Models\coordinador;
 use App\Models\Representante;
@@ -35,8 +36,8 @@ Route::get('/dashboard/periodos', [CoordinadorController::class, 'ver_periodos']
 Route::post('/dashboard/periodos', [CoordinadorController::class, 'crear_periodo_academico'])
             ->name('crear_periodo_academico');
 
-Route::get('/dashboard/crear-estudiante', [CoordinadorController::class, 'mostrar_plantilla']);
-Route::post('/dashboard/crear-estudiante', [CoordinadorController::class, 'crear_estudiante']);
+Route::get('/dashboard/crear-estudiante', [EstudianteController::class, 'mostrar_plantilla']);
+Route::post('/dashboard/crear-estudiante', [EstudianteController::class, 'crear_estudiante']);
 
 Route::get('/dashboard/crear-usuario', [CoordinadorController::class, 'mostrar_formulario_crear_usuario']);
 Route::post('/dashboard/crear-usuario', [CoordinadorController::class, 'crear_usuario']);
@@ -63,6 +64,8 @@ Route::get('/dashboard/asignar-carga', [DocenteController::class, 'mostrarFormul
     ->name('sidebar.formulario_carga_academica');
 Route::post('/dashboard/asignar-carga', [DocenteController::class, 'asignarCargaAcademica'])
     ->name('asignar_carga_academica');
+
+
 
 //ruta de vistas para los docentes
 Route::get('/dashboard/CargaNotas', [DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');
