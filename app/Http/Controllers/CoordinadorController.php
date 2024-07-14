@@ -238,36 +238,66 @@ class CoordinadorController extends Controller{
     }
 
 
-    public function crear_materia(Request $request)
-    {
-        // Validar los datos de entrada
-        $request->validate([
-            'grado_id' => 'required|exists:grados,id',
-            'nombre' => 'required|string|max:255',
-        ]);
 
-        // Crear una nueva asignatura
-        $materia = Materia::create([
-            'grado_id' => $request->input('grado_id'),
-            'nombre' => $request->input('nombre'),
-        ]);
-        // Obtener la lista de grados para pasarla a la vista
-        $grados = Grado::pluck('nombre', 'id'); // Esto obtiene un array asociativo id => nombre
+public function crear_materia(Request $request)
+{
+    // Validar los datos de entrada
+    $request->validate([
+        'grado_id' => 'required|exists:grados,id',
+        'nombre' => 'required|string|max:255',
+    ]);
 
-        //Retornar una respuesta exitosa
+    try {
+        // Crear una nueva materia
+        $materia = new Materia();
+        $materia->grado_id = $request->grado_id;
+        $materia->nombre = $request->nombre;
+        $materia->save();
+
+        // Retornar una respuesta exitosa
         return response()->json([
-            'message' => 'Asignatura creada exitosamente',
-            'materia' => $materia,
-            'grados' => $grados,
+            'message' => 'Materia creada exitosamente',
+            'materia' => $materia, // Cambiado de 'materias' a 'materia'
         ], 201);
+    } catch (\Exception $e) {
+        // Capturar y manejar cualquier error de base de datos
+        return response()->json([
+            'message' => 'Error al guardar la materia: ' . $e->getMessage(),
+        ], 500);
     }
+}
+
+
+    // public function crear_materia(Request $request)
+    // {
+    //     // Validar los datos de entrada
+    //     $request->validate([
+    //         'grado_id' => 'required|exists:grados,id',
+    //         'nombre' => 'required|string|max:255',
+    //     ]);
+
+    //     // Crear una nueva asignatura
+    //     $materia = Materia::create([
+    //         'grado_id' => $request->input('grado_id'),
+    //         'nombre' => $request->input('nombre'),
+    //     ]);
+    //     // Obtener la lista de grados para pasarla a la vista
+    //     $grados = Grado::pluck('nombre', 'id'); // Esto obtiene un array asociativo id => nombre
+
+    //     //Retornar una respuesta exitosa
+    //     return response()->json([
+    //         'message' => 'Asignatura creada exitosamente',
+    //         'materia' => $materia,
+    //         'grados' => $grados,
+    //     ], 201);
+    // }
     
-    public function mostrarMaterias()
-    {
-        $grados = Grado::all();
-        $materias = Materia::all();
-        return view('Paginas.Coordinadores.Materias', ['materia' => $materias, 'grados' => $grados]);
-    }
+     public function mostrarMaterias()
+     {
+         $grados = Grado::all();
+         $materias = Materia::all();
+         return view('Paginas.Coordinadores.Materias', ['materias' => $materias, 'grados' => $grados]);
+     }
 
 
 
