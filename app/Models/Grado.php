@@ -11,7 +11,7 @@ class Grado extends Model
     protected $table = 'grados';
     public $timestamps = false;
     protected $fillable = [
-        'nombre',
+        'nombre_grado',
     ];
     //Relaciones Uno-Muchos
     public function materias(){
