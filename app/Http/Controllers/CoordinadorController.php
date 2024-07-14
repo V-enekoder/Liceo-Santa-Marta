@@ -51,9 +51,11 @@ class CoordinadorController extends Controller{
         //Gate::authorize('modificar_docente');
         return view('Paginas.Coordinadores.Profesores',);
     }
+
     function modificarMaterias(){
         //Gate::authorize('modificar_materias');
         return view('Paginas.Coordinadores.Materias',);
+        
     }
     function crearCargaAcademica(){
         return view('Paginas.Coordinadores.Carga_academica',);
@@ -233,28 +235,6 @@ class CoordinadorController extends Controller{
         ]);
 
         return response()->json(['message' => 'Estudiante creado correctamente', 'estudiante' => $estudiante], 201);
-    }
-
-
-    public function crear_materia(Request $request)
-    {
-        // Validar los datos de entrada
-        $request->validate([
-            'grado_id' => 'required|exists:grados,id',
-            'nombre' => 'required|string|max:255',
-        ]);
-
-        // Crear una nueva asignatura
-        $materia = Materia::create([
-            'grado_id' => $request->input('grado_id'),
-            'nombre' => $request->input('nombre'),
-        ]);
-
-        // Retornar una respuesta exitosa
-        return response()->json([
-            'message' => 'Asignatura creada exitosamente',
-            'materia' => $materia,
-        ], 201);
     }
 
     public function mostrarFormularioCrearSeccion(Request $request)
