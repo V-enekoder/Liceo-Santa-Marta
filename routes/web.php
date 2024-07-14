@@ -48,16 +48,25 @@ Route::post('/dashboard/crear_usuario', [AdministradorController::class, 'crear_
 
 Route::get('/dashboard/crear-seccion', [CoordinadorController::class, 'mostrarFormularioCrearSeccion']);
 Route::post('/dashboard/crear-seccion', [CoordinadorController::class, 'crearSeccion']);
-
-
-
-
 Route::get('/dashboard/dataNotas', [CoordinadorController::class, 'modificarNotas'])->name('sidebar.notas');
 Route::get('/dashboard/dataRepresentantes', [CoordinadorController::class, 'modificarRepresentantes'])->name('sidebar.modirepresentantes');
 Route::get('/dashboard/dataEstudiantes', [CoordinadorController::class, 'modificarEstudiantes'])->name('sidebar.modiestudiantes');
 Route::get('/dashboard/dataDocentes', [CoordinadorController::class, 'modificarDocentes'])->name('sidebar.modidocentes');
-Route::get('/dashboard/dataMaterias', [CoordinadorController::class, 'modificarMaterias'])->name('sidebar.materias');
 Route::get('/dashboard/CargaAcademica', [CoordinadorController::class, 'crearCargaAcademica'])->name('sidebar.cargaAcademica');
+
+
+
+
+
+
+Route::get('/dashboard/dataMaterias', [CoordinadorController::class, 'mostrarMaterias'])->name('sidebar.materias');
+Route::post('/dashboard/dataMaterias', [CoordinadorController::class, 'crear_materia'])->name('sidebar.crearMateria');
+
+
+
+
+
+
 
 //ruta de vistas para los docentes
 Route::get('/dashboard/CargaNotas', [DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');

@@ -51,9 +51,11 @@ class CoordinadorController extends Controller{
         //Gate::authorize('modificar_docente');
         return view('Paginas.Coordinadores.Profesores',);
     }
+
     function modificarMaterias(){
         //Gate::authorize('modificar_materias');
         return view('Paginas.Coordinadores.Materias',);
+        
     }
     function crearCargaAcademica(){
         return view('Paginas.Coordinadores.Carga_academica',);
@@ -249,13 +251,27 @@ class CoordinadorController extends Controller{
             'grado_id' => $request->input('grado_id'),
             'nombre' => $request->input('nombre'),
         ]);
+        // Obtener la lista de grados para pasarla a la vista
+        $grados = Grado::pluck('nombre', 'id'); // Esto obtiene un array asociativo id => nombre
 
-        // Retornar una respuesta exitosa
+        //Retornar una respuesta exitosa
         return response()->json([
             'message' => 'Asignatura creada exitosamente',
             'materia' => $materia,
+            'grados' => $grados,
         ], 201);
     }
+    
+    public function mostrarMaterias()
+    {
+        $grados = Grado::all();
+        $materias = Materia::all();
+        return view('Paginas.Coordinadores.Materias', ['materia' => $materias, 'grados' => $grados]);
+    }
+
+
+
+
 
     public function mostrarFormularioCrearSeccion(Request $request)
     {
