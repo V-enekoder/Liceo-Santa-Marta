@@ -4,11 +4,13 @@ use App\Http\Controllers\AdministradorController;
 use App\Http\Controllers\CoordinadorController;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\RepresentanteController;
+use App\Http\Controllers\MateriaController;
 use App\Models\coordinador;
 use App\Models\Representante;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -55,16 +57,9 @@ Route::get('/dashboard/dataDocentes', [CoordinadorController::class, 'modificarD
 Route::get('/dashboard/CargaAcademica', [CoordinadorController::class, 'crearCargaAcademica'])->name('sidebar.cargaAcademica');
 
 
-
-
-
-
-Route::get('/dashboard/dataMaterias', [CoordinadorController::class, 'mostrarMaterias'])->name('sidebar.materias');
-Route::post('/dashboard/dataMaterias', [CoordinadorController::class, 'crear_materia'])->name('sidebar.crearMateria');
-
-
-
-
+//rutas para la edición y creación de materias (coordinador)
+Route::get('/dashboard/dataMaterias', [MateriaController::class, 'mostrarMaterias'])->name('sidebar.materias');
+Route::post('/dashboard/dataMaterias', [MateriaController::class, 'crear_materia'])->name('sidebar.crearMateria');
 
 
 

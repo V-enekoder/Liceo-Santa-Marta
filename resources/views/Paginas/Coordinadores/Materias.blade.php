@@ -10,10 +10,10 @@
         <table class="table-auto w-full mt-4">
             <thead>
                 <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                    <th class="py-3 px-6 text-center">ID de MATERIA</th>
-                    <th class="py-3 px-6 text-center">Grado en el que se imparte</th>
-                    <th class="py-3 px-6 text-center">Nombre Materia</th>
-                    <th class="py-3 px-6 text-center">Editar</th>
+                    <th class="py-3 px-6 text-center">ID ASIGNATURA</th>
+                    <th class="py-3 px-6 text-center">GRADO PERTENECIENTE</th>
+                    <th class="py-3 px-6 text-center">ASIGNATURA</th>
+                    <th class="py-3 px-6 text-center">OPCIONES DE AJUSTE</th>
                 </tr>
             </thead>
             <tbody id="materiasTablaBody" class="text-gray-800">
