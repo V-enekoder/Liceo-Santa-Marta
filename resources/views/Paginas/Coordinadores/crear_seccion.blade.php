@@ -1,11 +1,7 @@
 <x-app-layout>
-    <!DOCTYPE html>
-    <html lang="en">
-    
+
     <h1 class="h1Docente">Coordinador: Crear sección</h1>
-    
-    <body>
-        <div class="container mt-5 tablaDis widthFinal flexForms">
+    <div>
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -13,10 +9,12 @@
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
-                </div>
+                    </div>
             @endif
-            <label class="formTitle" >Crear sección</label>
-        <div class="tablaDis2">
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-table-head">Panel de crear sección</div>
+                        <div class="panel-body">
             <form action="{{ url('/dashboard/crear-seccion') }}" method="POST">
                 @csrf
                 <div class="form-group">
@@ -28,6 +26,7 @@
                         @endforeach
                     </select>
                 </div>
+            
     
                 <div class="form-group">
                     <label class="text-default-black" for="periodo_id">Periodo</label>
@@ -52,11 +51,9 @@
                 </div>
         </div>
     
-                <button type="submit" class="mt-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Crear Sección</button>
+                <button type="submit" class="mb-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Crear Sección</button>
             </form>
         </div>
-    </body>
-    
-    </html>
+    </div>
     
     </x-app-layout>
