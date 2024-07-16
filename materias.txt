@@ -1,0 +1,34 @@
+INSERT INTO materias (id, grado_id, nombre) VALUES 
+(1, 1, Castellano I),
+(2, 1, Orientación),
+(3, 1, Valores),
+(4, 1, Matemáticas I),
+(5, 1, Ciencias de la naturaleza), 
+(6, 2, Matemáticas II),
+(7, 2, Ciencias de la naturaleza II),
+(8, 2, Castellano II),
+(9, 2, Dibujo técnico),
+(10, 2, Ciudadanía),
+(11, 3, Química I),
+(12, 3, Física I),
+(13, 3, Matemáticas III),
+(14, 3, Biología I),
+(15, 3, GHC),
+(16, 4, Geografía),
+(17, 4, Física II),
+(18, 4, Química II),
+(19, 4, Matemáticas IV),
+(20, 4, Biología II),
+(21, 5, Psicología), 
+(22, 5, Orientación y convivencia), 
+(23, 5, Soberanía),
+(24, 5, Grupos estables),
+(25, 5, Física III);
+
+INSERT INTO materias (id, año) VALUES 
+(1, 1ro),
+(2, 2do),
+(3, 3ro),
+(4, 4to),
+(5, 5to);
+

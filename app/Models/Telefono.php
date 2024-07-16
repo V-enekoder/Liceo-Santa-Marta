@@ -12,12 +12,11 @@ class Telefono extends Model
     public $timestamps = false;
     protected $fillable = [
         'user_id',
-        'Telefono'
+        'numero_telefonico',
     ];
     //Relaciones Muchos-Uno
-    public function representante(){
+    public function user(){
         return $this->belongsTo(User::class);
     }
-
 }
 

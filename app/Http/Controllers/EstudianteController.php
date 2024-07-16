@@ -161,24 +161,7 @@ class EstudianteController extends Controller
                 'seccion_id' => $seccion->id,
             ]);
             $seccion->increment('alumnos_inscritos');
-
-                    // Paso 1: Obtener las materias del grado y periodo
         $this->crearCalificaciones($estudiante, $grado, $periodo);
-/*            $materias = $grado->materias;
-
-            foreach ($materias as $materia) {
-                // Paso 2: Obtener los registros de docente_materia
-                $docenteMateria = DocenteMateria::where('materia_id', $materia->id)
-                    ->where('periodo_id', $periodo->id)
-                    ->first();
-
-                if ($docenteMateria) {
-                    Calificacion::create([
-                        'docente_materia_id' => $docenteMateria->id,
-                        'estudiante_id' => $estudiante->id,
-                    ]);
-                }
-            }*/
 
             return back()->with('message', 'El estudiante ha sido inscrito exitosamente en la sección.');
         } catch (\Exception $e) {
@@ -205,48 +188,20 @@ class EstudianteController extends Controller
         }
     }
 
-
-    /*public function mostrarInscripcion()
-    {
-        // Obtener el primer registro de estudiante_seccion sin ordenar
-        $estudianteSeccion = EstudianteSeccion::first();
-
-        return view('Paginas.Coordinadores.calificaciones', compact('estudianteSeccion'));
-    }
-
-    public function crearCalificaciones(Request $request)
+    public function mostrarEstudiantePorCedula($cedula)
     {
         try {
-            // Obtener datos del request
-            $estudianteId = $request->estudiante_id;
-            $seccionId = $request->seccion_id;
-
-            // Obtener el grado y periodo de la sección
-            $seccion = Seccion::findOrFail($seccionId);
-            $gradoPeriodo = GradoPeriodo::find($seccion->grado_periodo_id);
-            $grado = $gradoPeriodo->grado;
-            $periodo = $gradoPeriodo->periodo;
-
-            // Obtener las materias del grado
-            $materias = $grado->materias;
-
-            foreach ($materias as $materia) {
-                // Obtener los registros de docente_materia
-                $docenteMateria = DocenteMateria::where('materia_id', $materia->id)
-                    ->where('periodo_id', $periodo->id)
-                    ->first();
-
-                if ($docenteMateria) {
-                    Calificacion::create([
-                        'docente_materia_id' => $docenteMateria->id,
-                        'estudiante_id' => $estudianteId,
-                    ]);
-                }
-            }
-
-            return back()->with('message', 'Calificaciones creadas exitosamente.');
+            // Buscar al estudiante por su cédula
+            $estudiante = Estudiante::where('cedula', $cedula)->firstOrFail();
+            // Retornar los datos del estudiante en formato JSON
+            return response()->json([
+                'estudiante' => $estudiante
+            ], 200);
         } catch (\Exception $e) {
-            return back()->with('error', 'Error al crear las calificaciones: ' . $e->getMessage());
+            // Manejar el error si no se encuentra al estudiante
+            return response()->json([
+                'error' => 'No se encontró al estudiante con la cédula proporcionada.'
+            ], 404);
         }
-    }*/
+    }
 }

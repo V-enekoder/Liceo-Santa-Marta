@@ -7,10 +7,7 @@ use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\RepresentanteController;
 use App\Http\Controllers\MateriaController;
-use App\Models\coordinador;
-use App\Models\Docente;
-use App\Models\Representante;
-use App\Models\User;
+use App\Http\Controllers\TelefonoController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -25,8 +22,8 @@ Route::middleware([
     'verified',
 ])->group(function () {
     Route::get('/dashboard', function () {
-        $users = User::all();
-        return view('dashboard', compact('users'));
+        $user = Auth::user();
+        return view('dashboard', compact('user'));
     })->name('dashboard');
 });
 
@@ -86,11 +83,20 @@ Route::get('/dashboard/dataEstudiantes', [CoordinadorController::class, 'modific
 Route::get('/dashboard/dataDocentes', [CoordinadorController::class, 'modificarDocentes'])->name('sidebar.modidocentes');
 
 
-Route::get('/dashboard/dataMaterias', [MateriaController::class, 'mostrarMaterias'])->name('sidebar.materias');
-Route::post('/dashboard/dataMaterias', [MateriaController::class, 'crear_materia'])->name('sidebar.crearMateria');
+Route::get('/dashboard/dataMaterias', [MateriaController::class, 'mostrarMaterias'])
+    ->name('sidebar.materias');
+Route::post('/dashboard/dataMaterias', [MateriaController::class, 'crear_materia'])
+    ->name('sidebar.crearMateria');
 
-Route::put('/dashboard/dataMaterias/{id}', [MateriaController::class, 'editar_materia'])->name('sidebar.editarMateria');
-Route::delete('/dashboard/dataMaterias/{id}', [MateriaController::class, 'eliminar_materia'])->name('sidebar.eliminarMateria');
+Route::put('/dashboard/dataMaterias/{id}', [MateriaController::class, 'editar_materia'])
+    ->name('sidebar.editarMateria');
+Route::delete('/dashboard/dataMaterias/{id}', [MateriaController::class, 'eliminar_materia'])
+    ->name('sidebar.eliminarMateria');
+
+Route::get('/dashboard/vincular_representante',[RepresentanteController::class,'formulario_vincular'])
+    ->name('sidebar.vincular_representante');
+Route::post('/dashboard/vincular_representante',[RepresentanteController::class,'vincular_estudiante_representante'])
+    ->name('vincular_representante');
 
 //Rutas para Docentes
 Route::get('/dashboard/CargaNotas', [DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');
@@ -104,6 +110,11 @@ Route::post('/dashboard/cambiar-contrasena', [DocenteController::class, 'cambiar
 
 //Rutas para Representantes
 
-Route::get('/dashboard/VerBoletin', [RepresentanteController::class, 'indexBoletin'])->name('boletin.index');
+Route::get('/dashboard/VerBoletin', [RepresentanteController::class, 'mostrar_boletin'])->name('sidebar.mostrar_boletin');
 Route::get('/dashboard/VerTodoBoletin', [RepresentanteController::class, 'indexTodoBoletin'])->name('boletin.indexTodo');
 Route::get('/dashboard/VerFicha', [RepresentanteController::class, 'verFicha'])->name('Ficha.index');
+
+Route::get('/dashboard/agregar_telefono', [TelefonoController::class, 'formulario_agregar_telefono'])
+    ->name('sidebar.agregar_telefono');
+Route::post('/dashboard/agregar_telefono', [TelefonoController::class, 'agregarTelefono']);
+

@@ -23,12 +23,15 @@
                         <td class="py-3 px-6 border-b border-gray-200">{{ $materia->grado->nombre_grado }}</td>
                         <td class="py-3 px-6 border-b border-gray-200">{{ $materia->nombre }}</td>
                         <td class="py-3 px-6 text-center border-b border-gray-200">
-                            <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs editarMateriaBtn"
-                                data-id="{{ $materia->id }}" data-grado="{{ $materia->grado->id }}" data-nombre="{{ $materia->nombre }}">
+                            <a href="#"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs editarMateriaBtn"
+                                data-id="{{ $materia->id }}" data-grado="{{ $materia->grado->id }}"
+                                data-nombre="{{ $materia->nombre }}">
                                 <i class="fas fa-edit mr-1"></i> Editar
                             </a>
-                            <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs eliminarMateriaBtn"
-                                    data-id="{{ $materia->id }}">
+                            <button
+                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs eliminarMateriaBtn"
+                                data-id="{{ $materia->id }}">
                                 Eliminar
                             </button>
                         </td>
@@ -46,21 +49,25 @@
                     <h1 class="text-xl font-bold mb-4">Agregar Materia</h1>
                     <div>
                         <label for="addGrado" class="block mb-2">Grado:</label>
-                        <select class="widthExpand" id="addGrado" name="grado_id" class="border border-gray-300 px-2 py-1 rounded mb-2">
-                            @foreach($grados as $grado)
+                        <select class="widthExpand" id="addGrado" name="grado_id"
+                            class="border border-gray-300 px-2 py-1 rounded mb-2">
+                            @foreach ($grados as $grado)
                                 <option value="{{ $grado->id }}">{{ $grado->nombre_grado }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div>
                         <label for="addNombre" class="block mb-2">Nombre:</label>
-                        <input type="text" id="addNombre" name="nombre" class="border border-gray-300 px-2 py-1 rounded mb-2">
+                        <input type="text" id="addNombre" name="nombre"
+                            class="border border-gray-300 px-2 py-1 rounded mb-2">
                     </div>
                     <div class="flex justify-end mt-4">
-                        <button type="button" id="cancelarAgregarBtn" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">
+                        <button type="button" id="cancelarAgregarBtn"
+                            class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">
                             Cancelar
                         </button>
-                        <button type="submit" id="guardarAgregarBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        <button type="submit" id="guardarAgregarBtn"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Guardar
                         </button>
                     </div>
@@ -80,20 +87,23 @@
                     <div>
                         <label for="editGrado" class="block mb-2">Grado:</label>
                         <select id="editGrado" name="grado_id" class="border border-gray-300 px-2 py-1 rounded mb-2">
-                            @foreach($grados as $grado)
+                            @foreach ($grados as $grado)
                                 <option value="{{ $grado->id }}">{{ $grado->nombre_grado }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div>
                         <label for="editNombre" class="block mb-2">Nombre:</label>
-                        <input type="text" id="editNombre" name="nombre" class="border border-gray-300 px-2 py-1 rounded mb-2">
+                        <input type="text" id="editNombre" name="nombre"
+                            class="border border-gray-300 px-2 py-1 rounded mb-2">
                     </div>
                     <div class="flex justify-end mt-4">
-                        <button type="button" id="cancelarEditarBtn" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">
+                        <button type="button" id="cancelarEditarBtn"
+                            class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">
                             Cancelar
                         </button>
-                        <button type="submit" id="guardarEditarBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        <button type="submit" id="guardarEditarBtn"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                             Guardar
                         </button>
                     </div>
@@ -126,20 +136,21 @@
                     success: function(response) {
                         alert(response.message);
                         var newRow = '<tr data-id="' + response.materia.id + '">' +
-                            '<td class="py-3 px-6 border-b border-gray-200">' + response.materia.id + '</td>' +
-                            '<td class="py-3 px-6 border-b border-gray-200">' + $('#addGrado option:selected').text() + '</td>' +
-                            '<td class="py-3 px-6 border-b border-gray-200">' + $('#addNombre').val() + '</td>' +
+                            '<td class="py-3 px-6 border-b border-gray-200">' + response.materia
+                            .id + '</td>' +
+                            '<td class="py-3 px-6 border-b border-gray-200">' + $(
+                                '#addGrado option:selected').text() + '</td>' +
+                            '<td class="py-3 px-6 border-b border-gray-200">' + $('#addNombre')
+                            .val() + '</td>' +
                             '<td class="py-3 px-6 text-center border-b border-gray-200">' +
-<<<<<<< HEAD
-                            '<a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs editarMateriaBtn" data-id="' + response.materia.id + '" data-grado="' + $('#addGrado option:selected').text() + '" data-nombre="' + $('#addNombre').val() + '">' +
+                            '<a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs editarMateriaBtn" data-id="' +
+                            response.materia.id + '" data-grado="' + $(
+                                '#addGrado option:selected').val() + '" data-nombre="' + $(
+                                '#addNombre').val() + '">' +
                             '<i class="fas fa-edit mr-1"></i> Editar</a>' +
-                            '</td>' 
-=======
-                            '<a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs editarMateriaBtn" data-id="' + response.materia.id + '" data-grado="' + $('#addGrado option:selected').val() + '" data-nombre="' + $('#addNombre').val() + '">' +
-                            '<i class="fas fa-edit mr-1"></i> Editar</a>' +
-                            '<button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs eliminarMateriaBtn" data-id="' + response.materia.id + '">Eliminar</button>' +
+                            '<button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs eliminarMateriaBtn" data-id="' +
+                            response.materia.id + '">Eliminar</button>' +
                             '</td>' +
->>>>>>> migue2
                             '</tr>';
 
                         $('#materiasTablaBody').append(newRow);
@@ -150,8 +161,6 @@
                     }
                 });
             });
-<<<<<<< HEAD
-=======
 
             // Mostrar el formulario para editar materia
             $(document).on('click', '.editarMateriaBtn', function() {
@@ -183,13 +192,20 @@
                     data: formData,
                     success: function(response) {
                         alert(response.message);
-                        var updatedRow = '<td class="py-3 px-6 border-b border-gray-200">' + response.materia.id + '</td>' +
-                            '<td class="py-3 px-6 border-b border-gray-200">' + $('#editGrado option:selected').text() + '</td>' +
-                            '<td class="py-3 px-6 border-b border-gray-200">' + $('#editNombre').val() + '</td>' +
+                        var updatedRow = '<td class="py-3 px-6 border-b border-gray-200">' +
+                            response.materia.id + '</td>' +
+                            '<td class="py-3 px-6 border-b border-gray-200">' + $(
+                                '#editGrado option:selected').text() + '</td>' +
+                            '<td class="py-3 px-6 border-b border-gray-200">' + $('#editNombre')
+                            .val() + '</td>' +
                             '<td class="py-3 px-6 text-center border-b border-gray-200">' +
-                            '<a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs editarMateriaBtn" data-id="' + response.materia.id + '" data-grado="' + $('#editGrado option:selected').val() + '" data-nombre="' + $('#editNombre').val() + '">' +
+                            '<a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs editarMateriaBtn" data-id="' +
+                            response.materia.id + '" data-grado="' + $(
+                                '#editGrado option:selected').val() + '" data-nombre="' + $(
+                                '#editNombre').val() + '">' +
                             '<i class="fas fa-edit mr-1"></i> Editar</a>' +
-                            '<button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs eliminarMateriaBtn" data-id="' + response.materia.id + '">Eliminar</button>' +
+                            '<button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs eliminarMateriaBtn" data-id="' +
+                            response.materia.id + '">Eliminar</button>' +
                             '</td>';
 
                         $('tr[data-id="' + response.materia.id + '"]').html(updatedRow);
@@ -223,7 +239,6 @@
                     });
                 }
             });
->>>>>>> migue2
         });
     </script>
 </x-app-layout>
