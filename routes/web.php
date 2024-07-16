@@ -7,6 +7,7 @@ use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\RepresentanteController;
 use App\Http\Controllers\MateriaController;
 use App\Models\coordinador;
+use App\Models\Docente;
 use App\Models\Representante;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -55,7 +56,6 @@ Route::get('/dashboard/dataNotas', [CoordinadorController::class, 'modificarNota
 Route::get('/dashboard/dataRepresentantes', [CoordinadorController::class, 'modificarRepresentantes'])->name('sidebar.modirepresentantes');
 Route::get('/dashboard/dataEstudiantes', [CoordinadorController::class, 'modificarEstudiantes'])->name('sidebar.modiestudiantes');
 Route::get('/dashboard/dataDocentes', [CoordinadorController::class, 'modificarDocentes'])->name('sidebar.modidocentes');
-Route::get('/dashboard/CargaAcademica', [CoordinadorController::class, 'crearCargaAcademica'])->name('sidebar.cargaAcademica');
 
 
 //rutas para la edición y creación de materias (coordinador)
@@ -77,6 +77,8 @@ Route::post('/dashboard/inscribir-estudiante', [EstudianteController::class, 'ob
     ->name('obtener_secciones');
 Route::post('/dashboard/inscribir_estudiante', [EstudianteController::class, 'inscribirEstudianteEnSeccion'])
     ->name('inscribir_estudiante');
+
+
 
 //ruta de vistas para los docentes
 Route::get('/dashboard/CargaNotas', [DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');

@@ -57,9 +57,6 @@ class CoordinadorController extends Controller{
         return view('Paginas.Coordinadores.Materias',);
         
     }
-    function crearCargaAcademica(){
-        return view('Paginas.Coordinadores.Carga_academica',);
-    }
 
     public function mostrar_formulario_crear_usuario()
     {
@@ -335,9 +332,9 @@ public function obtenerCalificacion(Request $request)
     {
         $request->validate([
             'calificacion_id' => 'required|integer|exists:calificaciones,id',
-            'lapso_1' => 'nullable|integer|min:0|max:20',
-            'lapso_2' => 'nullable|integer|min:0|max:20',
-            'lapso_3' => 'nullable|integer|min:0|max:20',
+            'lapso_1' => 'nullable|integer|min:1|max:20',
+            'lapso_2' => 'nullable|integer|min:1|max:20',
+            'lapso_3' => 'nullable|integer|min:1|max:20',
         ]);
 
         try {
