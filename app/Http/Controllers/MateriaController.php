@@ -59,28 +59,27 @@ class MateriaController extends Controller
             ], 500);
         }
     }
-//     public function editar_materia(Request $request, $id)
-// {
-//     $request->validate([
-//         'grado_id' => 'required|exists:grados,id',
-//         'nombre' => 'required|string|max:255',
-//     ]);
+    public function editar_materia(Request $request, $id)
+    {
+        $request->validate([
+            'grado_id' => 'required|exists:grados,id',
+            'nombre' => 'required|string|max:255',
+        ]);
 
-//     try {
-//         $materia = Materia::findOrFail($id);
-//         $materia->grado_id = $request->grado_id;
-//         $materia->nombre = $request->nombre;
-//         $materia->save();
+        try {
+            $materia = Materia::findOrFail($id);
+            $materia->grado_id = $request->grado_id;
+            $materia->nombre = $request->nombre;
+            $materia->save();
 
-//         return response()->json([
-//             'message' => 'Materia actualizada exitosamente',
-//             'materia' => $materia,
-//         ], 200);
-//     } catch (\Exception $e) {
-//         return response()->json([
-//             'message' => 'Error al actualizar la materia: ' . $e->getMessage(),
-//         ], 500);
-//     }
-// }
-
+            return response()->json([
+                'message' => 'Materia actualizada exitosamente',
+                'materia' => $materia,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error al actualizar la materia: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
 }
