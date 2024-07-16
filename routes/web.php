@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdministradorController;
+use App\Http\Controllers\CalificacionController;
 use App\Http\Controllers\CoordinadorController;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\EstudianteController;
@@ -61,9 +62,16 @@ Route::get('/dashboard/dataDocentes', [CoordinadorController::class, 'modificarD
 //rutas para la edición y creación de materias (coordinador)
 Route::get('/dashboard/dataMaterias', [MateriaController::class, 'mostrarMaterias'])->name('sidebar.materias');
 Route::post('/dashboard/dataMaterias', [MateriaController::class, 'crear_materia'])->name('sidebar.crearMateria');
+<<<<<<< HEAD
 //nuevas rutas
 Route::put('/dashboard/dataMaterias/{id}', [MateriaController::class, 'editar_materia'])->name('sidebar.editarMateria');
 Route::delete('/dashboard/dataMaterias/{id}', [MateriaController::class, 'eliminar_materia'])->name('sidebar.eliminarMateria');
+=======
+Route::put('/dashboard/dataMaterias/{id}', [MateriaController::class, 'editar_materia'])->name('sidebar.editarMateria');
+Route::delete('/dashboard/dataMaterias/{id}', [MateriaController::class, 'eliminar_materia'])->name('sidebar.eliminarMateria');
+
+
+>>>>>>> migue2
 
 
 Route::get('/dashboard/asignar-carga', [DocenteController::class, 'mostrarFormularioAsignarCarga'])
@@ -77,6 +85,11 @@ Route::post('/dashboard/inscribir-estudiante', [EstudianteController::class, 'ob
     ->name('obtener_secciones');
 Route::post('/dashboard/inscribir_estudiante', [EstudianteController::class, 'inscribirEstudianteEnSeccion'])
     ->name('inscribir_estudiante');
+
+Route::get('/dashboard/modificar_calificacion', [CalificacionController::class, 'mostrar_datos_calificacion'])
+    ->name('sidebar.modificar_calificacion');
+Route::post('/dashboard/modificar_calificacion', [CalificacionController::class, 'actualizar_calificacion'])
+    ->name('modificar_calificacion');
 
 
 
