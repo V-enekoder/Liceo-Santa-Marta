@@ -62,19 +62,6 @@ Route::get('/dashboard/dataDocentes', [CoordinadorController::class, 'modificarD
 //rutas para la edición y creación de materias (coordinador)
 Route::get('/dashboard/dataMaterias', [MateriaController::class, 'mostrarMaterias'])->name('sidebar.materias');
 Route::post('/dashboard/dataMaterias', [MateriaController::class, 'crear_materia'])->name('sidebar.crearMateria');
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
-//nuevas rutas
->>>>>>> 49079d1613083e295c239f531613a09ac24d8881
-Route::put('/dashboard/dataMaterias/{id}', [MateriaController::class, 'editar_materia'])->name('sidebar.editarMateria');
-Route::delete('/dashboard/dataMaterias/{id}', [MateriaController::class, 'eliminar_materia'])->name('sidebar.eliminarMateria');
-=======
-Route::put('/dashboard/dataMaterias/{id}', [MateriaController::class, 'editar_materia'])->name('sidebar.editarMateria');
-Route::delete('/dashboard/dataMaterias/{id}', [MateriaController::class, 'eliminar_materia'])->name('sidebar.eliminarMateria');
-
-
->>>>>>> migue2
 
 
 
