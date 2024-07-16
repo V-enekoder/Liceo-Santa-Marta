@@ -1,9 +1,5 @@
 <x-app-layout>
 
-    <!DOCTYPE html>
-    <html lang="en">
-    
-    <head>
         <h1 class="h1Docente">Coordinador: Crear carga académica</h1>
         <!-- Estilos CSS -->
         <style>
@@ -92,106 +88,112 @@
         </style>
     </head>
     
-    <body>
-        <div class="container">
-            <div class="row justify-content-center">
-    
-                <div class="col-md-10">
-                    <div class="card tablaDis">
-    
-                        <div class="card-body formTable">
-                            <label class="formTitle auxformTitle">Crear carga</label>
-                            <!-- Mostrar mensaje de estado -->
-                            @if (session('status'))
-                                <div class="alert alert-success" role="alert">
-                                    {{ session('status') }}
-                                </div>
-                            @endif
+    <div class="ajuste-tablas">
 
-                        <div class="tablaDis2">   
-                            <form method="POST" action="{{ route('sidebar.formulario_carga_academica') }}">
-                                @csrf
-                                <div class="form-group">
-                                    <label class="text-default-black" for="docente_id">Docente</label>
-                                    <select id="docente_id" class="form-control @error('docente_id') is-invalid @enderror"
-                                        name="docente_id" required>
-                                        <option value="">Seleccionar Docente</option>
-                                        @foreach ($docentes as $docente)
-                                            <option value="{{ $docente->id }}">{{ $docente->primer_nombre }}
-                                                {{ $docente->primer_apellido }}</option>
-                                        @endforeach
-                                    </select>
+    <div class="col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading text-table-head">Crear Carga Académica</div>
+            <div class="panel-body">
     
-                                    <!-- Mostrar mensaje de error -->
-                                    @error('docente_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
+                <!-- Mostrar mensaje de estado -->
+                @if (session('status'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
     
-                                <div class="form-group">
-                                    <label class="text-default-black" for="periodo_id">Período Académico</label>
-                                    <select id="periodo_id" class="form-control @error('periodo_id') is-invalid @enderror"
-                                        name="periodo_id" required>
-                                        <option value="">Seleccionar Período Académico</option>
-                                        @foreach ($periodosAcademicos as $periodo)
-                                            <option value="{{ $periodo->id }}">{{ $periodo->nombre }}</option>
-                                        @endforeach
-                                    </select>
+                <form method="POST" action="{{ route('sidebar.formulario_carga_academica') }}">
+                    @csrf
+                    <div class="form-group">
+                        <label class="text-default-black" for="docente_id">Docente</label>
+                        <select id="docente_id" class="form-control @error('docente_id') is-invalid @enderror"
+                            name="docente_id" required>
+                            <option value="">Seleccionar Docente</option>
+                            @foreach ($docentes as $docente)
+                                <option value="{{ $docente->id }}">{{ $docente->primer_nombre }}
+                                    {{ $docente->primer_apellido }}</option>
+                            @endforeach
+                        </select>
     
-                                    <!-- Mostrar mensaje de error -->
-                                    @error('periodo_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-                        </div>
-                        
-
-                    <div class="flexForms mt-3">
-                                <div class="form-group">
-                                    <label class="text-default-black" >Materias Disponibles</label>
-                                    <div class="row-cols-5">
-                                        @foreach ($grados as $grado)
-                                            <div class="column">
-                                                <h4>{{ $grado['año'] }}</h4>
-                                                <ul class="checkbox-list">
-                                                    @foreach ($grado['materias'] as $materia)
-                                                        <li class="checkbox-item">
-                                                            <input id="materia_{{ $materia->id }}" type="checkbox"
-                                                                class="checkbox-input" name="materias[]"
-                                                                value="{{ $materia->id }}">
-                                                            <label for="materia_{{ $materia->id }}"
-                                                                class="checkbox-label">
-                                                                {{ $materia->nombre }}
-                                                            </label>
-                                                        </li>
-                                                    @endforeach
-                                                </ul>
-                                            </div>
-                                        @endforeach
+                        <!-- Mostrar mensaje de error -->
+                        @error('docente_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+    
+                    <div class="form-group">
+                        <label class="text-default-black" for="periodo_id">Período Académico</label>
+                        <select id="periodo_id" class="form-control @error('periodo_id') is-invalid @enderror"
+                            name="periodo_id" required>
+                            <option value="">Seleccionar Período Académico</option>
+                            @foreach ($periodosAcademicos as $periodo)
+                                <option value="{{ $periodo->id }}">{{ $periodo->nombre }}</option>
+                            @endforeach
+                        </select>
+    
+                        <!-- Mostrar mensaje de error -->
+                        @error('periodo_id')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    
+        <div class="col-lg-4">
+            <div class="ml-10 panel panel-default">
+                <div class="panel-heading text-table-head">Panel para visualización de materias</div>
+                <div class="panel-body">
+        
+                    <form method="POST" action="{{ route('sidebar.formulario_carga_academica') }}">
+                        @csrf
+                        <div class="form-group">
+                            <label class="text-default-black">Materias Disponibles</label>
+                            <div class="row">
+                                @foreach ($grados as $grado)
+                                    <div class="col-12">
+                                        <h4>{{ $grado['año'] }}</h4>
+                                        <ul class="checkbox-list">
+                                            @foreach ($grado['materias'] as $materia)
+                                                <li class="checkbox-item">
+                                                    <input id="materia_{{ $materia->id }}" type="checkbox"
+                                                        class="checkbox-input" name="materias[]"
+                                                        value="{{ $materia->id }}">
+                                                    <label for="materia_{{ $materia->id }}"
+                                                        class="checkbox-label">
+                                                        {{ $materia->nombre }}
+                                                    </label>
+                                                </li>
+                                            @endforeach
+                                        </ul>
                                     </div>
-                    </div>
-    
-                                    <!-- Mostrar mensaje de error -->
-                                    @error('materias')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
-    
-                                <button type="submit" class="ml-0 mt-0 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                                    Asignar Carga Académica
-                                </button>
-                            </form>
+                                @endforeach
+                            </div>
+        
+                            <!-- Mostrar mensaje de error -->
+                            @error('materias')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                         </div>
-                    </div>
+        
+                        <button type="submit" class="mb-5 mt-0 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                            Asignar Carga Académica
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
+
+    </div>
+        
     
         <!-- Verificar si se ha enviado el formulario -->
         @if (request()->isMethod('post'))
@@ -207,8 +209,5 @@
                 </div>
             @endif
         @endif
-    </body>
-    
-    </html>
     
     </x-app-layout>
