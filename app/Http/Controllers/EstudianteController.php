@@ -161,14 +161,52 @@ class EstudianteController extends Controller
                 'seccion_id' => $seccion->id,
             ]);
             $seccion->increment('alumnos_inscritos');
+
+                    // Paso 1: Obtener las materias del grado y periodo
+        $this->crearCalificaciones($estudiante, $grado, $periodo);
+/*            $materias = $grado->materias;
+
+            foreach ($materias as $materia) {
+                // Paso 2: Obtener los registros de docente_materia
+                $docenteMateria = DocenteMateria::where('materia_id', $materia->id)
+                    ->where('periodo_id', $periodo->id)
+                    ->first();
+
+                if ($docenteMateria) {
+                    Calificacion::create([
+                        'docente_materia_id' => $docenteMateria->id,
+                        'estudiante_id' => $estudiante->id,
+                    ]);
+                }
+            }*/
+
             return back()->with('message', 'El estudiante ha sido inscrito exitosamente en la sección.');
         } catch (\Exception $e) {
             return back()->with('error', 'Error al realizar la operación: ' . $e->getMessage());
         }
     }
 
+    private function crearCalificaciones(Estudiante $estudiante, Grado $grado, Periodo_Academico $periodo)
+    {
+        $materias = $grado->materias;
 
-    public function mostrarInscripcion()
+        foreach ($materias as $materia) {
+            // Obtener los registros de docente_materia
+            $docenteMateria = DocenteMateria::where('materia_id', $materia->id)
+                ->where('periodo_id', $periodo->id)
+                ->first();
+
+            if ($docenteMateria) {
+                Calificacion::create([
+                    'docente_materia_id' => $docenteMateria->id,
+                    'estudiante_id' => $estudiante->id,
+                ]);
+            }
+        }
+    }
+
+
+    /*public function mostrarInscripcion()
     {
         // Obtener el primer registro de estudiante_seccion sin ordenar
         $estudianteSeccion = EstudianteSeccion::first();
@@ -210,5 +248,5 @@ class EstudianteController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', 'Error al crear las calificaciones: ' . $e->getMessage());
         }
-    }
+    }*/
 }
