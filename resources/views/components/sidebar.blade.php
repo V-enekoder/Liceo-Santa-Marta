@@ -51,6 +51,12 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                         <li><a href="{{ route('sidebar.formulario_carga_academica') }}"
                                 class="block p-2 hover:bg-gray-800">Crear
                                 carga académica</a></li>
+
+                        <li><a href="{{ route('sidebar.inscribir') }}"
+                            class="block p-2 hover:bg-gray-800">Inscribir estudiante</a></li>
+
+                        <li><a href="{{ route('sidebar.crearseccion') }}"
+                            class="block p-2 hover:bg-gray-800">Crear sección</a></li>
                         {{-- @endcan --}}
                     </ul>
                 </li>

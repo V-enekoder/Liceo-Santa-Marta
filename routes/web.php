@@ -50,7 +50,7 @@ Route::post('/dashboard/crear_usuario', [AdministradorController::class, 'crear_
 
 //Rutas para gestionar coordinadores
 
-Route::get('/dashboard/crear-seccion', [CoordinadorController::class, 'mostrarFormularioCrearSeccion']);
+Route::get('/dashboard/crear-seccion', [CoordinadorController::class, 'mostrarFormularioCrearSeccion'])->name('sidebar.crearseccion');
 Route::post('/dashboard/crear-seccion', [CoordinadorController::class, 'crearSeccion']);
 Route::get('/dashboard/dataNotas', [CoordinadorController::class, 'modificarNotas'])->name('sidebar.notas');
 Route::get('/dashboard/dataRepresentantes', [CoordinadorController::class, 'modificarRepresentantes'])->name('sidebar.modirepresentantes');

@@ -554,3 +554,53 @@ tbody {
 #alert-deletedata::backdrop{
   background-color: rgba(0,0,0,.55);
 }
+
+
+.widthExpand{
+  width: 120px !important;
+}
+
+.tablaDis {
+  padding: 32px;
+  border: #1e3a8a 3px solid;
+  border-radius: .3rem;
+}
+
+.tablaDis2 {
+  padding: 28px;
+  border: #3054b8 2px solid;
+  border-radius: .6rem;
+}
+
+.widthFinal {
+  width: 300px;
+  padding: 25px;
+  height: 450px;
+  margin-left: 0px;
+}
+
+.widthFinal2 {
+  width: 400px;
+  padding: 25px;
+  height: 400px;
+  margin-left: 0px;
+}
+
+.flexForms {
+  display: flex;
+  flex-direction: column;
+}
+
+.formTitle {
+  padding: 7px;
+  font-size: 20px;
+  text-shadow: 0 0 BLACK;
+}
+
+.auxformTitle {
+  display: flex;
+  justify-content: center;
+  padding: 1px !important;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
