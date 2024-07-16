@@ -57,9 +57,6 @@ class CoordinadorController extends Controller{
         return view('Paginas.Coordinadores.Materias',);
         
     }
-    function crearCargaAcademica(){
-        return view('Paginas.Coordinadores.Carga_academica',);
-    }
 
     public function mostrar_formulario_crear_usuario()
     {

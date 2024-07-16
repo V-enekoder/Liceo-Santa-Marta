@@ -19,7 +19,7 @@ class Grado extends Model
     }
     //Relaciones Muchos-Muchos
 
-    public function grados(){
+    public function periodos(){
         return $this->belongsToMany(Periodo_Academico::class,'GradoPeriodo');
     }
 }

@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\Calificacion;
+use App\Models\DocenteMateria;
 use App\Models\Estudiante;
 use App\Models\Grado;
 use App\Models\GradoPeriodo;
@@ -133,6 +134,7 @@ class EstudianteController extends Controller
             // Obtener el año del grado de la sección
             $gradoPeriodo = GradoPeriodo::find($seccion->grado_periodo_id);
             $grado = $gradoPeriodo->grado;
+            $periodo = $gradoPeriodo->periodo;
             $añoGrado = $grado->año;
 
             // Verificar si el estudiante puede inscribirse en esta sección
@@ -158,12 +160,55 @@ class EstudianteController extends Controller
                 'estudiante_id' => $estudiante->id,
                 'seccion_id' => $seccion->id,
             ]);
-
             $seccion->increment('alumnos_inscritos');
-
             return back()->with('message', 'El estudiante ha sido inscrito exitosamente en la sección.');
         } catch (\Exception $e) {
             return back()->with('error', 'Error al realizar la operación: ' . $e->getMessage());
+        }
+    }
+
+
+    public function mostrarInscripcion()
+    {
+        // Obtener el primer registro de estudiante_seccion sin ordenar
+        $estudianteSeccion = EstudianteSeccion::first();
+
+        return view('Paginas.Coordinadores.calificaciones', compact('estudianteSeccion'));
+    }
+
+    public function crearCalificaciones(Request $request)
+    {
+        try {
+            // Obtener datos del request
+            $estudianteId = $request->estudiante_id;
+            $seccionId = $request->seccion_id;
+
+            // Obtener el grado y periodo de la sección
+            $seccion = Seccion::findOrFail($seccionId);
+            $gradoPeriodo = GradoPeriodo::find($seccion->grado_periodo_id);
+            $grado = $gradoPeriodo->grado;
+            $periodo = $gradoPeriodo->periodo;
+
+            // Obtener las materias del grado
+            $materias = $grado->materias;
+
+            foreach ($materias as $materia) {
+                // Obtener los registros de docente_materia
+                $docenteMateria = DocenteMateria::where('materia_id', $materia->id)
+                    ->where('periodo_id', $periodo->id)
+                    ->first();
+
+                if ($docenteMateria) {
+                    Calificacion::create([
+                        'docente_materia_id' => $docenteMateria->id,
+                        'estudiante_id' => $estudianteId,
+                    ]);
+                }
+            }
+
+            return back()->with('message', 'Calificaciones creadas exitosamente.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error al crear las calificaciones: ' . $e->getMessage());
         }
     }
 }
