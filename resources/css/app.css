@@ -604,3 +604,15 @@ tbody {
   margin-top: -10px;
   margin-bottom: 10px;
 }
+
+.widthFix{
+  width: 320px !important;
+}
+
+tr.odd {
+  background-color: #f9f9f9;
+}
+
+tr.even {
+  background-color: #ffffff;
+}
