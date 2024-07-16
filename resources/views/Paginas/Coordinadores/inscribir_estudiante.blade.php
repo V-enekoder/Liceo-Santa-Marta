@@ -1,16 +1,15 @@
 <x-app-layout>
 
-    <!DOCTYPE html>
-    <html lang="es">
-    
     <h1 class="h1Docente">Coordinador: Inscribir estudiante</h1>
-    
-    <body>
-        <div class="container mt-5 tablaDis widthFinal flexForms">
-            <label class="formTitle" >Formulario de inscripción</label>
+
+    <div class="col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading text-table-head">Panel de búsqueda para inscripción</div>
+                <div class="panel-body">
+
             <form action="{{ route('inscribir_estudiante') }}" method="POST">
                 @csrf
-                <div class="form-group tablaDis2">
+                <div class="form-group">
                     <label class="text-default-black" for="seccion_id">Sección</label>
                     <select name="seccion_id" id="seccion_id" class="form-control" required>
                         <option value="">Seleccione una sección</option>
@@ -19,7 +18,7 @@
                         @endforeach
                     </select>
                 </div>
-                <div class="form-group mt-3 tablaDis2">
+                <div class="form-group mt-3">
                     <label class="text-default-black" for="cedula_estudiante">Cédula del Estudiante</label>
                     <input type="text" name="cedula_estudiante" id="cedula_estudiante" class="form-control" required>
                 </div>
@@ -36,8 +35,6 @@
                 </div>
             @endif
         </div>
-    </body>
-    
-    </html>
+    </div>
     
     </x-app-layout>
