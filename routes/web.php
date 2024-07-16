@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdministradorController;
+use App\Http\Controllers\CalificacionController;
 use App\Http\Controllers\CoordinadorController;
 use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\EstudianteController;
@@ -77,6 +78,11 @@ Route::post('/dashboard/inscribir-estudiante', [EstudianteController::class, 'ob
     ->name('obtener_secciones');
 Route::post('/dashboard/inscribir_estudiante', [EstudianteController::class, 'inscribirEstudianteEnSeccion'])
     ->name('inscribir_estudiante');
+
+Route::get('/dashboard/modificar_calificacion', [CalificacionController::class, 'mostrar_datos_calificacion'])
+    ->name('sidebar.modificar_calificacion');
+Route::post('/dashboard/modificar_calificacion', [CalificacionController::class, 'actualizar_calificacion'])
+    ->name('modificar_calificacion');
 
 
 

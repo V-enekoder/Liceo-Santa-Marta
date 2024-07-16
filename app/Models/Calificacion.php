@@ -21,8 +21,7 @@ class Calificacion extends Model
 
     //Relaciones Muchos-Uno
     public function docente_materia(){
-        return $this->belongsTo(DocenteMateria::class)
-            ->withPivot('periodo_id');
+        return $this->belongsTo(DocenteMateria::class);
     }
 
     public function estudiante(){
