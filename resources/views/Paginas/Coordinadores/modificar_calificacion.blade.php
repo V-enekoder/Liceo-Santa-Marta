@@ -107,37 +107,45 @@
         </div>
 
         <!-- Panel de Materias -->
-<div class="col-lg-4">
-    <div class="panel panel-default ml-7">
-        <div class="panel-heading text-table-head">Panel de materias</div>
-        <div class="panel-body">
-            <table class="table table-striped table-bordered table-hover" style="border-radius: 8px;">
-                <thead>
-                    <tr>
-                        <th>Grado</th>
-                        <th>Materia</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($materias as $materia)
-                        <tr role="row" class="{{ $loop->even ? 'even' : 'odd' }}">
-                            <td style="font-weight: bold">{{ $materia->grado->nombre }}</td>
-                            <td>{{ $materia->nombre }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+        <div class="col-lg-4">
+            <div class="panel panel-default ml-7">
+                <div class="panel-heading text-table-head">Panel de materias</div>
+                <div class="panel-body">
+                    <div class="form-group">
+                        <label for="grado-search">Filtrar por Grado:</label>
+                        <input type="text" id="grado-search" class="form-control mb-3" placeholder="Ingrese grado">
+                    </div>
+                    <table class="table table-striped table-bordered table-hover" style="border-radius: 8px;">
+                        <thead>
+                            <tr>
+                                <th>Grado</th>
+                                <th>Materia</th>
+                            </tr>
+                        </thead>
+                        <tbody id="materias-tbody">
+                            @foreach ($materias as $materia)
+                                <tr>
+                                    <td style="font-weight: bold" class="grado">{{ $materia->grado->nombre }}</td>
+                                    <td>{{ $materia->nombre }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                    <div id="pagination-container" class="pagination-container"></div>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
-
 
         <!-- Panel de Estudiantes -->
         <div class="col-lg-3">
             <div class="panel panel-default ml-7">
                 <div class="panel-heading text-table-head">Panel de estudiantes</div>
                 <div class="panel-body">
-                    <div class="table-responsive">
+                    <div class="form-group">
+                        <label for="cedula-search">Filtrar por Cédula:</label>
+                        <input type="text" id="cedula-search" class="form-control" placeholder="Ingrese cédula">
+                    </div>
+                    <div class="table-responsive mt-3">
                         <table class="table table-striped table-bordered table-hover" style="border-radius: 8px;">
                             <thead>
                                 <tr>
@@ -146,7 +154,7 @@
                                     <th>Apellido</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="estudiantes-tbody">
                                 @foreach ($estudiantes as $estudiante)
                                     <tr role="row" class="{{ $loop->even ? 'even' : 'odd' }}">
                                         <td style="font-weight: bold">{{ $estudiante->cedula }}</td>
@@ -156,11 +164,86 @@
                                 @endforeach
                             </tbody>
                         </table>
+                        <div id="estudiantes-pagination" class="pagination-container"></div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
+
+        <!-- scripts -->
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                function setupTableFilteringAndPagination(tableId, inputId, paginationId, filterFunction) {
+                    const rowsPerPage = 8;
+                    const tableBody = document.getElementById(tableId);
+                    const rows = Array.from(tableBody.querySelectorAll('tr'));
+                    const paginationContainer = document.getElementById(paginationId);
+                    const searchInput = document.getElementById(inputId);
+            
+                    let filteredRows = rows;
+            
+                    function displayPage(page) {
+                        tableBody.innerHTML = '';
+                        const start = (page - 1) * rowsPerPage;
+                        const end = start + rowsPerPage;
+                        const pageRows = filteredRows.slice(start, end);
+            
+                        pageRows.forEach((row, index) => {
+                            row.className = index % 2 === 0 ? 'even' : 'odd';
+                            tableBody.appendChild(row);
+                        });
+                    }
+            
+                    function setupPagination() {
+                        paginationContainer.innerHTML = '';
+                        const pageCount = Math.ceil(filteredRows.length / rowsPerPage);
+            
+                        for (let i = 1; i <= pageCount; i++) {
+                            const btn = document.createElement('button');
+                            btn.textContent = i;
+                            btn.addEventListener('click', function() {
+                                displayPage(i);
+                            });
+                            paginationContainer.appendChild(btn);
+                        }
+                    }
+            
+                    function filterAndSortTable() {
+                        const input = searchInput.value.toLowerCase();
+                        filteredRows = rows.filter(function(row) {
+                            return filterFunction(row, input);
+                        });
+            
+                        filteredRows.sort(function(a, b) {
+                            const textA = a.querySelector('td').textContent.toLowerCase();
+                            const textB = b.querySelector('td').textContent.toLowerCase();
+                            return textA.localeCompare(textB);
+                        });
+            
+                        displayPage(1);
+                        setupPagination();
+                    }
+            
+                    searchInput.addEventListener('input', function() {
+                        filterAndSortTable();
+                        displayPage(1);
+                    });
+            
+                    filterAndSortTable();
+                }
+            
+                setupTableFilteringAndPagination('materias-tbody', 'grado-search', 'pagination-container', function(row, input) {
+                    const grado = row.querySelector('.grado').textContent.toLowerCase();
+                    return grado.includes(input);
+                });
+            
+                setupTableFilteringAndPagination('estudiantes-tbody', 'cedula-search', 'estudiantes-pagination', function(row, input) {
+                    const cedula = row.querySelector('td').textContent.toLowerCase();
+                    return cedula.includes(input);
+                });
+            });
+            </script>
 
 
 </x-app-layout>
