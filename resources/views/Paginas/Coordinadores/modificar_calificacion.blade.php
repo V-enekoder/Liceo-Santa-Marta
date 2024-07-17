@@ -166,9 +166,9 @@
                         <tbody id="estudiantes-tbody">
                             @foreach ($estudiantes as $estudiante)
                                 <tr role="row" class="{{ $loop->even ? 'even' : 'odd' }}">
-                                    <td style="font-weight: bold">{{ $estudiante->cedula }}</td>
-                                    <td>{{ $estudiante->primer_nombre }}</td>
-                                    <td>{{ $estudiante->primer_apellido }}</td>
+                                    <td style="font-weight: bold">{{ $estudiante->persona->cedula }}</td>
+                                    <td>{{ $estudiante->persona->primer_nombre }}</td>
+                                    <td>{{ $estudiante->persona->primer_apellido }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
