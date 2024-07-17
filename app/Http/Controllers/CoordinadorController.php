@@ -44,8 +44,7 @@ class CoordinadorController extends Controller{
         return view('Paginas.Coordinadores.modificacion_estudiantes',);
     }
 //-----------------------------------------------------------------------------------------------------------------------
-    function modificarDocentes(){
-        //Gate::authorize('modificar_docente');
+    public function modificarDocentes(){
         return view('Paginas.Coordinadores.Profesores',);
     }
 //-------------------------------------------------------------------------------------------------------
