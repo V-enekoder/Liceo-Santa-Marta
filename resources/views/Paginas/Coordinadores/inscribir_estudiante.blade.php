@@ -1,12 +1,15 @@
-{{-- <x-app-layout> --}}
+<x-app-layout>
+
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row">
         <div class="col-lg-8">
             <div class="card">
-                <div class="card-header text-center">
+                <div class="card-header">
                     <h1 class="h1Docente">Coordinador: Inscribir estudiante</h1>
                 </div>
-                <div class="card-body">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-table-head">Panel de búsqueda para inscripción</div>
+                    <div class="panel-body">
                     <form action="{{ route('inscribir_estudiante') }}" method="POST">
                         @csrf
                         <div class="form-group">
@@ -23,9 +26,8 @@
                             <input type="text" name="cedula_estudiante" id="cedula_estudiante" class="form-control"
                                 required>
                         </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary">Inscribir</button>
-                        </div>
+                        <button type="submit"
+                        class="mt-5 mb-0 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Inscribir</button>
                     </form>
 
                     @if (session('message'))
@@ -43,4 +45,4 @@
         </div>
     </div>
 </div>
-{{-- </x-app-layout> --}}
+</x-app-layout>
