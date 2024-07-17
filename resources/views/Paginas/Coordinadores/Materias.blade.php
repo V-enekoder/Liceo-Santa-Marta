@@ -20,7 +20,7 @@
                 @foreach ($materias as $materia)
                     <tr data-id="{{ $materia->id }}">
                         <td class="py-3 px-6 border-b border-gray-200">{{ $materia->id }}</td>
-                        <td class="py-3 px-6 border-b border-gray-200">{{ $materia->grado->nombre_grado }}</td>
+                        <td class="py-3 px-6 border-b border-gray-200">{{ $materia->grado->nombre }}</td>
                         <td class="py-3 px-6 border-b border-gray-200">{{ $materia->nombre }}</td>
                         <td class="py-3 px-6 text-center border-b border-gray-200">
                             <a href="#"

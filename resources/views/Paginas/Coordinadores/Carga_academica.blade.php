@@ -1,6 +1,4 @@
-{{-- <x-app-layout> --}}
-<div class="container">
-    <h1 class="h1Docente text-center mb-4">Coordinador: Crear carga académica</h1>
+<x-app-layout> 
 
     <!-- Estilos CSS -->
     <style>
@@ -111,68 +109,111 @@
         </div>
     @endif
 
-    <div class="ajuste-tablas">
-        <div class="col-lg-4 mx-auto">
-            <div class="panel panel-default">
-                <div class="panel-heading text-table-head">Crear Carga Académica</div>
-                <div class="panel-body">
-                    <form method="POST" action="{{ route('sidebar.formulario_carga_academica') }}">
-                        @csrf
-                        <div class="form-group">
-                            <label class="text-default-black" for="persona_id">Persona</label>
-                            <select id="persona_id" class="form-control @error('persona_id') is-invalid @enderror"
-                                name="persona_id" required>
-                                <option value="">Seleccionar Persona</option>
-                                @foreach ($personas as $persona)
-                                    <option value="{{ $persona->id }}">{{ $persona->primer_nombre }}
-                                        {{ $persona->primer_apellido }}</option>
-                                @endforeach
-                            </select>
 
-                            <!-- Mostrar mensaje de error -->
-                            @error('persona_id')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label class="text-default-black">Materias Disponibles</label>
-                            <div class="row">
-                                @foreach ($grados as $grado)
-                                    <div class="col-12">
-                                        <h4>{{ $grado['año'] }}</h4>
-                                        <ul class="checkbox-list">
-                                            @foreach ($grado['materias'] as $materia)
-                                                <li class="checkbox-item">
-                                                    <input id="materia_{{ $materia->id }}" type="checkbox"
-                                                        class="checkbox-input" name="materias[]"
-                                                        value="{{ $materia->id }}">
-                                                    <label for="materia_{{ $materia->id }}" class="checkbox-label">
-                                                        {{ $materia->nombre }}
-                                                    </label>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    </div>
-                                @endforeach
+    <div class="container dflexFix">
+        <h1 class="h1Docente text-center mb-4">Coordinador: Crear carga académica</h1>
+        <div class="ajuste-tablas">
+            <div class="col-lg-4 mx-auto">
+                <div class="panel panel-default">
+                    <div class="panel-heading text-table-head">Crear Carga Académica</div>
+                    <div class="panel-body">
+                        <form method="POST" action="{{ route('sidebar.formulario_carga_academica') }}">
+                            @csrf
+                            <div class="form-group">
+                                <label class="text-default-black" for="persona_id">Persona</label>
+                                <select id="persona_id" class="form-control @error('persona_id') is-invalid @enderror"
+                                    name="persona_id" required>
+                                    <option value="">Seleccionar Persona</option>
+                                    @foreach ($personas as $persona)
+                                        <option value="{{ $persona->id }}">{{ $persona->primer_nombre }}
+                                            {{ $persona->primer_apellido }}</option>
+                                    @endforeach
+                                </select>
+                                <!-- Mostrar mensaje de error -->
+                                @error('persona_id')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
                             </div>
-
-                            <!-- Mostrar mensaje de error -->
-                            @error('materias')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-                        <button type="submit" class="btn-primary">Asignar Carga Académica</button>
-                    </form>
+                            <div class="form-group">
+                                <label class="text-default-black">Materias Disponibles</label>
+                                <table class="table table-striped table-bordered table-hover" style="border-radius: 8px;">
+                                    <thead>
+                                        <tr>
+                                            <th>Grado</th>
+                                            <th>Materia</th>
+                                            <th>Asignar</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="materias-tbody">
+                                        @foreach ($materias as $index => $materia)
+                                            <tr class="{{ $index % 2 == 0 ? 'even' : 'odd' }}">
+                                                <td class="py-0 px-6 border-b border-gray-200">{{ $materia->grado->nombre }}</td>
+                                                <td class="py-0 px-6 border-b border-gray-200">{{ $materia->nombre }}</td>
+                                                <td class="py-0 px-6 border-b border-gray-200">
+                                                    <input id="materia_{{ $materia->id }}" type="checkbox" class="checkbox-input" name="materias[]" value="{{ $materia->id }}">
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                                <div id="pagination-container" class="pagination-container"></div>
+                                <!-- Mostrar mensaje de error -->
+                                @error('materias')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <button type="submit" class="btn-primary">Asignar Carga Académica</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-</div>
-{{-- </x-app-layout> --}}
+    
+    <!-- Estilos CSS adicionales -->
+    <style>
+        .even {
+            background-color: #f9f9f9;
+        }
+        .odd {
+            background-color: #ffffff;
+        }
+    </style>
+    
+    <!-- Script de paginación -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const rowsPerPage = 8;
+            const rows = document.querySelectorAll('#materias-tbody tr');
+            const paginationContainer = document.getElementById('pagination-container');
+            
+            function displayRows(startIndex) {
+                rows.forEach((row, index) => {
+                    row.style.display = index >= startIndex && index < startIndex + rowsPerPage ? '' : 'none';
+                });
+            }
+    
+            function setupPagination() {
+                const totalPages = Math.ceil(rows.length / rowsPerPage);
+                paginationContainer.innerHTML = '';
+                for (let i = 0; i < totalPages; i++) {
+                    const pageButton = document.createElement('button');
+                    pageButton.textContent = i + 1;
+                    pageButton.classList.add('pagination-button');
+                    pageButton.addEventListener('click', () => {
+                        displayRows(i * rowsPerPage);
+                    });
+                    paginationContainer.appendChild(pageButton);
+                }
+            }
+    
+            displayRows(0);
+            setupPagination();
+        });
+    </script>
+
+</x-app-layout>
