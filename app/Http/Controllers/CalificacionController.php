@@ -8,7 +8,9 @@ use App\Models\Estudiante;
 use App\Models\Grado;
 use App\Models\Materia;
 use App\Models\Periodo_Academico;
+use App\Models\Persona;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class CalificacionController extends Controller
 {
@@ -31,15 +33,25 @@ public function actualizar_calificacion(Request $request)
     $request->validate([
         'periodo_id' => 'required|integer|exists:periodos_academicos,id',
         'materia_id' => 'required|integer|exists:materias,id',
-        'cedula_estudiante' => 'required|integer|exists:estudiantes,cedula',
+        'cedula_estudiante' => 'required|integer|exists:personas,cedula',
         'lapso_1' => 'nullable|integer|min:1|max:20',
         'lapso_2' => 'nullable|integer|min:1|max:20',
         'lapso_3' => 'nullable|integer|min:1|max:20',
     ]);
 
     try {
-        // Buscar al estudiante por cédula
-        $estudiante = Estudiante::where('cedula', $request->cedula_estudiante)->firstOrFail();
+        $persona = Persona::where('cedula', $request->cedula_estudiante)->firstOrFail();
+
+        // Acceder al estudiante a través de la relación
+        $estudiante = $persona->estudiante;
+
+        // Validar si el estudiante existe
+        if (!$estudiante) {
+            throw ValidationException::withMessages([
+                'cedula_estudiante' => ['No se encontró un estudiante asociado a esta cédula.'],
+            ]);
+        }
+
 
         // Buscar la calificación del estudiante en la materia y periodo específicos
         $calificacion = Calificacion::where('estudiante_id', $estudiante->id)
@@ -83,5 +95,7 @@ public function actualizar_calificacion(Request $request)
         ], 400);
     }
 }
+
+
 
 }

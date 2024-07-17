@@ -79,7 +79,7 @@ public function mostrar_formulario_crear_usuario()
             'fecha_nacimiento' => $request->input('fecha_nacimiento'),
             'activo' => true,
         ]);
-        // Crear un usuario si la categoría de persona es 1 y es solicitado
+        // Crear un usuario si la categoria de persona es 1 y es solicitado
         $user = null;
 
         Log::info('Persona ID: ' . $persona->id);

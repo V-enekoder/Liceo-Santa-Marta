@@ -16,10 +16,10 @@ class PersonaFactory extends Factory
     protected $model = Persona::class;
 
             /**
-Crear una persona con un categoría_id específico
+Crear una persona con un categoria_id específico
 $persona = Persona::factory()->withCategoriaId(1)->create();
 
-// Crear una persona con un categoría_id generado automáticamente
+// Crear una persona con un categoria_id generado automáticamente
 $persona = Persona::factory()->create();
          */
     public function definition()
