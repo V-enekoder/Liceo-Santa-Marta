@@ -22,7 +22,7 @@
             </div>
         @endif
 
-        <form action="{{ url('/dashboard/crear-usuario') }}" method="POST">
+        <form action="{{ route('sidebar.crearpersona') }}" method="POST">
             @csrf
             <div class="form-group">
                 <label for="cedula">Cédula</label>
