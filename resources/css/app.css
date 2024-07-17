@@ -640,3 +640,10 @@ tr.even {
 .pagination-container button:focus {
   outline: none;
 }
+
+.dflexFix {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: flex-start;
+}
