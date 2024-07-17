@@ -51,7 +51,7 @@ class CreateNewUser implements CreatesNewUsers
     
         if ($user->rol_id != 4) {
             throw ValidationException::withMessages([
-                'rol_id' => ['El usuario no tiene permisos para realizar esta acción.'],
+                'rol_id' => ['El usuario no tiene permisos para realizar esta acción. Comuníquese con la institucion.'],
             ]);
         }
         // Actualizar los campos proporcionados

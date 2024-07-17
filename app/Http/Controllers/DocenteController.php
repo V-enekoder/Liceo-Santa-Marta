@@ -94,11 +94,11 @@ class DocenteController extends Controller
     public function mostrarFormularioAsignarCarga()
     {
         // Obtener las personas con categoria_id = 1
-        $personas = Persona::where('categoria_id', 1)->get();
+        $per = Persona::where('categoria_id', 1)->get();
 
         // Filtrar las personas que tienen rol_id = 3 (docentes)
-        $docentes = $personas->filter(function ($persona) {
-            return $persona->user && $persona->user->rol_id === 3;
+        $personas = $per->filter(function ($per) {
+            return $per->user && $per->user->rol_id === 3;
         });
 
         // Obtener todas las materias disponibles
@@ -107,7 +107,7 @@ class DocenteController extends Controller
         // Obtener los grados con sus materias
         $grados = Grado::with('materias')->get();
 
-        return view('Paginas.Coordinadores.Carga_academica', compact('materias', 'docentes', 'grados'));
+        return view('Paginas.Coordinadores.Carga_academica', compact('materias', 'personas', 'grados'));
     }
 
 public function asignarCargaAcademica(Request $request)
@@ -128,21 +128,25 @@ public function asignarCargaAcademica(Request $request)
         // Verificar si se encontró un usuario
         if (!$user) {
             return response()->json([
-                'success' => false,
+                'status' => 'error',
+                'error' => 'No se encontró un usuario asociado a la persona proporcionada.'
+            ], 404);
+        }
+
+        $user = User::where('persona_id', $request->persona_id)
+            ->with('persona')
+            ->first();
+
+        // Verificar si se encontró un usuario
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
                 'error' => 'No se encontró un usuario asociado a la persona proporcionada.'
             ], 404);
         }
 
         // Buscar al docente asociado a este usuario
         $docente = $user->docente;
-
-        // Verificar si se encontró un docente
-        /*if (!$docente) {
-            return response()->json([
-                'success' => false,
-                'error' => 'No se encontró un docente asociado al usuario.'
-            ], 404);
-        }*/
 
         // Obtener el periodo académico actual
         $periodoActual = Periodo_Academico::where('actual', 1)->firstOrFail();
@@ -166,18 +170,17 @@ public function asignarCargaAcademica(Request $request)
         }
 
         return response()->json([
-            'docente' => $user
-        ], 200);
-
+            'status' => 'success',
+            'message' => 'Carga académica asignada correctamente al docente'
+        ], 201);
     } catch (\Exception $e) {
         return response()->json([
-            'error' => 'Error al realizar la operación: ' . $e->getMessage(),
-        ], 400);
+            'status' => 'error',
+            'message' => 'Error al asignar la carga académica',
+            'error' => $e->getMessage()
+        ], 500);
     }
 }
-
-
-
 
     public function mostrarDocentePorCedula($cedula)
     {
