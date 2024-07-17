@@ -47,11 +47,12 @@ class CoordinadorController extends Controller{
         //Gate::authorize('modificar_estudiante');
         return view('Paginas.Coordinadores.modificacion_estudiantes',);
     }
+//-----------------------------------------------------------------------------------------------------------------------
     function modificarDocentes(){
         //Gate::authorize('modificar_docente');
         return view('Paginas.Coordinadores.Profesores',);
     }
-
+//-------------------------------------------------------------------------------------------------------
     function modificarMaterias(){
         //Gate::authorize('modificar_materias');
         return view('Paginas.Coordinadores.Materias',);
