@@ -15,10 +15,15 @@ return new class extends Migration
     {
         Schema::create('coordinadores', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->unique()->constrained('users')->cascadeOnDelete();
-            $table->date('fecha_ingreso')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->foreignId('user_id')
+                ->unique()
+                ->constrained('users')
+                ->cascadeOnDelete();
+            $table->date('fecha_ingreso')
+                ->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->date('fecha_retiro')->nullable();
         });
+
     }
 
     /**

@@ -12,7 +12,7 @@ class EstudianteRepresentante extends Model{
     protected $fillable = [
         'estudiante_id',
         'representante_id',
-        'periodo_academico_id',
+        'periodo_id',
     ];
 
     //Relaciones Muchos-Uno

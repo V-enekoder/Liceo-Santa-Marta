@@ -149,5 +149,24 @@ class DocenteController extends Controller
                 ->with('error', 'Error al asignar la carga académica: ' . $e->getMessage());
         }
     }
+    public function mostrarDocentePorCedula($cedula)
+    {
+        try {
+            // Buscar al docente por su cédula y rol de docente (rol_id = 3)
+            $docente = User::where('cedula', $cedula)
+                            ->where('rol_id', 3)
+                            ->with('docente') // Cargar la relación con el modelo Docente si está definida
+                            ->firstOrFail();
 
+            // Retornar los datos del docente en formato JSON
+            return response()->json([
+                'docente' => $docente
+            ], 200);
+        } catch (\Exception $e) {
+            // Manejar el error si no se encuentra el docente
+            return response()->json([
+                'error' => 'No se encontró al docente con la cédula proporcionada.'
+            ], 404);
+        }
+    }
 }

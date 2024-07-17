@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('nombre');
             $table->year('año_inicio')->unique();
             $table->year('año_fin')->unique();
+            $table->boolean('actual')->default(false);
         });
     }
 

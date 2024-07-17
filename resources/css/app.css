@@ -604,3 +604,39 @@ tbody {
   margin-top: -10px;
   margin-bottom: 10px;
 }
+
+.widthFix{
+  width: 320px !important;
+}
+
+tr.odd {
+  background-color: #f9f9f9;
+}
+
+tr.even {
+  background-color: #ffffff;
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination-container button {
+  background-color: #007bff;
+  border: none;
+  color: white;
+  padding: 10px 15px;
+  margin: 0 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination-container button:hover {
+  background-color: #0056b3;
+}
+
+.pagination-container button:focus {
+  outline: none;
+}

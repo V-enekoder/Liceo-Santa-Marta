@@ -12,7 +12,7 @@ class Estudiante extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'cedula',
+        'persona_id',
         'primer_nombre',
         'segundo_nombre',
         'primer_apellido',
@@ -24,6 +24,12 @@ class Estudiante extends Model
     protected $dates = [
         'fecha_nacimiento'
     ];
+
+    //Relaciones Uno-UNo
+    public function persona(){
+        return $this->belongsTo(Persona::class);
+    }
+
     //Relaciones Uno-Muchos
     public function calificaciones(){
         return $this->hasMany(Calificacion::class);
