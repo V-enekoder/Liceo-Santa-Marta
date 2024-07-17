@@ -1,6 +1,6 @@
 <x-app-layout>
-    <div class="container">
-        <h1 class="h1Docente text-center mb-4">Coordinador: Crear sección</h1>
+    <div class="container dflexFix">
+        <h1 class="h1Docente mb-4">Coordinador: Crear sección</h1>
 
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -34,7 +34,8 @@
                                 value="{{ old('capacidad', 40) }}" min="1" required>
                         </div>
 
-                        <button type="submit" class="mt-3 btn btn-primary btn-block">Crear Sección</button>
+                        <button type="submit"
+                        class="mt-5 mb-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Crear sección</button>
                     </form>
                 </div>
             </div>
