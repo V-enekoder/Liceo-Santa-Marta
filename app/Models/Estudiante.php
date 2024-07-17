@@ -13,16 +13,8 @@ class Estudiante extends Model
 
     protected $fillable = [
         'persona_id',
-        'primer_nombre',
-        'segundo_nombre',
-        'primer_apellido',
-        'segundo_apellido',
-        'fecha_nacimiento',
         'ultimo_grado_aprobado',
-    ];
-
-    protected $dates = [
-        'fecha_nacimiento'
+        'inscrito'
     ];
 
     //Relaciones Uno-UNo

@@ -11,8 +11,15 @@ class Persona extends Model
     protected $table = 'personas';
     public $timestamps = false;
     protected $fillable = [
+        'categoria_id',
         'cedula',
-        'fecha_nacimiento'
+        'primer_nombre',
+        'segundo_nombre',
+        'primer_apellido',
+        'segundo_apellido',
+        'direccion',
+        'fecha_nacimiento',
+        'activo'
     ];
 
     //Relacion Uno-Uno

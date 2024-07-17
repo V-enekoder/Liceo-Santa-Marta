@@ -12,42 +12,12 @@ use App\Models\EstudianteRepresentante;
 use App\Models\EstudianteSeccion;
 use App\Models\Periodo_Academico;
 use App\Models\Seccion;
+use App\Models\Persona;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class EstudianteController extends Controller
 {
-    public function mostrar_plantilla()
-    {
-        return view('Paginas.Coordinadores.crear_estudiante');
-    }
-    public function crear_estudiante(Request $request)
-    {
-        // Validación de los datos de entrada
-        $request->validate([
-            'cedula' => 'required|integer|unique:estudiantes,cedula',
-            'primer_nombre' => 'required|string|max:255',
-            'segundo_nombre' => 'nullable|string|max:255',
-            'primer_apellido' => 'required|string|max:255',
-            'segundo_apellido' => 'nullable|string|max:255',
-            'fecha_nacimiento' => 'required|date',
-            'ultimo_grado_aprobado' => 'required|integer'
-        ]);
-
-        // Crear el nuevo estudiante
-        $estudiante = Estudiante::create([
-            'cedula' => $request->cedula,
-            'primer_nombre' => $request->primer_nombre,
-            'segundo_nombre' => $request->segundo_nombre,
-            'primer_apellido' => $request->primer_apellido,
-            'segundo_apellido' => $request->segundo_apellido,
-            'fecha_nacimiento' => $request->fecha_nacimiento,
-            'ultimo_grado_aprobado' => $request->ultimo_grado_aprobado
-        ]);
-
-        return response()->json(['message' => 'Estudiante creado correctamente', 'estudiante' => $estudiante], 201);
-    }
-
     public function mostrarFichaEstudiante(Request $request)
     {
         $request->validate([
@@ -89,18 +59,17 @@ class EstudianteController extends Controller
     public function mostrarFormularioInscripcion()
     {
         $grados = Grado::all();
-        $periodos = Periodo_Academico::all();
-        return view('Paginas.Coordinadores.secciones_disponibles', compact('grados', 'periodos'));
+        return view('Paginas.Coordinadores.secciones_disponibles', compact('grados'));
     }
 
     public function obtenerSecciones(Request $request)
     {
         $grado_id = $request->grado_id;
-        $periodo_id = $request->periodo_id;
+        $periodoActual = Periodo_Academico::where('actual', true)->first();
 
-        // Buscar el grado_periodo correspondiente
+        // Obtener el grado_periodo utilizando el periodo académico actual
         $grado_periodo = GradoPeriodo::where('grado_id', $grado_id)
-            ->where('periodo_id', $periodo_id)
+            ->where('periodo_id', $periodoActual->id)
             ->first();
 
         // Obtener las secciones correspondientes si existe el grado_periodo
@@ -116,17 +85,28 @@ class EstudianteController extends Controller
     {
         $request->validate([
             'seccion_id' => 'required|integer|exists:secciones,id',
-            'cedula_estudiante' => 'required|integer|exists:estudiantes,cedula',
+            'cedula_estudiante' => 'required|integer|exists:personas,cedula',
         ]);
 
         try {
+            // Buscar a la persona por la cédula proporcionada
+            $persona = Persona::where('cedula', $request->cedula_estudiante)->firstOrFail();
+
+            // Verificar si la persona tiene asociado un estudiante
+            if (!$persona->estudiante) {
+                return back()->with('error', 'La persona con la cédula proporcionada no tiene un perfil de estudiante asociado.');
+            }
+
+            // Obtener al estudiante asociado a la persona
+            $estudiante = $persona->estudiante;
+
+            // Obtener la sección seleccionada
             $seccion = Seccion::findOrFail($request->seccion_id);
 
+            // Verificar la capacidad de la sección
             if ($seccion->alumnos_inscritos >= $seccion->capacidad) {
                 return back()->with('error', 'La sección ha alcanzado su capacidad máxima.');
             }
-
-            $estudiante = Estudiante::where('cedula', $request->cedula_estudiante)->firstOrFail();
 
             // Obtener el último grado aprobado del estudiante
             $ultimoGradoAprobado = $estudiante->ultimo_grado_aprobado;
@@ -135,7 +115,7 @@ class EstudianteController extends Controller
             $gradoPeriodo = GradoPeriodo::find($seccion->grado_periodo_id);
             $grado = $gradoPeriodo->grado;
             $periodo = $gradoPeriodo->periodo;
-            $añoGrado = $grado->año;
+            $añoGrado = $grado->nombre;
 
             // Verificar si el estudiante puede inscribirse en esta sección
             if ($ultimoGradoAprobado != ($añoGrado - 1)) {
@@ -160,8 +140,12 @@ class EstudianteController extends Controller
                 'estudiante_id' => $estudiante->id,
                 'seccion_id' => $seccion->id,
             ]);
+
+            // Incrementar el contador de alumnos inscritos en la sección
             $seccion->increment('alumnos_inscritos');
-        $this->crearCalificaciones($estudiante, $grado, $periodo);
+
+            // Crear las calificaciones correspondientes al estudiante
+            $this->crearCalificaciones($estudiante, $grado, $periodo);
 
             return back()->with('message', 'El estudiante ha sido inscrito exitosamente en la sección.');
         } catch (\Exception $e) {
@@ -188,15 +172,24 @@ class EstudianteController extends Controller
         }
     }
 
-    public function mostrarEstudiantePorCedula($cedula)
+    public function formulario_buscar()
+    {
+        return view('Paginas.Coordinadores.buscar_estudiante');
+    }
+
+    public function buscar_estudiante($cedula)
     {
         try {
-            // Buscar al estudiante por su cédula
-            $estudiante = Estudiante::where('cedula', $cedula)->firstOrFail();
-            // Retornar los datos del estudiante en formato JSON
-            return response()->json([
-                'estudiante' => $estudiante
-            ], 200);
+            $persona = Persona::where('cedula', $cedula)->firstOrFail();
+
+            // Verificar si la persona tiene asociado un estudiante
+            if (!$persona->estudiante) {
+                return back()->with('error', 'La persona con la cédula proporcionada no tiene un perfil de estudiante asociado.');
+            }
+
+            // Obtener al estudiante asociado a la persona
+            $estudiante = $persona->estudiante;
+            return view('Paginas.Coordinadores.buscar_estudiante', compact('estudiante'));
         } catch (\Exception $e) {
             // Manejar el error si no se encuentra al estudiante
             return response()->json([

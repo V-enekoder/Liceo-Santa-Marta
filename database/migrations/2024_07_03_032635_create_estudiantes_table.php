@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('persona_id')->constrained('personas')->cascadeOnDelete();
             $table->unsignedInteger('ultimo_grado_aprobado');
-            $table->boolean('inscrito');
+            $table->boolean('inscrito')->default(false);
         });
     }
 

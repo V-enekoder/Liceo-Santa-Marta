@@ -27,7 +27,7 @@ class EstudianteFactory extends Factory
                 return Persona::factory()->create(['categoría_id' => 2])->id;
             },
             'ultimo_grado_aprobado' => $this->faker->numberBetween(0, 5),
-            'inscrito' => $this->faker->boolean,
+            'inscrito' => 0
         ];
     }
 }

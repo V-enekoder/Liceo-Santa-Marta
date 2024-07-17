@@ -7,7 +7,9 @@ use App\Http\Controllers\DocenteController;
 use App\Http\Controllers\EstudianteController;
 use App\Http\Controllers\RepresentanteController;
 use App\Http\Controllers\MateriaController;
+use App\Http\Controllers\SeccionController;
 use App\Http\Controllers\TelefonoController;
+use App\Http\Controllers\PersonaController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -29,23 +31,20 @@ Route::middleware([
 
 //Rutas para Administradores
 
-Route::get('/dashboard/crear_usuario', [AdministradorController::class, 'mostrar_formulario_crear_usuario']);
-Route::post('/dashboard/crear_usuario', [AdministradorController::class, 'crear_usuario']);
 //Rutas para Coorinadores
 Route::get('/dashboard/periodos', [CoordinadorController::class, 'ver_periodos'])
     ->name('sidebar.periodos');
 Route::post('/dashboard/periodos', [CoordinadorController::class, 'crear_periodo_academico'])
     ->name('crear_periodo_academico');
 
-Route::get('/dashboard/crear-estudiante', [EstudianteController::class, 'mostrar_plantilla']);
-Route::post('/dashboard/crear-estudiante', [EstudianteController::class, 'crear_estudiante']);
+Route::get('/dashboard/crear_persona', [PersonaController::class, 'mostrar_formulario_crear_usuario'])
+    ->name('sidebar.crearpersona');
+Route::post('/dashboard/crear_persona', [PersonaController::class, 'crear']);
 
-Route::get('/dashboard/crear-usuario', [CoordinadorController::class, 'mostrar_formulario_crear_usuario']);
-Route::post('/dashboard/crear-usuario', [CoordinadorController::class, 'crear_usuario']);
-
-Route::get('/dashboard/crear-seccion', [CoordinadorController::class, 'mostrarFormularioCrearSeccion'])
+Route::get('/dashboard/crear-seccion', [SeccionController::class, 'mostrarFormularioCrearSeccion'])
     ->name('sidebar.crearseccion');
-Route::post('/dashboard/crear-seccion', [CoordinadorController::class, 'crearSeccion']);
+Route::post('/dashboard/crear-seccion', [SeccionController::class, 'crearSeccion']);
+
 Route::get('/dashboard/dataNotas', [CoordinadorController::class, 'modificarNotas'])->name('sidebar.notas');
 Route::get('/dashboard/dataRepresentantes', [CoordinadorController::class, 'modificarRepresentantes'])->name('sidebar.modirepresentantes');
 Route::get('/dashboard/dataEstudiantes', [CoordinadorController::class, 'modificarEstudiantes'])->name('sidebar.modiestudiantes');
@@ -77,6 +76,12 @@ Route::post('/dashboard/inscribir-estudiante', [EstudianteController::class, 'ob
     ->name('obtener_secciones');
 Route::post('/dashboard/inscribir_estudiante', [EstudianteController::class, 'inscribirEstudianteEnSeccion'])
     ->name('inscribir_estudiante');
+
+Route::get('/dashboard/buscar-estudiante', [EstudianteController::class, 'formulario_buscar'])
+    ->name('sidebar.buscar_estudiante');
+
+Route::get('/dashboard/buscar-estudiante', [EstudianteController::class, 'buscar_estudiante'])
+    ->name('buscar_estudiante');
 
 Route::get('/dashboard/modificar_calificacion', [CalificacionController::class, 'mostrar_datos_calificacion'])
     ->name('sidebar.modificar_calificacion');

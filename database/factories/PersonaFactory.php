@@ -29,7 +29,6 @@ $persona = Persona::factory()->create();
                 return Categoria::factory()->create()->id;
             },
             'cedula' => $this->faker->unique()->numberBetween(1000000, 99999999),
-            'tipo' => $this->faker->numberBetween(1, 2),
             'primer_nombre' => $this->faker->firstName,
             'segundo_nombre' => $this->faker->firstName,
             'primer_apellido' => $this->faker->lastName,

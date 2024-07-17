@@ -17,7 +17,7 @@ class SeccionesSeeder extends Seeder
             foreach ($seccionesPorGrado as $nombreSeccion) {
                 Seccion::create([
                     'grado_periodo_id' => GradoPeriodo::where('grado_id', $gradoId)->where('periodo_id', 1)->first()->id,
-                    'nombre' => 'Sección ' . $nombreSeccion,
+                    'nombre' => $nombreSeccion,
                     'alumnos_inscritos' => 0,
                 ]);
             }
