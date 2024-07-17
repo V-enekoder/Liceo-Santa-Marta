@@ -20,6 +20,11 @@ class Persona extends Model
         return $this->hasOne(User::class);
     }
 
+    //Relacion Mucho-Uno
+    public function categoria(){
+        return $this->belongsTo(Categoria::class);
+    }
+
     public function estudiante(){
         return $this->hasOne(Estudiante::class);
     }
