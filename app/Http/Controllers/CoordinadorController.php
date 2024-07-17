@@ -44,10 +44,44 @@ class CoordinadorController extends Controller{
         return view('Paginas.Coordinadores.modificacion_estudiantes',);
     }
 //-----------------------------------------------------------------------------------------------------------------------
-    public function modificarDocentes(){
-        return view('Paginas.Coordinadores.Profesores',);
+    public function mostrarDocentes() 
+    {
+    // Obtener todos los docentes junto con la información del usuario
+    $docentes = Docente::with('user.persona')->get();
+    return view('Paginas.Coordinadores.Profesores', ['docentes' => $docentes]);
     }
-//-------------------------------------------------------------------------------------------------------
+
+
+    public function updateDocente(Request $request, $id)
+    {   
+        $docente = Docente::findOrFail($id);
+        $usuario = $docente->usuario;
+        $persona = $usuario->persona;
+
+        // Validar los datos
+        $request->validate([
+            'nombre' => 'required|string|max:255',
+            'apellido' => 'required|string|max:255',
+            'cedula' => 'required|string|max:10',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $usuario->id,
+        ]);
+
+        // Actualizar los datos de la persona
+        $persona->update([
+            'nombre' => $request->nombre,
+            'apellido' => $request->apellido,
+            'cedula' => $request->cedula,
+        ]);
+
+        // Actualizar los datos del usuario
+        $usuario->update([
+            'email' => $request->email,
+        ]);
+
+        // Redirigir con un mensaje de éxito
+        return redirect()->route('sidebar.modidocentes')->with('success', 'Docente actualizado con éxito');
+    }
+//-----------------------------------------------------------------------------------------------------------------------
     function modificarMaterias(){
         //Gate::authorize('modificar_materias');
         return view('Paginas.Coordinadores.Materias',);
