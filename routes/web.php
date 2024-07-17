@@ -88,6 +88,11 @@ Route::get('/dashboard/modificar_calificacion', [CalificacionController::class, 
 Route::post('/dashboard/modificar_calificacion', [CalificacionController::class, 'actualizar_calificacion'])
     ->name('modificar_calificacion');
 
+Route::get('/dashboard/docentes', [DocenteController::class, 'mostrarTodosLosDocentes'])
+    ->name('docentes.index');
+Route::get('/dashboard/docentes/buscar', [DocenteController::class, 'mostrarTodosLosDocentes'])
+    ->name('docentes.buscar');
+
 Route::get('/dashboard/dataNotas', [CoordinadorController::class, 'modificarNotas'])->name('sidebar.notas');
 Route::get('/dashboard/dataRepresentantes', [CoordinadorController::class, 'modificarRepresentantes'])->name('sidebar.modirepresentantes');
 Route::get('/dashboard/dataEstudiantes', [CoordinadorController::class, 'modificarEstudiantes'])->name('sidebar.modiestudiantes');
@@ -108,6 +113,7 @@ Route::get('/dashboard/vincular_representante',[RepresentanteController::class,'
     ->name('sidebar.vincular_representante');
 Route::post('/dashboard/vincular_representante',[RepresentanteController::class,'vincular_estudiante_representante'])
     ->name('vincular_representante');
+
 
 //Rutas para Docentes
 Route::get('/dashboard/CargaNotas', [DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');
