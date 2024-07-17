@@ -33,8 +33,10 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                         <li><a href="{{ route('sidebar.periodos') }}" class="block p-2 hover:bg-gray-800">Crear período
                                 acádemico</a></li>
 
-                        <li><a href="{{ route('sidebar.notas') }}" class="block p-2 hover:bg-gray-800">Modificar
-                                notas</a></li>
+                        <li><a href="{{ route('sidebar.crearseccion') }}" class="block p-2 hover:bg-gray-800">Crear
+                            sección</a></li>
+
+                        <li><a href="{{ route('sidebar.modificar_calificacion') }}" class="block p-2 hover:bg-gray-800">Modificar calificaciones</a></li>
 
                         <li><a href="{{ route('sidebar.modirepresentantes') }}"
                                 class="block p-2 hover:bg-gray-800">modificación de datos representante</a> </li>
@@ -54,10 +56,8 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
 
                         <li><a href="{{ route('sidebar.inscribir') }}" class="block p-2 hover:bg-gray-800">Inscribir
                                 estudiante</a></li>
-
-                        <li><a href="{{ route('sidebar.crearseccion') }}" class="block p-2 hover:bg-gray-800">Crear
-                                sección</a></li>
                         {{-- @endcan --}}
+
                     </ul>
                 </li>
                 <li x-data="{ open: false }">
