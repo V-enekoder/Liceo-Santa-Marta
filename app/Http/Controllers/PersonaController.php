@@ -65,7 +65,7 @@ public function mostrar_formulario_crear_usuario()
 
         // Crear persona
         $persona = Persona::create([
-            'categoría_id' => $request->input('categoria_id'),
+            'categoria_id' => $request->input('categoria_id'),
             'cedula' => $request->input('cedula'),
             'tipo' => $request->input('tipo'),
             'primer_nombre' => $request->input('primer_nombre'),
@@ -103,8 +103,8 @@ public function mostrar_formulario_crear_usuario()
                 ]);
                 break;
         }
-        // Crear un estudiante si la categoría de persona es 2 y es solicitado
-        if ($persona->categoría_id == 2) {
+        // Crear un estudiante si la categoria de persona es 2 y es solicitado
+        if ($persona->categoria_id == 2) {
             Estudiante::create([
                 'persona_id' => $persona->id,
                 'ultimo_grado_aprobado' => $request->input('ultimo_grado_aprobado', 0),

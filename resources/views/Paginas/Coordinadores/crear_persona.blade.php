@@ -31,9 +31,9 @@
             </div>
 
             <div class="form-group">
-                <label for="categoria_id">Categoría</label>
+                <label for="categoria_id">Categoria</label>
                 <select class="form-control" id="categoria_id" name="categoria_id" required>
-                    <option value="">Seleccione una categoría</option>
+                    <option value="">Seleccione una categoria</option>
                     <option value="1">Usuario</option>
                     <option value="2">Estudiante</option>
                 </select>
