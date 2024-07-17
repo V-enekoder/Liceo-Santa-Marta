@@ -1,4 +1,4 @@
-{{-- <x-app-layout> --}}
+<x-app-layout>
 <h1 class="h1Docente">Coordinador: Modificar calificaciones</h1>
 
 @if (session('status'))
@@ -167,8 +167,8 @@
                             @foreach ($estudiantes as $estudiante)
                                 <tr role="row" class="{{ $loop->even ? 'even' : 'odd' }}">
                                     <td style="font-weight: bold">{{ $estudiante->persona->cedula }}</td>
-                                    <td>{{ $estudiante->persona->primer_nombre }}</td>
-                                    <td>{{ $estudiante->persona->primer_apellido }}</td>
+                                    <td>{{ $estudiante->persona->primer_nombre }} {{ $estudiante->persona->segundo_nombre }}</td>
+                                    <td>{{ $estudiante->persona->primer_apellido }} {{ $estudiante->persona->segundo_apellido }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -257,4 +257,4 @@
     </script>
 
 
-    {{-- </x-app-layout> --}}
+</x-app-layout>
