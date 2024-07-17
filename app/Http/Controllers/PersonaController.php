@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class PersonaController extends Controller
 {
@@ -47,7 +48,8 @@ public function mostrar_formulario_crear_usuario()
     {
         // Validar los datos de entrada
         $validator = Validator::make($request->all(), [
-            'cedula' => 'required|integer|unique:users',
+            'categoria_id' => 'required|integer',
+            'cedula' => 'required|integer|unique:personas,cedula',
             'primer_nombre' => 'required|string|max:255',
             'segundo_nombre' => 'nullable|string|max:255',
             'primer_apellido' => 'required|string|max:255',
@@ -56,6 +58,7 @@ public function mostrar_formulario_crear_usuario()
             'password' => 'nullable|string|min:8|confirmed',
             'direccion' => 'nullable|string|max:255',
             'fecha_nacimiento' => 'nullable|date',
+            'rol_id' => 'required|integer',
         ]);
 
         // Si la validación falla, retornar errores
@@ -65,7 +68,7 @@ public function mostrar_formulario_crear_usuario()
 
         // Crear persona
         $persona = Persona::create([
-            'categoría_id' => $request->input('categoria_id'),
+            'categoria_id' => $request->input('categoria_id'),
             'cedula' => $request->input('cedula'),
             'tipo' => $request->input('tipo'),
             'primer_nombre' => $request->input('primer_nombre'),
@@ -76,32 +79,37 @@ public function mostrar_formulario_crear_usuario()
             'fecha_nacimiento' => $request->input('fecha_nacimiento'),
             'activo' => true,
         ]);
+        // Crear un usuario si la categoría de persona es 1 y es solicitado
+        $user = null;
 
-        // Crear usuario asociado a la persona
-        $user = User::create([
-            'persona_id' => $persona->id,
-            'rol_id' => $request->input('rol_id'),
-            'email' => $request->input('email'),
-            'password' => isset($request->password) ? Hash::make($request->password) : null,
-        ]);
+        Log::info('Persona ID: ' . $persona->id);
 
-        switch ($user->rol_id) {
-            case 2:
-                Coordinador::create([
-                    'user_id' => $user->id,
-                    'fecha_ingreso' => now() // Fecha actual como fecha de ingreso
-                ]);
-                break;
-            case 3:
-                Docente::create([
-                    'user_id' => $user->id
-                ]);
-                break;
-            case 4:
-                Representante::create([
-                    'user_id' => $user->id
-                ]);
-                break;
+        if($persona->categoria_id == 1){
+            $user = User::create([
+                'persona_id' => $persona->id,
+                'rol_id' => $request->input('rol_id'),
+                'email' => $request->input('email'),
+                'password' => isset($request->password) ? Hash::make($request->password) : null,
+            ]);
+
+            switch ($user->rol_id) {
+                case 2:
+                    Coordinador::create([
+                        'user_id' => $user->id,
+                        'fecha_ingreso' => now() // Fecha actual como fecha de ingreso
+                    ]);
+                    break;
+                case 3:
+                    Docente::create([
+                        'user_id' => $user->id
+                    ]);
+                    break;
+                case 4:
+                    Representante::create([
+                        'user_id' => $user->id
+                    ]);
+                    break;
+            }
         }
         // Crear un estudiante si la categoría de persona es 2 y es solicitado
         if ($persona->categoría_id == 2) {
