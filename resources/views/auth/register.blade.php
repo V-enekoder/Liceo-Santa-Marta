@@ -8,17 +8,7 @@
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
-
-            <div>
-                <x-label for="nombre" value="{{ __('Name') }}" />
-                <x-input id="nombre" class="block mt-1 w-full" type="text" name="nombre" :value="old('nombre')" required
-                    autofocus autocomplete="nombre" />
-            </div>
-            <div>
-                <x-label for="apellido" value="{{ __('Last Name') }}" />
-                <x-input id="apellido" class="block mt-1 w-full" type="text" name="apellido" :value="old('apellido')"
-                    required autofocus autocomplete="apellido" />
-            </div>
+            
             {{-- <div class="mt-4">
                 <x-label for="document_type" value="{{ __('Tipo Documento') }}" />
                 <select wire:model="document_type" name="document_type"

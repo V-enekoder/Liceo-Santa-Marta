@@ -931,7 +931,7 @@
 
 <body class="font-sans antialiased dark:text-white/50">
     <div class="bg-gray-50 dark:text-white/50">
-        <img id="background" src="https://img.freepik.com/fotos-premium/fondo-cielo-azul-claro-degradado_37778-834.jpg" />
+        <img id="background" src="https://static.vecteezy.com/system/resources/previews/003/031/750/non_2x/dark-blue-wide-background-with-radial-blurred-gradient-vector.jpg" />
         <div
             class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
             <div class="relative w-full p-6 max-w-2xl  lg:max-w-7xl ">
