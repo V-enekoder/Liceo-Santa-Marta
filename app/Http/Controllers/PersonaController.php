@@ -79,7 +79,7 @@ public function mostrar_formulario_crear_usuario()
             'fecha_nacimiento' => $request->input('fecha_nacimiento'),
             'activo' => true,
         ]);
-        // Crear un usuario si la categoría de persona es 1 y es solicitado
+        // Crear un usuario si la categoria de persona es 1 y es solicitado
         $user = null;
 
         Log::info('Persona ID: ' . $persona->id);
@@ -111,8 +111,8 @@ public function mostrar_formulario_crear_usuario()
                     break;
             }
         }
-        // Crear un estudiante si la categoría de persona es 2 y es solicitado
-        if ($persona->categoría_id == 2) {
+        // Crear un estudiante si la categoria de persona es 2 y es solicitado
+        if ($persona->categoria_id == 2) {
             Estudiante::create([
                 'persona_id' => $persona->id,
                 'ultimo_grado_aprobado' => $request->input('ultimo_grado_aprobado', 0),

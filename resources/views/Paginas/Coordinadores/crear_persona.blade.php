@@ -31,9 +31,9 @@
             </div>
 
             <div class="form-group">
-                <label for="categoria_id">Categoría</label>
+                <label for="categoria_id">categoria</label>
                 <select class="form-control" id="categoria_id" name="categoria_id" required>
-                    <option value="">Seleccione una categoría</option>
+                    <option value="">Seleccione una categoria</option>
                     <option value="1">Usuario</option>
                     <option value="2">Estudiante</option>
                 </select>
@@ -124,14 +124,14 @@
     categoriaSelect.addEventListener('change', function() {
         var categoria = this.value;
 
-        // Mostrar u ocultar campos según la categoría seleccionada
+        // Mostrar u ocultar campos según la categoria seleccionada
         if (categoria === '2') { // Estudiante
             estudianteFields.style.display = 'block';
             rolIdGroup.style.display = 'none';
             emailGroup.style.display = 'none';
             passwordGroup.style.display = 'none';
             passwordConfirmationGroup.style.display = 'none';
-        } else { // Usuario (categoría 1)
+        } else { // Usuario (categoria 1)
             estudianteFields.style.display = 'none';
             rolIdGroup.style.display = 'block';
             emailGroup.style.display = 'block';

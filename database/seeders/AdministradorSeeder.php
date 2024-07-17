@@ -16,7 +16,7 @@ class AdministradorSeeder extends Seeder
     {
         // Crear la persona con los datos especificados
         $persona = Persona::factory()->create([
-            'categoría_id' => 1,
+            'categoria_id' => 1,
             'cedula' => 0, // Suponiendo que cedula es única
             'primer_nombre' => 'admin',
             'segundo_nombre' => null,
