@@ -12,7 +12,7 @@ use App\Models\Periodo_Academico;
 use App\Models\Persona;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-
+use Exception;
 class DocenteController extends Controller
 {
     function cargarNotas(){
@@ -110,100 +110,122 @@ class DocenteController extends Controller
         return view('Paginas.Coordinadores.Carga_academica', compact('materias', 'personas', 'grados'));
     }
 
-public function asignarCargaAcademica(Request $request)
-{
-    // Validar los datos recibidos
-    $request->validate([
-        'persona_id' => 'required|integer|exists:personas,id',
-        'materias' => 'required|array',
-        'materias.*' => 'integer|exists:materias,id',
-    ]);
+    public function asignarCargaAcademica(Request $request)
+    {
+        // Validar los datos recibidos
+        $request->validate([
+            'persona_id' => 'required|integer|exists:personas,id',
+            'materias' => 'required|array',
+            'materias.*' => 'integer|exists:materias,id',
+        ]);
 
-    try {
-        // Buscar al usuario por persona_id
-        $user = User::where('persona_id', $request->persona_id)
-            ->with(['persona', 'docente'])
-            ->first();
+        try {
+            // Buscar al usuario por persona_id
+            $user = User::where('persona_id', $request->persona_id)
+                ->with(['persona', 'docente'])
+                ->first();
 
-        // Verificar si se encontró un usuario
-        if (!$user) {
-            return response()->json([
-                'status' => 'error',
-                'error' => 'No se encontró un usuario asociado a la persona proporcionada.'
-            ], 404);
-        }
-
-        $user = User::where('persona_id', $request->persona_id)
-            ->with('persona')
-            ->first();
-
-        // Verificar si se encontró un usuario
-        if (!$user) {
-            return response()->json([
-                'status' => 'error',
-                'error' => 'No se encontró un usuario asociado a la persona proporcionada.'
-            ], 404);
-        }
-
-        // Buscar al docente asociado a este usuario
-        $docente = $user->docente;
-
-        // Obtener el periodo académico actual
-        $periodoActual = Periodo_Academico::where('actual', 1)->firstOrFail();
-
-        // Asignar las materias al docente en el periodo académico actual
-        foreach ($request->materias as $materiaId) {
-            // Verificar si ya existe la asignación docente-materia en el periodo actual
-            $existeAsignacion = DocenteMateria::where('docente_id', $docente->id)
-                ->where('materia_id', $materiaId)
-                ->where('periodo_id', $periodoActual->id)
-                ->exists();
-
-            if (!$existeAsignacion) {
-                // Crear el registro en la tabla docente_materia
-                DocenteMateria::create([
-                    'docente_id' => $docente->id,
-                    'materia_id' => $materiaId,
-                    'periodo_id' => $periodoActual->id
-                ]);
+            // Verificar si se encontró un usuario
+            if (!$user) {
+                return response()->json([
+                    'status' => 'error',
+                    'error' => 'No se encontró un usuario asociado a la persona proporcionada.'
+                ], 404);
             }
+
+            $user = User::where('persona_id', $request->persona_id)
+                ->with('persona')
+                ->first();
+
+            // Verificar si se encontró un usuario
+            if (!$user) {
+                return response()->json([
+                    'status' => 'error',
+                    'error' => 'No se encontró un usuario asociado a la persona proporcionada.'
+                ], 404);
+            }
+
+            // Buscar al docente asociado a este usuario
+            $docente = $user->docente;
+
+            // Obtener el periodo académico actual
+            $periodoActual = Periodo_Academico::where('actual', 1)->firstOrFail();
+
+            // Asignar las materias al docente en el periodo académico actual
+            foreach ($request->materias as $materiaId) {
+                // Verificar si ya existe la asignación docente-materia en el periodo actual
+                $existeAsignacion = DocenteMateria::where('docente_id', $docente->id)
+                    ->where('materia_id', $materiaId)
+                    ->where('periodo_id', $periodoActual->id)
+                    ->exists();
+
+                if (!$existeAsignacion) {
+                    // Crear el registro en la tabla docente_materia
+                    DocenteMateria::create([
+                        'docente_id' => $docente->id,
+                        'materia_id' => $materiaId,
+                        'periodo_id' => $periodoActual->id
+                    ]);
+                }
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Carga académica asignada correctamente al docente'
+            ], 201);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Error al asignar la carga académica',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
+
+
+    public function mostrarTodosLosDocentes(Request $request)
+    {
+        // Obtener todos los docentes con sus datos de persona
+        $docentes = User::whereHas('persona', function ($query) {
+                $query->where('categoria_id', 1); // Filtrar por la categoría de docente, si aplica
+            })
+            ->where('rol_id', 3) // Filtrar por rol de docente
+            ->with('persona') // Cargar relación persona
+            ->get();
+
+        // Filtrar por cédula si se proporciona en la solicitud
+        if ($request->has('cedula')) {
+            $cedula = $request->cedula;
+            $docentes = $docentes->filter(function ($docente) use ($cedula) {
+                return $docente->persona->cedula == $cedula;
+            });
         }
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Carga académica asignada correctamente al docente'
-        ], 201);
-    } catch (\Exception $e) {
-        return response()->json([
-            'status' => 'error',
-            'message' => 'Error al asignar la carga académica',
-            'error' => $e->getMessage()
-        ], 500);
+        return view('Paginas.Coordinadores.buscar_docente', compact('docentes'));
     }
-}
-
+            
     public function mostrarDocentePorCedula($cedula)
     {
         try {
             // Buscar a la persona por su cédula
             $persona = Persona::where('cedula', $cedula)
-                ->with(['user' => function($query) {
-                    // Dentro de la relación 'user', cargar la relación 'docente' si está definida
+                ->with(['user' => function ($query) {
+                    // Cargar la relación 'user' y 'docente' si el usuario tiene el rol_id = 3 (docente)
                     $query->with('docente')->where('rol_id', 3);
                 }])
                 ->firstOrFail();
 
-            // Verificar si el usuario asociado tiene el rol de docente
+            // Verificar si se encontró el usuario y si tiene el rol de docente
             $user = $persona->user;
             if (!$user || !$user->docente) {
-                throw new \Exception('No se encontró al docente con la cédula proporcionada.');
+                throw new Exception('No se encontró al docente con la cédula proporcionada.');
             }
 
             // Retornar los datos del docente en formato JSON
             return response()->json([
                 'docente' => $user
             ], 200);
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             // Manejar el error si no se encuentra el docente
             return response()->json([
                 'error' => $e->getMessage()
