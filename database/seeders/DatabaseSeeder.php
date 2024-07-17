@@ -2,26 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Rol;
-use App\Models\User;
-use app\Models\Calificacion;
-use app\Models\Coordinador;
-use app\Models\DocenteMateria;
-use app\Models\Docente;
-use app\Models\EstudianteRepresentante;
-use app\Models\Estudiante;
-use app\Models\GradoPeriodo;
-use App\Models\Grado;
-use app\Models\Materia;
-use app\Models\Periodo_Academico;
-use app\Models\Representante;
-use app\Models\Seccion;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Database\Factories\UserFactory;
-use Database\Factories\CoordinadorFactory;
-
-
+use App\Models\Coordinador;
+use App\Models\Docente;
+use App\Models\Representante;
+use App\Models\Estudiante;
 class DatabaseSeeder extends Seeder
 {
 
@@ -29,6 +15,21 @@ class DatabaseSeeder extends Seeder
     {
         //*Se ejecuta con 
         //*php artisan db:seed
+
+        $this->call(CategoriasSeeder::class);
         $this->call(RolesSeeder::class);
+        $this->call(GradosSeeder::class);
+        $this->call(MateriasSeeder::class);
+        $this->call(AdministradorSeeder::class);
+        Coordinador::factory()->count(6)->create();
+        Docente::factory()->count(10)->create();
+        Representante::factory()->count(15)->create();
+        Estudiante::factory()->count(60)->create();
+        $this->call(Periodo_AcademicoSeeder::class);
+        $this->call(CoordinadorPeriodoSeeder::class);
+        $this->call(EstudianteRepresentanteSeeder::class);
+        $this->call(GradoPeriodoSeeder::class);
+        $this->call(SeccionesSeeder::class);
+
     }
 }

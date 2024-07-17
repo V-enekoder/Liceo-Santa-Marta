@@ -2,37 +2,38 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use app\models\EstudianteRepresentante;
-use Database\Seeders\EstudianteSeeder;
-use Database\Seeders\RepresentanteSeeder;
-use Database\Seeders\Periodo_AcademicoSeeder;
+use App\Models\EstudianteRepresentante;
 
 class EstudianteRepresentanteSeeder extends Seeder
 {
     public function run(): void
     {
-        //estudianteid, representanteid, periodoid
-        $this->CrearRegistroEstudianteRepresentante(1, 4, 1);
+        $this->vincular(1, 15, 1, 2, 1, 60);
     }
-    
-    private function CrearRegistroEstudianteRepresentantes(int $startId, int $endId, int $periodoId): void
-    {
-        $totalEstudiantes = 2;
-        $idEstudiante = 1;
-    
-         for ($i = $startId; $i <= $endId; $i++) {
-            for ($j = 1; $j <= $totalEstudiantes; $j++) {
+
+    private function vincular(
+        int $startRepresentanteId,
+        int $endRepresentanteId,
+        int $periodoId,
+        int $estudiantesPorRepresentante,
+        int $startEstudianteId,
+        int $endEstudianteId
+    ): void {
+        $estudianteId = $startEstudianteId;
+
+        for ($i = $startRepresentanteId; $i <= $endRepresentanteId; $i++) {
+            for ($j = 1; $j <= $estudiantesPorRepresentante; $j++) {
                 $EstudianteRepresentanteData = [
-                    'estudiante_id' => $idEstudiante,
+                    'estudiante_id' => $estudianteId,
                     'representante_id' => $i,
                     'periodo_id' => $periodoId,
                 ];
-                EstudianteRepresentante::insert($EstudianteRepresentanteData);
-                $idEstudiante++;
+                EstudianteRepresentante::create($EstudianteRepresentanteData);
+                $estudianteId++;
             }
         }
     }
 }
+
     
