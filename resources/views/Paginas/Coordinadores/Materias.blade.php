@@ -52,7 +52,7 @@
                         <select class="widthExpand" id="addGrado" name="grado_id"
                             class="border border-gray-300 px-2 py-1 rounded mb-2">
                             @foreach ($grados as $grado)
-                                <option value="{{ $grado->id }}">{{ $grado->nombre_grado }}</option>
+                                <option value="{{ $grado->id }}">{{ $grado->nombre }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -86,9 +86,9 @@
                     <h1 class="text-xl font-bold mb-4">Editar Materia</h1>
                     <div>
                         <label for="editGrado" class="block mb-2">Grado:</label>
-                        <select id="editGrado" name="grado_id" class="border border-gray-300 px-2 py-1 rounded mb-2">
+                        <select id="editGrado" name="grado_id" class="widthExpand border border-gray-300 px-2 py-1 rounded mb-2">
                             @foreach ($grados as $grado)
-                                <option value="{{ $grado->id }}">{{ $grado->nombre_grado }}</option>
+                                <option value="{{ $grado->id }}">{{ $grado->nombre }}</option>
                             @endforeach
                         </select>
                     </div>
