@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('personas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('categoría_id')->constrainedTo('categorias')->CascadeOnDelete();
             $table->unsignedInteger('cedula')->unique();
+            $table->unsignedInteger('tipo');
             $table->string('primer_nombre')->nullable();
             $table->string('segundo_nombre')->nullable();
             $table->string('primer_apellido')->nullable();
