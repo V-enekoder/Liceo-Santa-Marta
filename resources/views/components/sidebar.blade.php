@@ -52,11 +52,11 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                                 class="block p-2 hover:bg-gray-800">Crear
                                 carga académica</a></li>
 
-                        <li><a href="{{ route('sidebar.inscribir') }}"
-                            class="block p-2 hover:bg-gray-800">Inscribir estudiante</a></li>
+                        <li><a href="{{ route('sidebar.inscribir') }}" class="block p-2 hover:bg-gray-800">Inscribir
+                                estudiante</a></li>
 
-                        <li><a href="{{ route('sidebar.crearseccion') }}"
-                            class="block p-2 hover:bg-gray-800">Crear sección</a></li>
+                        <li><a href="{{ route('sidebar.crearseccion') }}" class="block p-2 hover:bg-gray-800">Crear
+                                sección</a></li>
                         {{-- @endcan --}}
                     </ul>
                 </li>
@@ -106,7 +106,8 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                         x-transition:leave-start="transform opacity-100 scale-100"
                         x-transition:leave-end="transform opacity-0 scale-95" class="submenu ml-4 space-y-2">
                         {{-- @can('es_representante') --}}
-                        <li><a href="{{ route('boletin.index') }}" class="block p-2 hover:bg-gray-800">Ver boletin de
+                        <li><a href="{{ route('sidebar.mostrar_boletin') }}" class="block p-2 hover:bg-gray-800">Ver
+                                boletin de
                                 calificaciones</a>
                         </li>
                         <li><a href="{{ route('boletin.indexTodo') }}" class="block p-2 hover:bg-gray-800">Consulta de
