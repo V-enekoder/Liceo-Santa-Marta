@@ -37,13 +37,7 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'rol_id',
-        'cedula',
-        'primer_nombre',
-        'segundo_nombre',
-        'primer_apellido',
-        'segundo_apellido',
         'email',
-        'direccion',
         'password'
     ];
 
@@ -82,6 +76,10 @@ class User extends Authenticatable
     }
     
     //Relaciones Uno-Uno
+    public function persona(){
+        return $this->belongsTo(Persona::class);
+    }
+
     public function coordinador(){
         return $this->hasOne(Coordinador::class);
     }

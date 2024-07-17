@@ -12,18 +12,11 @@ return new class extends Migration
     public function up(): void{
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('cedula')->unique();
+            $table->foreignId('persona_id')->constrainedTo('personas')->onDelete('cascade');
             $table->foreignId('rol_id')->default(4)->constrained('roles')->onDelete('cascade');
-            $table->string('primer_nombre');
-            $table->string('segundo_nombre')->nullable();
-            $table->string('primer_apellido');
-            $table->string('segundo_apellido')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('password')->nullable();
-            $table->string('direccion')->nullable();
-            $table->boolean('activo')->default(true);
             $table->rememberToken();
-            $table->timestamps();
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
