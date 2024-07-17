@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Telefono;
+use App\Models\User;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Telefono>
  */
@@ -19,8 +20,8 @@ class TelefonoFactory extends Factory
     public function definition()
     {
         return [
-            'user_cedula' => function () {
-                return \App\Models\User::factory()->create()->cedula; // Crea un usuario y usa su cédula
+            'user_id' => function () {
+                return User::factory()->create()->id; // Crea un usuario y usa su cédula
             },
             'numero_telefonico' => $this->faker->phoneNumber,
         ];

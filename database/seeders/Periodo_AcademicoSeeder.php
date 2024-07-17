@@ -4,18 +4,19 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use app\models\Periodo_Academico;
+use App\models\Periodo_Academico;
 
 class Periodo_AcademicoSeeder extends Seeder
 {
     public function run(): void
     {
         $periodo = [
-            'Nombre' => 'Periodo Academico 2023-2024',
+            'nombre' => 'Periodo Academico 2023-2024',
             'año_inicio' => 2023,
             'año_fin' => 2024,
+            'actual' => true,
         ];
 
-        PeriodoAcademico::insert($periodo);
+        Periodo_Academico::insert($periodo);
     }
 }

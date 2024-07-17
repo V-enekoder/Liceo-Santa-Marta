@@ -10,18 +10,25 @@ class CoordinadorFactory extends Factory
 {
     protected $model = Coordinador::class;
 
-    /**
-     * Define the model's default state.
-     *
-     * @return array
-     */
     public function definition()
     {
         return [
-            'user_id' => User::factory(),  // Crea un nuevo usuario si no se proporciona uno
-            'fecha_ingreso' => $this->faker->date(),
-            'fecha_retiro' => $this->faker->optional()->date(),
+            'user_id' => function () {
+                return User::factory()->withRolId(2)->create()->id;
+            },
+            'fecha_ingreso' => $this->faker->date,
+            'fecha_retiro' => null,
         ];
     }
+
+    public function withUserId($userId)
+    {
+        return $this->state(function (array $attributes) use ($userId) {
+            return [
+                'user_id' => $userId,
+            ];
+        });
+    }
 }
+
 

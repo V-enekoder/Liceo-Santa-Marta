@@ -98,7 +98,7 @@ class DocenteMateriaSeeder extends Seeder
 
         //Insertar
         foreach ($docenteMateriaData as $docenteData) {
-            DocenteMateria::insert($docenteData);
+            //DocenteMateria::insert($docenteData);
         }
     }
 

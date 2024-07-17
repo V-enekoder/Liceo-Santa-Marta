@@ -2,26 +2,29 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\Representante; 
+use App\Models\Representante;
 use App\Models\User;
-//Seguir investigando como utilizar las fabricas
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class RepresentanteFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */   protected $model = Representante::class;
+    protected $model = Representante::class;
 
-
-    public function definition(): array
+    public function definition()
     {
-        $user = User::factory()->create();
-
         return [
-            'user_cedula' => $user->cedula,
+            'user_id' => function () {
+                return User::factory()->withRolId(4)->create()->id;
+            },
         ];
+    }
+
+    public function withUserId($userId)
+    {
+        return $this->state(function (array $attributes) use ($userId) {
+            return [
+                'user_id' => $userId,
+            ];
+        });
     }
 }

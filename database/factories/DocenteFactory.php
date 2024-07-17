@@ -2,25 +2,29 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Docente;
 use App\Models\User;
-/**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Docente>
- */
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 class DocenteFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
-    public function definition(): array
-    {
-        // Crear un usuario utilizando la factory existente de User
-        $user = User::factory()->create();
+    protected $model = Docente::class;
 
+    public function definition()
+    {
         return [
-            'user_cedula' => $user->cedula,
+            'user_id' => function () {
+                return User::factory()->withRolId(3)->create()->id;
+            },
         ];
+    }
+
+    public function withUserId($userId)
+    {
+        return $this->state(function (array $attributes) use ($userId) {
+            return [
+                'user_id' => $userId,
+            ];
+        });
     }
 }

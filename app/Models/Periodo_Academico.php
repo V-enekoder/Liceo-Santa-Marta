@@ -14,7 +14,8 @@ class Periodo_Academico extends Model
     protected $fillable=[
         'nombre',
         'año_inicio',
-        'año_fin'
+        'año_fin',
+        'actual'
     ]; 
     
     //Relaciones Uno-Muchos

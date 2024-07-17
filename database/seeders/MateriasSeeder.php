@@ -4,10 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use app\models\Materia;
-use Database\Seeders\GradoSeeder;
+use App\Models\Materia;
 
-class MateriaSeeder extends Seeder
+class MateriasSeeder extends Seeder
 {
     public function run(): void
     {
