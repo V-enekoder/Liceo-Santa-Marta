@@ -125,6 +125,11 @@ Route::get('/dashboard/reporte_carga_academica', [CoordinadorController::class, 
 Route::post('/dashboard/reporte_carga_academica', [CoordinadorController::class, 'obtener_carga_academica'])
     ->name('carga_academica.obtener');
 
+    Route::get('/dashboard/carga_notas', [DocenteController::class, 'formulario_cargar_notas'])
+    ->name('sidebar.CargaNotas');
+Route::post('/dashboard/carga_notas', [DocenteController::class,'cargar'])
+    ->name('subir_notas');
+
 
 //Rutas para Docentes
 Route::get('/dashboard/CargaNotas', [DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');
