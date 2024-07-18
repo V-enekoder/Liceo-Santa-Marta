@@ -34,9 +34,10 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                                 acádemico</a></li>
 
                         <li><a href="{{ route('sidebar.crearseccion') }}" class="block p-2 hover:bg-gray-800">Crear
-                            sección</a></li>
+                                sección</a></li>
 
-                        <li><a href="{{ route('sidebar.modificar_calificacion') }}" class="block p-2 hover:bg-gray-800">Modificar calificaciones</a></li>
+                        <li><a href="{{ route('sidebar.modificar_calificacion') }}"
+                                class="block p-2 hover:bg-gray-800">Modificar calificaciones</a></li>
 
                         <li><a href="{{ route('sidebar.modirepresentantes') }}"
                                 class="block p-2 hover:bg-gray-800">modificación de datos representante</a> </li>
@@ -84,7 +85,7 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                         <li><a href="{{ route('sidebar.VerSecciones') }}" class="block p-2 hover:bg-gray-800">Ver
                                 secciones de clases</a></li>
 
-                        <li><a href="{{ route('sidebar.VerCargaAcademica') }}" class="block p-2 hover:bg-gray-800">Mi
+                        <li><a href="{{ route('sidebar.ver_carga_academica') }}" class="block p-2 hover:bg-gray-800">Mi
                                 carga académica</a></li>
                         {{-- @endcan --}}
                     </ul>

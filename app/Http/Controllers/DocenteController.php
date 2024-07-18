@@ -13,6 +13,7 @@ use App\Models\Persona;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 class DocenteController extends Controller
 {
     function cargarNotas(){
@@ -22,37 +23,6 @@ class DocenteController extends Controller
     function verSecciones(){
         //Gate::authorize('ver_secciones');
         return view('Paginas.Docentes.gestion_secciones',);
-    }
-    function verCargaAcademica(){
-        //Gate::authorize('ver_carga_academica');
-        return view('Paginas.Docentes.reporte_carga_academica',);
-    }
-
-    public function obtenerMateriasPorDocenteYPeriodo(Request $request)
-    {
-        $request->validate([
-            'docente_id' => 'required|integer|exists:docentes,id',
-            'periodo_id' => 'required|integer|exists:periodos_academicos,id',
-        ]);
-
-        try {
-            // Buscar las materias asignadas al docente en el período especificado
-            $materias = DocenteMateria::where('docente_id', $request->docente_id)
-                ->where('periodo_id', $request->periodo_id)
-                ->with('materia')
-                ->get()
-                ->pluck('materia');
-
-            // Retornar la información de las materias
-            return response()->json([
-                'materias' => $materias,
-            ], 200);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Error al realizar la operación: ' . $e->getMessage(),
-            ], 400);
-        }
     }
 
     public function showCambiarContrasenaForm()
@@ -231,5 +201,13 @@ class DocenteController extends Controller
                 'error' => $e->getMessage()
             ], 404);
         }
+    }
+
+    function ver_carga_academica(){
+        $user = Auth::user();
+        $docente = $user->docente;
+        $materias = $docente->materias;
+        //Gate::authorize('ver_carga_academica');
+        return view('Paginas.Docentes.ver_carga_academica',compact('docente','materias'));
     }
 }

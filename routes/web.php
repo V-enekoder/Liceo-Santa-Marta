@@ -114,11 +114,21 @@ Route::get('/dashboard/vincular_representante',[RepresentanteController::class,'
 Route::post('/dashboard/vincular_representante',[RepresentanteController::class,'vincular_estudiante_representante'])
     ->name('vincular_representante');
 
+Route::get('/dashboard/reporte_carga_academica', [CoordinadorController::class, 'formulario_carga_academica'])  
+    ->name('sidebar.reporte_carga_academica');
+Route::post('/dashboard/reporte_carga_academica', [CoordinadorController::class, 'obtener_carga_academica'])
+    ->name('carga_academica.obtener');
+
 
 //Rutas para Docentes
 Route::get('/dashboard/CargaNotas', [DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');
 Route::get('/dashboard/DataSecciones', [DocenteController::class, 'verSecciones'])->name('sidebar.VerSecciones');
-Route::get('/dashboard/DataCargaAcademica', [DocenteController::class, 'verCargaAcademica'])->name('sidebar.VerCargaAcademica');
+
+
+Route::get('/dashboard/carga_academica', [DocenteController::class, 'ver_carga_academica'])
+    ->name('sidebar.ver_carga_academica');
+Route::post('/dashboard/carga_academica', [DocenteController::class,'obtener_carga_academica'])
+    ->name('obtener_carga_academica');
 
 Route::get('/dashboard/cambiar-contrasena', [DocenteController::class, 'showCambiarContrasenaForm'])
     ->name('sidebar.mostrar_cambiar_clave');

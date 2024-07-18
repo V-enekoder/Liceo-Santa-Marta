@@ -26,8 +26,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
-
+use Exception;
+use App\Models\Persona;
 
 class CoordinadorController extends Controller{
 
@@ -84,7 +84,7 @@ class CoordinadorController extends Controller{
                 'materias' => $materiasAsignadas,
             ], 200);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'error' => 'Error al realizar la operación: ' . $e->getMessage(),
             ], 400);
@@ -112,64 +112,13 @@ class CoordinadorController extends Controller{
                 'secciones' => $secciones,
             ], 200);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'error' => 'Error al realizar la operación: ' . $e->getMessage(),
             ], 400);
         }
     }
 
-    public function crearCalificaciones(Request $request)
-    {
-        $request->validate([
-            'seccion_id' => 'required|integer|exists:secciones,id',
-            'cedula_estudiante' => 'required|integer|exists:estudiantes,cedula',
-        ]);
-
-        try {
-            // Buscar al estudiante por su cédula
-            $estudiante = Estudiante::where('cedula', $request->cedula_estudiante)->firstOrFail();
-
-            // Buscar la sección por su ID
-            $seccion = Seccion::findOrFail($request->seccion_id);
-
-            // Buscar el grado y el periodo en la tabla grado_periodo
-            $gradoPeriodo = GradoPeriodo::findOrFail($seccion->grado_periodo_id);
-            $gradoId = $gradoPeriodo->grado_id;
-            $periodoId = $gradoPeriodo->periodo_id;
-
-            // Buscar todas las materias correspondientes a ese grado
-            $materias = Materia::where('grado_id', $gradoId)->get();
-
-            // Para cada materia, buscar el docente correspondiente en el periodo actual
-            foreach ($materias as $materia) {
-                $docenteMateria = DocenteMateria::where('materia_id', $materia->id)
-                                ->where('periodo_id', $periodoId)
-                                ->first();
-
-                if ($docenteMateria) {
-                    // Crear la calificación del estudiante para esa materia
-                    Calificacion::create([
-                        'docente_materia_id' => $docenteMateria->id,
-                        'estudiante_id' => $estudiante->id,
-                        'lapso_1' => 0,
-                        'lapso_2' => 0,
-                        'lapso_3' => 0,
-                        'promedio' => 0,
-                    ]);
-                }
-            }
-
-            return response()->json([
-                'message' => 'Calificaciones creadas exitosamente.',
-            ], 200);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Error al realizar la operación: ' . $e->getMessage(),
-            ], 400);
-        }
-    }
     public function obtenerReporteNotas(Request $request)
     {
         $request->validate([
@@ -230,10 +179,54 @@ class CoordinadorController extends Controller{
                 'calificaciones' => $calificaciones,
             ], 200);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'error' => 'Error al realizar la operación: ' . $e->getMessage(),
             ], 400);
         }       
     }
+
+    public function formulario_carga_academica()
+    {
+        $per = Persona::where('categoria_id', 1)->get();
+
+        // Filtrar las personas que tienen rol_id = 3 (docentes)
+        $personas = $per->filter(function ($per) {
+            return $per->user && $per->user->rol_id === 3;
+        });
+        $periodos = Periodo_Academico::all();
+
+        return view('Paginas.Coordinadores.reporte_carga_academica', compact('personas', 'periodos'));
+    }
+
+    public function obtener_carga_academica(Request $request)
+    {
+        $request->validate([
+            'persona_id' => 'required|integer|exists:personas,id',
+            'periodo_id' => 'required|integer|exists:periodos_academicos,id',
+        ]);
+
+        try {
+            $persona = Persona::findOrFail($request->persona_id);
+            $usuario = $persona->user;
+            $docente = $usuario->docente;
+            // Buscar las materias asignadas al docente en el período especificado
+            $materias = DocenteMateria::where('docente_id', $docente->id)
+                ->where('periodo_id', $request->periodo_id)
+                ->with('materia')
+                ->get()
+                ->pluck('materia');
+
+            // Retornar la información de las materias
+            return response()->json([
+                'materias' => $materias,
+            ], 200);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => 'Error al realizar la operación: ' . $e->getMessage(),
+            ], 400);
+        }
+    }
+
 }
