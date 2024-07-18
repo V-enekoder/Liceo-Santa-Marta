@@ -44,33 +44,33 @@ class CoordinadorController extends Controller{
         return view('Paginas.Coordinadores.modificacion_estudiantes',);
     }
 //-----------------------------------------------------------------------------------------------------------------------
-    public function mostrarDocentes() 
-    {
-    // Obtener todos los docentes junto con la información del usuario
-    $docentes = Docente::with('user.persona')->get();
-    return view('Paginas.Coordinadores.Profesores', ['docentes' => $docentes]);
-    }
+    // public function mostrarDocentes() 
+    // {
+    // // Obtener todos los docentes junto con la información del usuario
+    // $docentes = Docente::with('user.persona')->get();
+    // return view('Paginas.Coordinadores.Profesores', ['docentes' => $docentes]);
+    // }
 
-    public function updateDocente(Request $request, $id)
-    {
-        $docente = Docente::find($id);
+    // public function updateDocente(Request $request, $id)
+    // {
+    //     $docente = Docente::find($id);
 
-        $request->validate([
-            'primer_nombre' => 'required|string|max:255',
-            'primer_apellido' => 'required|string|max:255',
-            'cedula' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-        ]);
+    //     $request->validate([
+    //         'primer_nombre' => 'required|string|max:255',
+    //         'primer_apellido' => 'required|string|max:255',
+    //         'cedula' => 'required|string|max:255',
+    //         'email' => 'required|email|max:255',
+    //     ]);
 
-        $docente->user->persona->primer_nombre = $request->input('primer_nombre');
-        $docente->user->persona->primer_apellido = $request->input('primer_apellido');
-        $docente->user->persona->cedula = $request->input('cedula');
-        $docente->user->email = $request->input('email');
-        $docente->user->persona->save();
-        $docente->user->save();
+    //     $docente->user->persona->primer_nombre = $request->input('primer_nombre');
+    //     $docente->user->persona->primer_apellido = $request->input('primer_apellido');
+    //     $docente->user->persona->cedula = $request->input('cedula');
+    //     $docente->user->email = $request->input('email');
+    //     $docente->user->persona->save();
+    //     $docente->user->save();
 
-        return response()->json(['message' => 'Docente actualizado correctamente', 'docente' => $docente]);
-    }
+    //     return response()->json(['message' => 'Docente actualizado correctamente', 'docente' => $docente]);
+    // }
 //-----------------------------------------------------------------------------------------------------------------------
     function modificarMaterias(){
         //Gate::authorize('modificar_materias');

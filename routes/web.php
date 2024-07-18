@@ -54,8 +54,8 @@ Route::get('/dashboard/dataEstudiantes', [CoordinadorController::class, 'modific
 
 
 //Rutas para la edicion de docentes (coordinador)
-Route::get('/dashboard/dataDocentes', [CoordinadorController::class, 'mostrarDocentes'])->name('sidebar.modidocentes');
-Route::put('/dashboard/dataDocentes/{id}', [CoordinadorController::class, 'updateDocente'])->name('sidebar.updateDocente');
+Route::get('/dashboard/dataDocentes', [DocenteController::class, 'mostrarDocentes'])->name('sidebar.modidocentes');
+Route::put('/dashboard/dataDocentes/{id}', [DocenteController::class, 'updateDocente'])->name('sidebar.updateDocente');
 
 
 //rutas para la edición y creación de materias (coordinador)
@@ -63,6 +63,9 @@ Route::get('/dashboard/dataMaterias', [MateriaController::class, 'mostrarMateria
 Route::post('/dashboard/dataMaterias', [MateriaController::class, 'crear_materia'])->name('sidebar.crearMateria');
 Route::put('/dashboard/dataMaterias/{id}', [MateriaController::class, 'editar_materia'])->name('sidebar.editarMateria');
 Route::delete('/dashboard/dataMaterias/{id}', [MateriaController::class, 'eliminar_materia'])->name('sidebar.eliminarMateria');
+
+
+
 
 
 Route::get('/dashboard/asignar-carga', [DocenteController::class, 'mostrarFormularioAsignarCarga'])
