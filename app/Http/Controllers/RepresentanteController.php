@@ -186,4 +186,11 @@ class RepresentanteController extends Controller{
             ], 400);
         }
     }
+
+    //Modifcar representantes
+    function modificarRepresentantes(){
+        return view('Paginas.Coordinadores.modificacion_representantes',);
+    }
+
+
 }

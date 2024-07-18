@@ -48,9 +48,11 @@ Route::get('/dashboard/crear-seccion', [SeccionController::class, 'mostrarFormul
 Route::post('/dashboard/crear-seccion', [SeccionController::class, 'crearSeccion']);
 
 Route::get('/dashboard/dataNotas', [CoordinadorController::class, 'modificarNotas'])->name('sidebar.notas');
-Route::get('/dashboard/dataRepresentantes', [CoordinadorController::class, 'modificarRepresentantes'])->name('sidebar.modirepresentantes');
+
 Route::get('/dashboard/dataEstudiantes', [CoordinadorController::class, 'modificarEstudiantes'])->name('sidebar.modiestudiantes');
 
+//vamos a darle vida a los representantes
+Route::get('/dashboard/dataRepresentantes', [CoordinadorController::class, 'modificarRepresentantes'])->name('sidebar.modirepresentantes');
 
 
 //Rutas para la edicion de docentes (coordinador)
