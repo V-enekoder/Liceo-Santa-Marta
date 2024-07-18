@@ -188,7 +188,7 @@ class RepresentanteController extends Controller{
     }
 
     //Modifcar representantes
-    function modificarRepresentantes(){
+    function mostrarRepresentantes(){
         return view('Paginas.Coordinadores.modificacion_representantes',);
     }
 

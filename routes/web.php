@@ -51,8 +51,7 @@ Route::get('/dashboard/dataNotas', [CoordinadorController::class, 'modificarNota
 
 Route::get('/dashboard/dataEstudiantes', [CoordinadorController::class, 'modificarEstudiantes'])->name('sidebar.modiestudiantes');
 
-//vamos a darle vida a los representantes
-Route::get('/dashboard/dataRepresentantes', [CoordinadorController::class, 'modificarRepresentantes'])->name('sidebar.modirepresentantes');
+
 
 
 //Rutas para la edicion de docentes (coordinador)
@@ -99,7 +98,6 @@ Route::get('/dashboard/docentes/buscar', [DocenteController::class, 'mostrarTodo
     ->name('docentes.buscar');
 
 Route::get('/dashboard/dataNotas', [CoordinadorController::class, 'modificarNotas'])->name('sidebar.notas');
-Route::get('/dashboard/dataRepresentantes', [CoordinadorController::class, 'modificarRepresentantes'])->name('sidebar.modirepresentantes');
 Route::get('/dashboard/dataEstudiantes', [CoordinadorController::class, 'modificarEstudiantes'])->name('sidebar.modiestudiantes');
 
 
@@ -148,3 +146,5 @@ Route::get('/dashboard/agregar_telefono', [TelefonoController::class, 'formulari
     ->name('sidebar.agregar_telefono');
 Route::post('/dashboard/agregar_telefono', [TelefonoController::class, 'agregarTelefono']);
 
+//vamos a darle vida a los representantes
+Route::get('/dashboard/dataRepresentantes', [RepresentanteController::class, 'mostrarRepresentantes'])->name('sidebar.modirepresentantes');
