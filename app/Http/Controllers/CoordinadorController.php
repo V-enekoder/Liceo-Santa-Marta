@@ -26,8 +26,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Exception;
-use App\Models\Persona;
+
+
 
 class CoordinadorController extends Controller{
 
@@ -44,44 +44,10 @@ class CoordinadorController extends Controller{
         return view('Paginas.Coordinadores.modificacion_estudiantes',);
     }
 //-----------------------------------------------------------------------------------------------------------------------
-    public function mostrarDocentes() 
-    {
-    // Obtener todos los docentes junto con la información del usuario
-    $docentes = Docente::with('user.persona')->get();
-    return view('Paginas.Coordinadores.Profesores', ['docentes' => $docentes]);
+    public function modificarDocentes(){
+        return view('Paginas.Coordinadores.Profesores',);
     }
-
-
-    public function updateDocente(Request $request, $id)
-    {   
-        $docente = Docente::findOrFail($id);
-        $usuario = $docente->usuario;
-        $persona = $usuario->persona;
-
-        // Validar los datos
-        $request->validate([
-            'nombre' => 'required|string|max:255',
-            'apellido' => 'required|string|max:255',
-            'cedula' => 'required|string|max:10',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $usuario->id,
-        ]);
-
-        // Actualizar los datos de la persona
-        $persona->update([
-            'nombre' => $request->nombre,
-            'apellido' => $request->apellido,
-            'cedula' => $request->cedula,
-        ]);
-
-        // Actualizar los datos del usuario
-        $usuario->update([
-            'email' => $request->email,
-        ]);
-
-        // Redirigir con un mensaje de éxito
-        return redirect()->route('sidebar.modidocentes')->with('success', 'Docente actualizado con éxito');
-    }
-//-----------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------
     function modificarMaterias(){
         //Gate::authorize('modificar_materias');
         return view('Paginas.Coordinadores.Materias',);
@@ -118,7 +84,7 @@ class CoordinadorController extends Controller{
                 'materias' => $materiasAsignadas,
             ], 200);
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Error al realizar la operación: ' . $e->getMessage(),
             ], 400);
@@ -146,121 +112,63 @@ class CoordinadorController extends Controller{
                 'secciones' => $secciones,
             ], 200);
 
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Error al realizar la operación: ' . $e->getMessage(),
             ], 400);
         }
     }
 
-    public function obtenerReporteNotas(Request $request)
+    public function crearCalificaciones(Request $request)
     {
         $request->validate([
             'seccion_id' => 'required|integer|exists:secciones,id',
-            'periodo_id' => 'required|integer|exists:periodos_academicos,id',
-            'materia_id' => 'required|integer|exists:materias,id',
+            'cedula_estudiante' => 'required|integer|exists:estudiantes,cedula',
         ]);
 
         try {
-            // Buscar la sección
+            // Buscar al estudiante por su cédula
+            $estudiante = Estudiante::where('cedula', $request->cedula_estudiante)->firstOrFail();
+
+            // Buscar la sección por su ID
             $seccion = Seccion::findOrFail($request->seccion_id);
 
-            // Buscar los estudiantes de la sección
-            $estudiantesSeccion = EstudianteSeccion::where('seccion_id', $seccion->id)->get();
+            // Buscar el grado y el periodo en la tabla grado_periodo
+            $gradoPeriodo = GradoPeriodo::findOrFail($seccion->grado_periodo_id);
+            $gradoId = $gradoPeriodo->grado_id;
+            $periodoId = $gradoPeriodo->periodo_id;
 
-            if ($estudiantesSeccion->isEmpty()) {
-                return response()->json([
-                    'error' => 'No hay estudiantes en esta sección.'
-                ], 404);
+            // Buscar todas las materias correspondientes a ese grado
+            $materias = Materia::where('grado_id', $gradoId)->get();
+
+            // Para cada materia, buscar el docente correspondiente en el periodo actual
+            foreach ($materias as $materia) {
+                $docenteMateria = DocenteMateria::where('materia_id', $materia->id)
+                                ->where('periodo_id', $periodoId)
+                                ->first();
+
+                if ($docenteMateria) {
+                    // Crear la calificación del estudiante para esa materia
+                    Calificacion::create([
+                        'docente_materia_id' => $docenteMateria->id,
+                        'estudiante_id' => $estudiante->id,
+                        'lapso_1' => 0,
+                        'lapso_2' => 0,
+                        'lapso_3' => 0,
+                        'promedio' => 0,
+                    ]);
+                }
             }
 
-            // Buscar las calificaciones de los estudiantes en la materia y periodo especificados
-            $calificaciones = Calificacion::whereIn('estudiante_id', $estudiantesSeccion->pluck('estudiante_id'))
-                ->where('docente_materia_id', function ($query) use ($request) {
-                    $query->select('id')
-                        ->from('docente_materia')
-                        ->where('materia_id', $request->materia_id)
-                        ->where('periodo_id', $request->periodo_id)
-                        ->limit(1);
-                })
-                ->get();
-
-            if ($calificaciones->isEmpty()) {
-                return response()->json([
-                    'error' => 'No hay calificaciones para los estudiantes en esta materia y periodo.'
-                ], 404);
-            }
-
-            // Calcular estadísticas
-            $totalEstudiantes = $calificaciones->count();
-            $totalAprobados = $calificaciones->filter(function ($calificacion) {
-                return $calificacion->promedio >= 10; // Asumiendo que la nota de aprobación es 10
-            })->count();
-
-            $totalReprobados = $totalEstudiantes - $totalAprobados;
-            $porcentajeAprobados = ($totalAprobados / $totalEstudiantes) * 100;
-            $porcentajeReprobados = ($totalReprobados / $totalEstudiantes) * 100;
-            $promedioGeneral = $calificaciones->avg('promedio');
-
-            // Retornar el reporte
             return response()->json([
-                'total_estudiantes' => $totalEstudiantes,
-                'total_aprobados' => $totalAprobados,
-                'porcentaje_aprobados' => $porcentajeAprobados,
-                'total_reprobados' => $totalReprobados,
-                'porcentaje_reprobados' => $porcentajeReprobados,
-                'promedio_general' => $promedioGeneral,
-                'calificaciones' => $calificaciones,
+                'message' => 'Calificaciones creadas exitosamente.',
             ], 200);
 
-        } catch (Exception $e) {
-            return response()->json([
-                'error' => 'Error al realizar la operación: ' . $e->getMessage(),
-            ], 400);
-        }       
-    }
-
-    public function formulario_carga_academica()
-    {
-        $per = Persona::where('categoria_id', 1)->get();
-
-        // Filtrar las personas que tienen rol_id = 3 (docentes)
-        $personas = $per->filter(function ($per) {
-            return $per->user && $per->user->rol_id === 3;
-        });
-        $periodos = Periodo_Academico::all();
-
-        return view('Paginas.Coordinadores.reporte_carga_academica', compact('personas', 'periodos'));
-    }
-
-    public function obtener_carga_academica(Request $request)
-    {
-        $request->validate([
-            'persona_id' => 'required|integer|exists:personas,id',
-            'periodo_id' => 'required|integer|exists:periodos_academicos,id',
-        ]);
-
-        try {
-            $persona = Persona::findOrFail($request->persona_id);
-            $usuario = $persona->user;
-            $docente = $usuario->docente;
-            // Buscar las materias asignadas al docente en el período especificado
-            $materias = DocenteMateria::where('docente_id', $docente->id)
-                ->where('periodo_id', $request->periodo_id)
-                ->with('materia')
-                ->get()
-                ->pluck('materia');
-
-            // Retornar la información de las materias
-            return response()->json([
-                'materias' => $materias,
-            ], 200);
-
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'error' => 'Error al realizar la operación: ' . $e->getMessage(),
             ], 400);
         }
     }
-
+    
 }
