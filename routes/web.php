@@ -116,7 +116,7 @@ Route::get('/dashboard/vincular_representante',[RepresentanteController::class,'
     ->name('sidebar.vincular_representante');
 Route::post('/dashboard/vincular_representante',[RepresentanteController::class,'vincular_estudiante_representante'])
     ->name('vincular_representante');
-    
+
 Route::get('/dashboard/reporte-notas', [SeccionController::class, 'obtenerReporteNotas'])
     ->name('reporte-notas');
 
@@ -128,7 +128,12 @@ Route::post('/dashboard/reporte_carga_academica', [CoordinadorController::class,
 
 
 //Rutas para Docentes
-Route::get('/dashboard/CargaNotas', [DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');
+Route::get('/dashboard/carga_notas', [DocenteController::class, 'formulario_cargar_notas'])
+    ->name('sidebar.CargaNotas');
+Route::post('/dashboard/carga_notas', [DocenteController::class,'cargar'])
+    ->name('subir_notas');
+
+
 Route::get('/dashboard/DataSecciones', [DocenteController::class, 'verSecciones'])->name('sidebar.VerSecciones');
 Route::get('/dashboard/DataCargaAcademica', [DocenteController::class, 'verCargaAcademica'])->name('sidebar.VerCargaAcademica');
 
