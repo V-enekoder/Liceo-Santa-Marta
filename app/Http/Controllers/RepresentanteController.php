@@ -9,6 +9,7 @@ use App\Models\Representante;
 use App\Models\Telefono;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Models\Persona;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -145,7 +146,7 @@ class RepresentanteController extends Controller{
     public function formulario_vincular()
     {
         // Obtener todos los períodos académicos
-        $periodos = Periodo_Academico::all();
+        $periodos = Periodo_Academico::where('actual', true)->get();
 
         // Retornar la vista con los períodos académicos
         return view('Paginas.Coordinadores.vincular_representante', compact('periodos'));
@@ -153,26 +154,34 @@ class RepresentanteController extends Controller{
     public function vincular_estudiante_representante(Request $request)
     {
         $request->validate([
-            'cedula_representante' => 'required|integer',
-            'cedula_estudiante' => 'required|integer',
-            'periodo_id' => 'required|integer|exists:periodos_academicos,id',
+            'cedula_representante' => 'required|integer|exists:personas,cedula',
+            'cedula_estudiante' => 'required|integer|exists:personas,cedula',
         ]);
 
         try {
+            // Obtener el periodo académico actual
+            $periodo = Periodo_Academico::where('actual', true)->firstOrFail();
+
             // Buscar el representante por su cédula
-            $user = User::where('cedula', $request->cedula_representante)
-                ->where('rol_id', 4)
-                ->firstOrFail();
-            $representante = Representante::where('user_id', $user->id)->firstOrFail();
+            $persona_representante = Persona::where('cedula', $request->cedula_representante)->firstOrFail();
+            $representante = $persona_representante->user->representante;
 
             // Buscar el estudiante por su cédula
-            $estudiante = Estudiante::where('cedula', $request->cedula_estudiante)->firstOrFail();
+            $persona_estudiante = Persona::where('cedula', $request->cedula_estudiante)->firstOrFail();
+            $estudiante = $persona_estudiante->estudiante;
+
+            // Verificar si el representante y el estudiante existen
+            if (!$representante || !$estudiante) {
+                return response()->json([
+                    'error' => 'No se encontró un representante o estudiante asociado a las cédulas proporcionadas.'
+                ], 400);
+            }
 
             // Vincular al estudiante y representante en el período académico
             $estudianteRepresentante = EstudianteRepresentante::create([
                 'estudiante_id' => $estudiante->id,
                 'representante_id' => $representante->id,
-                'periodo_id' => $request->periodo_id,
+                'periodo_id' => $periodo->id,
             ]);
 
             return response()->json([
@@ -186,4 +195,5 @@ class RepresentanteController extends Controller{
             ], 400);
         }
     }
+
 }

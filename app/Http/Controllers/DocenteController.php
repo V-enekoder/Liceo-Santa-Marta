@@ -46,12 +46,12 @@ class DocenteController extends Controller
 
     public function cargar(Request $request)
     {
-        //dd($request->all());
         // Validación de los datos recibidos
         $validator = Validator::make($request->all(), [
             'periodo_id' => 'required|integer|exists:periodos_academicos,id',
             'materia_id' => 'required|integer|exists:materias,id',
             'cedula_estudiante' => 'required|integer|exists:personas,cedula',
+            'docente_id' => 'required|integer|exists:docentes,id',
             'lapso_1' => 'nullable|integer|min:1|max:20',
             'lapso_2' => 'nullable|integer|min:1|max:20',
             'lapso_3' => 'nullable|integer|min:1|max:20',
@@ -63,7 +63,6 @@ class DocenteController extends Controller
 
             // Obtener la materia por su ID y luego obtener el grado asociado a esa materia
             $materia = Materia::where('id', $request->materia_id)->with('grado')->firstOrFail();
-            $grado = $materia->grado;
 
             // Acceder al estudiante a través de la relación
             $estudiante = $persona->estudiante;
@@ -75,18 +74,17 @@ class DocenteController extends Controller
                 ]);
             }
 
-            // Buscar el GradoPeriodo que coincida con el periodo_id y el grado extraído de la materia
-            $gradoPeriodo = GradoPeriodo::where('periodo_id', $request->periodo_id)
-                ->whereHas('grado', function ($query) use ($grado) {
-                    $query->where('id', $grado->id);
-                })
+            // Buscar el DocenteMateria que coincida con el periodo_id, materia_id y docente_id
+            $docenteMateria = DocenteMateria::where('periodo_id', $request->periodo_id)
+                ->where('materia_id', $request->materia_id)
+                ->where('docente_id', $request->docente_id)
                 ->firstOrFail();
 
-            $grado_periodo_id = $gradoPeriodo->id;
+            $docente_materia_id = $docenteMateria->id;
 
             // Buscar la calificación del estudiante en la materia y periodo específicos
             $calificacion = Calificacion::where('estudiante_id', $estudiante->id)
-                ->where('docente_materia_id', $grado_periodo_id)
+                ->where('docente_materia_id', $docente_materia_id)
                 ->firstOrFail();
 
             // Actualizar los lapsos si están presentes en el request
@@ -105,7 +103,8 @@ class DocenteController extends Controller
                 ($calificacion->lapso_1 ?? 0) +
                 ($calificacion->lapso_2 ?? 0) +
                 ($calificacion->lapso_3 ?? 0)
-                ) / 3;
+            ) / 3;
+
             // Guardar los cambios
             $calificacion->save();
 
@@ -121,10 +120,6 @@ class DocenteController extends Controller
                 'error' => 'Error al realizar la operación: ' . $e->getMessage(),
             ], 400);
         }
-    }
-    function verSecciones(){
-        //Gate::authorize('ver_secciones');
-        return view('Paginas.Docentes.gestion_secciones',);
     }
     function verCargaAcademica(){
         //Gate::authorize('ver_carga_academica');
