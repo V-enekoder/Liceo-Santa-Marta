@@ -36,20 +36,8 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                         <li><a href="{{ route('sidebar.crearseccion') }}" class="block p-2 hover:bg-gray-800">Crear
                                 sección</a></li>
 
-                        <li><a href="{{ route('sidebar.modificar_calificacion') }}"
-                                class="block p-2 hover:bg-gray-800">Modificar calificaciones</a></li>
-
-                        <li><a href="{{ route('sidebar.modirepresentantes') }}"
-                                class="block p-2 hover:bg-gray-800">modificación de datos representante</a> </li>
-
-                        <li><a href="{{ route('sidebar.modiestudiantes') }}"
-                                class="block p-2 hover:bg-gray-800">modificación de datos estudiante</a> </li>
-
-                        <li><a href="{{ route('sidebar.modidocentes') }}"
-                                class="block p-2 hover:bg-gray-800">Modificación datos de Docente</a></li>
-
-                        <li><a href="{{ route('sidebar.materias') }}" class="block p-2 hover:bg-gray-800">Modificar
-                                datos de materias</a></li>
+                        <li><a href="{{ route('sidebar.crearpersona') }}" class="block p-2 hover:bg-gray-800">Crear
+                                persona</a></li>
 
                         <li><a href="{{ route('sidebar.formulario_carga_academica') }}"
                                 class="block p-2 hover:bg-gray-800">Crear
@@ -57,6 +45,21 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
 
                         <li><a href="{{ route('sidebar.inscribir') }}" class="block p-2 hover:bg-gray-800">Inscribir
                                 estudiante</a></li>
+
+                        <li><a href="{{ route('sidebar.modificar_calificacion') }}"
+                                class="block p-2 hover:bg-gray-800">Modificar calificaciones</a></li>
+
+                        <li><a href="{{ route('sidebar.modirepresentantes') }}"
+                                class="block p-2 hover:bg-gray-800">Modificación de datos representante</a> </li>
+
+                        <li><a href="{{ route('sidebar.modiestudiantes') }}"
+                                class="block p-2 hover:bg-gray-800">Modificación de datos estudiante</a> </li>
+
+                        <li><a href="{{ route('sidebar.modidocentes') }}"
+                                class="block p-2 hover:bg-gray-800">Modificación datos de Docente</a></li>
+
+                        <li><a href="{{ route('sidebar.materias') }}" class="block p-2 hover:bg-gray-800">Modificar
+                                datos de materias</a></li>
                         {{-- @endcan --}}
 
                     </ul>

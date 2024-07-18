@@ -1,7 +1,7 @@
 <!-- resources/views/Paginas/Coordinadores/secciones_disponibles.blade.php -->
 
 <x-app-layout>
-    <div class="flex justify-center items-center h-full">
+    <div class="h-full">
         <div class="w-full max-w-md">
             <h1 class="h1Docente text-center mb-4">Coordinador: Inscribir estudiante</h1>
 

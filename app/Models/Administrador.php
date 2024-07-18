@@ -17,7 +17,6 @@ class Administrador extends Model
 
     //Relaciones Uno-Uno
 
-    
     public function usuario(){
         return $this->belongsTo(User::class);
     }

@@ -13,11 +13,10 @@ class Docente extends Model
     protected $fillable = ['user_id'];
     
     //Relaciones Uno-Uno
-    public function usuario(){
+    public function user(){
         return $this->belongsTo(User::class);
     }
     //Relaciones Muchos-Muchos
-    
     public function materias(){
         return $this->belongsToMany(Materia::class, 'docente_materia')
             ->withPivot('periodo_id');
