@@ -9,6 +9,10 @@ use App\Models\Materia;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Models\EstudianteSeccion;
+use Exception;
+use App\Models\Calificacion;
+use App\Models\DocenteMateria;
 
 class SeccionController extends Controller
 {
@@ -19,37 +23,37 @@ class SeccionController extends Controller
 
         return view('Paginas.Coordinadores.crear_seccion', compact('grados'));
     }
-    
-public function crearSeccion(Request $request)
-{
-    try {
-        // Validar los datos recibidos
-        $validatedData = $request->validate([
-            'grado_id' => 'required|integer|exists:grados,id',
-            'capacidad' => 'integer|min:1'
-        ]);
 
-        // Buscar el período académico actual
-        $periodoActual = Periodo_Academico::where('actual', true)->firstOrFail();
+    public function crearSeccion(Request $request)
+    {
+        try {
+            // Validar los datos recibidos
+            $validatedData = $request->validate([
+                'grado_id' => 'required|integer|exists:grados,id',
+                'capacidad' => 'integer|min:1'
+            ]);
 
-        // Buscar el ID de grado_periodo correspondiente al grado y período actual
-        $gradoPeriodo = GradoPeriodo::where('grado_id', $validatedData['grado_id'])
-                                    ->where('periodo_id', $periodoActual->id)
-                                    ->firstOrFail();
+            // Buscar el período académico actual
+            $periodoActual = Periodo_Academico::where('actual', true)->firstOrFail();
 
-        // Contar las secciones existentes para este grado_periodo
-        $numeroSecciones = Seccion::where('grado_periodo_id', $gradoPeriodo->id)->count();
+            // Buscar el ID de grado_periodo correspondiente al grado y período actual
+            $gradoPeriodo = GradoPeriodo::where('grado_id', $validatedData['grado_id'])
+                                        ->where('periodo_id', $periodoActual->id)
+                                        ->firstOrFail();
 
-        // Calcular el nombre de la nueva sección en base a la cantidad de secciones existentes
-        $nuevoNombre = chr(ord('A') + $numeroSecciones); // Empieza en 'A' y suma el número de secciones
+            // Contar las secciones existentes para este grado_periodo
+            $numeroSecciones = Seccion::where('grado_periodo_id', $gradoPeriodo->id)->count();
 
-        // Crear la nueva sección en la base de datos
-        $seccion = Seccion::create([
-            'grado_periodo_id' => $gradoPeriodo->id,
-            'nombre' => $nuevoNombre,
-            'alumnos_inscritos' => 0,
-            'capacidad' => $validatedData['capacidad'] ?? 40, // Asigna 40 si no se proporciona capacidad
-        ]);
+            // Calcular el nombre de la nueva sección en base a la cantidad de secciones existentes
+            $nuevoNombre = chr(ord('A') + $numeroSecciones); // Empieza en 'A' y suma el número de secciones
+
+            // Crear la nueva sección en la base de datos
+            $seccion = Seccion::create([
+                'grado_periodo_id' => $gradoPeriodo->id,
+                'nombre' => $nuevoNombre,
+                'alumnos_inscritos' => 0,
+                'capacidad' => $validatedData['capacidad'] ?? 40, // Asigna 40 si no se proporciona capacidad
+            ]);
 
         return response()->json([
             'message' => 'Sección creada exitosamente',
@@ -66,7 +70,7 @@ public function crearSeccion(Request $request)
 public function obtenerDatosSecciones()
 {
     $grados = Grado::all();
-    $periodos = PeriodoAcademico::all();
+    $periodos = Periodo_Academico::all();
     $materias = Materia::all();
     
     $seccionesPorGradoYPeriodo = Seccion::with(['grado', 'periodoAcademico'])->get()->groupBy(['grado_id', 'periodo_academico_id']);

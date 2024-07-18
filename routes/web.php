@@ -121,6 +121,19 @@ Route::post('/dashboard/vincular_representante',[RepresentanteController::class,
 Route::get('/dashboard/reporte-notas', [SeccionController::class, 'obtenerReporteNotas'])
     ->name('reporte-notas');
 
+Route::get('/dashboard/obtener_secciones_disponibles', [SeccionController::class, 'formulario_secciones_disponibles'])
+    ->name('secciones.disponibles.formulario');
+Route::post('/dashboard/obtener_secciones_disponibles', [SeccionController::class, 'obtener_secciones_disponibles'])
+    ->name('secciones.disponibles.obtener');
+Route::post('/dashboard/obtener_reporte_notas', [SeccionController::class, 'obtener_reporte_notas'])
+    ->name('reporte.notas.obtener');
+
+
+
+Route::get('/dashboard/reporte_carga_academica', [CoordinadorController::class, 'formulario_carga_academica'])  
+    ->name('sidebar.reporte_carga_academica');
+Route::post('/dashboard/reporte_carga_academica', [CoordinadorController::class, 'obtener_carga_academica'])
+    ->name('carga_academica.obtener');
 
 //Rutas para Docentes
 Route::get('/dashboard/CargaNotas', [DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');
