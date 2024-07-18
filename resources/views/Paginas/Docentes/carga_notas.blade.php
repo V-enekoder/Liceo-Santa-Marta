@@ -55,17 +55,17 @@
                         <!-- Espacios para las calificaciones de los 3 lapsos -->
                         <div class="form-group">
                             <label for="lapso1" class="text-default-black">Lapso 1</label>
-                            <input type="number" class="form-control" id="lapso1" name="lapso1" min="1"
+                            <input type="number" class="form-control" id="lapso_1" name="lapso_1" min="1"
                                 max="20" step="1">
                         </div>
                         <div class="form-group">
                             <label for="lapso2" class="text-default-black">Lapso 2</label>
-                            <input type="number" class="form-control" id="lapso2" name="lapso2" min="1"
+                            <input type="number" class="form-control" id="lapso_2" name="lapso_2" min="1"
                                 max="20" step="1">
                         </div>
                         <div class="form-group">
                             <label for="lapso3" class="text-default-black">Lapso 3</label>
-                            <input type="number" class="form-control" id="lapso3" name="lapso3" min="1"
+                            <input type="number" class="form-control" id="lapso_3" name="lapso_3" min="1"
                                 max="20" step="1">
                         </div>
 
