@@ -44,11 +44,8 @@ class CoordinadorController extends Controller{
         return view('Paginas.Coordinadores.modificacion_estudiantes',);
     }
 //-----------------------------------------------------------------------------------------------------------------------
-    public function mostrarDocentes() 
-    {
-    // Obtener todos los docentes junto con la información del usuario
-    $docentes = Docente::with('user.persona')->get();
-    return view('Paginas.Coordinadores.Profesores', ['docentes' => $docentes]);
+    public function modificarDocentes(){
+        return view('Paginas.Coordinadores.Profesores',);
     }
 
     public function updateDocente(Request $request, $id)
@@ -195,70 +192,5 @@ class CoordinadorController extends Controller{
             ], 400);
         }
     }
-    public function obtenerReporteNotas(Request $request)
-    {
-        $request->validate([
-            'seccion_id' => 'required|integer|exists:secciones,id',
-            'periodo_id' => 'required|integer|exists:periodos_academicos,id',
-            'materia_id' => 'required|integer|exists:materias,id',
-        ]);
-
-        try {
-            // Buscar la sección
-            $seccion = Seccion::findOrFail($request->seccion_id);
-
-            // Buscar los estudiantes de la sección
-            $estudiantesSeccion = EstudianteSeccion::where('seccion_id', $seccion->id)->get();
-
-            if ($estudiantesSeccion->isEmpty()) {
-                return response()->json([
-                    'error' => 'No hay estudiantes en esta sección.'
-                ], 404);
-            }
-
-            // Buscar las calificaciones de los estudiantes en la materia y periodo especificados
-            $calificaciones = Calificacion::whereIn('estudiante_id', $estudiantesSeccion->pluck('estudiante_id'))
-                ->where('docente_materia_id', function ($query) use ($request) {
-                    $query->select('id')
-                        ->from('docente_materia')
-                        ->where('materia_id', $request->materia_id)
-                        ->where('periodo_id', $request->periodo_id)
-                        ->limit(1);
-                })
-                ->get();
-
-            if ($calificaciones->isEmpty()) {
-                return response()->json([
-                    'error' => 'No hay calificaciones para los estudiantes en esta materia y periodo.'
-                ], 404);
-            }
-
-            // Calcular estadísticas
-            $totalEstudiantes = $calificaciones->count();
-            $totalAprobados = $calificaciones->filter(function ($calificacion) {
-                return $calificacion->promedio >= 10; // Asumiendo que la nota de aprobación es 10
-            })->count();
-
-            $totalReprobados = $totalEstudiantes - $totalAprobados;
-            $porcentajeAprobados = ($totalAprobados / $totalEstudiantes) * 100;
-            $porcentajeReprobados = ($totalReprobados / $totalEstudiantes) * 100;
-            $promedioGeneral = $calificaciones->avg('promedio');
-
-            // Retornar el reporte
-            return response()->json([
-                'total_estudiantes' => $totalEstudiantes,
-                'total_aprobados' => $totalAprobados,
-                'porcentaje_aprobados' => $porcentajeAprobados,
-                'total_reprobados' => $totalReprobados,
-                'porcentaje_reprobados' => $porcentajeReprobados,
-                'promedio_general' => $promedioGeneral,
-                'calificaciones' => $calificaciones,
-            ], 200);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Error al realizar la operación: ' . $e->getMessage(),
-            ], 400);
-        }       
-    }
+    
 }

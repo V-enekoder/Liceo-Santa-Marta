@@ -5,6 +5,7 @@ use App\Models\Grado;
 use App\Models\Periodo_Academico;
 use App\Models\GradoPeriodo;
 use App\Models\Seccion;
+use App\Models\Materia;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -18,9 +19,6 @@ class SeccionController extends Controller
 
         return view('Paginas.Coordinadores.crear_seccion', compact('grados'));
     }
-
-
-
     
 public function crearSeccion(Request $request)
 {
@@ -63,6 +61,60 @@ public function crearSeccion(Request $request)
             'error' => $e->getMessage()
         ], 500);
     }
+}
+
+public function obtenerDatosSecciones()
+{
+    $grados = Grado::all();
+    $periodos = PeriodoAcademico::all();
+    $materias = Materia::all();
+    
+    $seccionesPorGradoYPeriodo = Seccion::with(['grado', 'periodoAcademico'])->get()->groupBy(['grado_id', 'periodo_academico_id']);
+
+    return view('Paginas.mostrar_reporte_notas', [
+        'grados' => $grados,
+        'periodos' => $periodos,
+        'materias' => $materias,
+        'seccionesPorGradoYPeriodo' => $seccionesPorGradoYPeriodo,
+    ]);
+}
+
+public function obtenerReporteNotas(Request $request)
+{
+    $validated = $request->validate([
+        'seccion_id' => 'required|exists:secciones,id',
+        'periodo_academico' => 'required|exists:periodos_academicos,id',
+        'materia_id' => 'required|exists:materias,id',
+    ]);
+
+    $seccionId = $validated['seccion_id'];
+    $periodoAcademico = $validated['periodo_academico'];
+    $materiaId = $validated['materia_id'];
+
+    // Obtener las calificaciones de los estudiantes de la sección, periodo académico y materia especificados
+    $calificaciones = Calificacion::whereHas('docenteMateria', function ($query) use ($periodoAcademico, $materiaId) {
+            $query->where('periodo_id', $periodoAcademico)
+                ->where('materia_id', $materiaId);
+        })
+        ->whereHas('estudiante.secciones', function ($query) use ($seccionId) {
+            $query->where('seccion_id', $seccionId);
+        })
+        ->get();
+
+
+    $totalEstudiantes = $calificaciones->count();
+    $aprobados = $calificaciones->where('promedio', '>=', 10)->count();
+    $reprobados = $totalEstudiantes - $aprobados;
+    $promedioGeneral = $totalEstudiantes > 0 ? $calificaciones->avg('promedio') : 0;
+    $porcentajeAprobados = $totalEstudiantes > 0 ? ($aprobados / $totalEstudiantes) * 100 : 0;
+
+    return view('Paginas.mostrar_reporte_notas', [
+        'totalEstudiantes' => $totalEstudiantes,
+        'aprobados' => $aprobados,
+        'reprobados' => $reprobados,
+        'porcentajeAprobados' => $porcentajeAprobados,
+        'promedioGeneral' => $promedioGeneral,
+    ]);
 }
 
 

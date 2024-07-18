@@ -23,12 +23,8 @@ class User extends Authenticatable
     const COORDINADOR = 2;
     const DOCENTE = 3;
     const REPRESENTANTE = 4;
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    //protected $primaryKey = 'cedula'; // Define la clave primaria
+
+    
 
     /**
      * The attributes that are mass assignable.
