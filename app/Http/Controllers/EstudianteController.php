@@ -197,4 +197,12 @@ class EstudianteController extends Controller
             ], 404);
         }
     }
+
+    public function verFicha($cedula){
+        
+        $estudiante = Estudiante::whereHas('persona', function ($query) use ($cedula) {
+           $query->where('cedula', $cedula);
+         })->with('persona')->first();
+        return response()->json($estudiante);
+    }
 }
