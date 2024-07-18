@@ -147,7 +147,7 @@ Route::get('/dashboard/VerBoletin', [RepresentanteController::class, 'mostrar_bo
 Route::get('/dashboard/VerTodoBoletin', [RepresentanteController::class, 'indexTodoBoletin'])->name('boletin.indexTodo');
 Route::get('/dashboard/VerFicha', [RepresentanteController::class, 'verFicha'])->name('Ficha.index');
 
-Route::get('/dashboard/agregar_telefono', [TelefonoController::class, 'formulario_agregar_telefono'])
+Route::get('/dashboard/agregar_telefono', [TelefonoController::class, 'indexTelefono'])
     ->name('sidebar.agregar_telefono');
 Route::post('/dashboard/agregar_telefono', [TelefonoController::class, 'agregarTelefono']);
 
