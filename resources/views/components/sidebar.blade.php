@@ -90,12 +90,6 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                         <li><a href="{{ route('sidebar.CargaNotas') }}" class="block p-2 hover:bg-gray-800">Cargar
                                 notas</a></li>
 
-                        <li><a href="{{ route('sidebar.VerSecciones') }}" class="block p-2 hover:bg-gray-800">Ver
-                                secciones de clases</a></li>
-                                {{-- aqui debería ser {{route('sidebar.ver_carga_academica')}} --}}
-                        <li><a href="{{ route('sidebar.VerSecciones') }}" class="block p-2 hover:bg-gray-800">Mi
-                                carga académica</a></li>
-
 
                         {{-- @endcan --}}
                     </ul>
@@ -119,10 +113,6 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                         {{-- @can('es_representante') --}}
 
                         <li><a href="{{ route('sidebar.agregar_telefono') }}" class="block p-2 hover:bg-gray-800">Agregar teléfono</a></li>
-
-                        <li><a href="{{ route('sidebar.mostrar_boletin') }}" class="block p-2 hover:bg-gray-800">Ver
-                                boletin de
-                                calificaciones</a>
                         </li>
                         <li><a href="{{ route('formulario.seleccionar_boletin') }}" class="block p-2 hover:bg-gray-800">Consulta de
                                 boletines académicos</a></li>
