@@ -51,36 +51,27 @@ class CoordinadorController extends Controller{
     return view('Paginas.Coordinadores.Profesores', ['docentes' => $docentes]);
     }
 
-
     public function updateDocente(Request $request, $id)
-    {   
-        $docente = Docente::findOrFail($id);
-        $usuario = $docente->usuario;
-        $persona = $usuario->persona;
+    {
+        $docente = Docente::find($id);
 
-        // Validar los datos
         $request->validate([
-            'nombre' => 'required|string|max:255',
-            'apellido' => 'required|string|max:255',
-            'cedula' => 'required|string|max:10',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $usuario->id,
+            'primer_nombre' => 'required|string|max:255',
+            'primer_apellido' => 'required|string|max:255',
+            'cedula' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
         ]);
 
-        // Actualizar los datos de la persona
-        $persona->update([
-            'nombre' => $request->nombre,
-            'apellido' => $request->apellido,
-            'cedula' => $request->cedula,
-        ]);
+        $docente->user->persona->primer_nombre = $request->input('primer_nombre');
+        $docente->user->persona->primer_apellido = $request->input('primer_apellido');
+        $docente->user->persona->cedula = $request->input('cedula');
+        $docente->user->email = $request->input('email');
+        $docente->user->persona->save();
+        $docente->user->save();
 
-        // Actualizar los datos del usuario
-        $usuario->update([
-            'email' => $request->email,
-        ]);
-
-        // Redirigir con un mensaje de éxito
-        return redirect()->route('sidebar.modidocentes')->with('success', 'Docente actualizado con éxito');
+        return response()->json(['message' => 'Docente actualizado correctamente', 'docente' => $docente]);
     }
+
 //-----------------------------------------------------------------------------------------------------------------------
     function modificarMaterias(){
         //Gate::authorize('modificar_materias');
