@@ -59,10 +59,10 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                                 class="block p-2 hover:bg-gray-800">Modificación datos de Docente</a></li>
 
                         <li><a href="{{ route('sidebar.materias') }}" class="block p-2 hover:bg-gray-800">Modificar
-                                datos deMaterias</a></li>
+                                datos de Materias</a></li>
 
-                                <li><a href="{{ route('sidebar.reporte_carga_academica') }}"
-                                        class="block p-2 hover:bg-gray-800">Buscar reporte academico</a></li>
+                        <li><a href="{{ route('sidebar.reporte_carga_academica') }}"
+                                class="block p-2 hover:bg-gray-800">Buscar reporte academico</a></li>
                         {{-- @endcan --}}
 
                     </ul>
