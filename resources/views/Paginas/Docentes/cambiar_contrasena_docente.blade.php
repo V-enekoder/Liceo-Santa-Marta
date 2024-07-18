@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
+<x-app-layout>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cambiar Contraseña</title>
+    <h1 class="h1Docente">Docente: Cambiar contraseña</h1>
     <!-- Estilos CSS -->
     <style>
         body {
@@ -79,16 +75,12 @@
             color: #721c24;
         }
     </style>
-</head>
 
-<body>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Cambiar Contraseña</div>
 
-                    <div class="card-body">
+<div class="col-lg-4">
+    <div class="panel panel-default">
+        <div class="panel-heading text-table-head">Panel de cambiar contraseña</div>
+        <div class="panel-body">
                         <!-- Mostrar mensaje de estado -->
                         @if (session('status'))
                             <div class="alert alert-success" role="alert">
@@ -157,6 +149,5 @@
             </div>
         @endif
     @endif
-</body>
 
-</html>
+        </x-app-layout>

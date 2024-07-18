@@ -1,4 +1,4 @@
-{{-- <x-app-layout> --}}
+<x-app-layout>
 
 <h1 class="h1Docente">Ver carga academica</h1>
 
@@ -101,4 +101,4 @@
 </div>
 </div>
 
-{{-- </x-app-layout> --}}
+</x-app-layout>

@@ -47,19 +47,22 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                                 estudiante</a></li>
 
                         <li><a href="{{ route('sidebar.modificar_calificacion') }}"
-                                class="block p-2 hover:bg-gray-800">Modificar calificaciones</a></li>
+                                class="block p-2 hover:bg-gray-800">Modificar Calificaciones</a></li>
 
                         <li><a href="{{ route('sidebar.modirepresentantes') }}"
-                                class="block p-2 hover:bg-gray-800">Modificación de datos representante</a> </li>
+                                class="block p-2 hover:bg-gray-800">Modificación de datos Representante</a> </li>
 
                         <li><a href="{{ route('sidebar.modiestudiantes') }}"
-                                class="block p-2 hover:bg-gray-800">Modificación de datos estudiante</a> </li>
+                                class="block p-2 hover:bg-gray-800">Modificación de datos Estudiante</a> </li>
 
                         <li><a href="{{ route('sidebar.modidocentes') }}"
                                 class="block p-2 hover:bg-gray-800">Modificación datos de Docente</a></li>
 
                         <li><a href="{{ route('sidebar.materias') }}" class="block p-2 hover:bg-gray-800">Modificar
-                                datos de materias</a></li>
+                                datos deMaterias</a></li>
+
+                                <li><a href="{{ route('sidebar.reporte_carga_academica') }}"
+                                        class="block p-2 hover:bg-gray-800">Buscar reporte academico</a></li>
                         {{-- @endcan --}}
 
                     </ul>
@@ -82,6 +85,8 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                         x-transition:leave-start="transform opacity-100 scale-100"
                         x-transition:leave-end="transform opacity-0 scale-95" class="submenu ml-4 space-y-2">
                         {{-- @can('es_docente') --}}
+                        <li><a href="{{ route('sidebar.mostrar_cambiar_clave') }}" class="block p-2 hover:bg-gray-800">Cambiar contraseña</a></li>
+
                         <li><a href="{{ route('sidebar.CargaNotas') }}" class="block p-2 hover:bg-gray-800">Cargar
                                 notas</a></li>
 
@@ -90,6 +95,8 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                                 {{-- aqui debería ser {{route('sidebar.ver_carga_academica')}} --}}
                         <li><a href="{{ route('sidebar.VerSecciones') }}" class="block p-2 hover:bg-gray-800">Mi
                                 carga académica</a></li>
+
+
                         {{-- @endcan --}}
                     </ul>
                 </li>
