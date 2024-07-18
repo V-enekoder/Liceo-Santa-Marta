@@ -146,6 +146,8 @@ Route::get('/dashboard/agregar_telefono', [TelefonoController::class, 'formulari
     ->name('sidebar.agregar_telefono');
 Route::post('/dashboard/agregar_telefono', [TelefonoController::class, 'agregarTelefono']);
 
+Route::get('/verficha/{cedula}',[EstudianteController::class, 'verFicha']);
+
 //------------------------------------------------------------------------------------------------------------------------------------
 // Modificar representante
 Route::get('/dashboard/dataRepresentantes', [RepresentanteController::class, 'mostrarRepresentantes'])
