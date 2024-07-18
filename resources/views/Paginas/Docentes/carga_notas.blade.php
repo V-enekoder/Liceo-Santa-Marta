@@ -27,7 +27,7 @@
         </div>
 
         <!-- FORMULARIO DE CARGA DE NOTAS -->
-        <div class="col-lg-8">
+        <div class="col-lg-8 ml-5">
             <div class="panel panel-default">
                 <div class="panel-heading text-table-head">Formulario de carga de notas</div>
                 <div class="panel-body">
@@ -75,7 +75,7 @@
                         <!-- Campo oculto para enviar el ID de la materia seleccionada -->
                         <input type="hidden" id="materia_id" name="materia_id" value="">
 
-                        <button type="submit" class="btn btn-success form-control text-default"
+                        <button type="submit" class="btn btn-success form-control text-default mt-5 mb-1"
                             onclick="updateMateriaId()">Guardar notas</button>
                     </form>
                 </div>
