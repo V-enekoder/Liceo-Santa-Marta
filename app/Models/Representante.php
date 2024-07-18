@@ -13,7 +13,7 @@ class Representante extends Model
     protected $fillable = ['user_id']; 
 
     //Relaciones Uno-Uno
-    public function usuario(){
+    public function user(){
         return $this->belongsTo(User::class);
     }
     //Relaciones Muchos-Muchos

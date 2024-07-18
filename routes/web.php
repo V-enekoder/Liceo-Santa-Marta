@@ -48,8 +48,9 @@ Route::get('/dashboard/crear-seccion', [SeccionController::class, 'mostrarFormul
 Route::post('/dashboard/crear-seccion', [SeccionController::class, 'crearSeccion']);
 
 Route::get('/dashboard/dataNotas', [CoordinadorController::class, 'modificarNotas'])->name('sidebar.notas');
-Route::get('/dashboard/dataRepresentantes', [CoordinadorController::class, 'modificarRepresentantes'])->name('sidebar.modirepresentantes');
+
 Route::get('/dashboard/dataEstudiantes', [CoordinadorController::class, 'modificarEstudiantes'])->name('sidebar.modiestudiantes');
+
 
 
 
@@ -97,7 +98,6 @@ Route::get('/dashboard/docentes/buscar', [DocenteController::class, 'mostrarTodo
     ->name('docentes.buscar');
 
 Route::get('/dashboard/dataNotas', [CoordinadorController::class, 'modificarNotas'])->name('sidebar.notas');
-Route::get('/dashboard/dataRepresentantes', [CoordinadorController::class, 'modificarRepresentantes'])->name('sidebar.modirepresentantes');
 Route::get('/dashboard/dataEstudiantes', [CoordinadorController::class, 'modificarEstudiantes'])->name('sidebar.modiestudiantes');
 
 
@@ -116,7 +116,6 @@ Route::get('/dashboard/vincular_representante',[RepresentanteController::class,'
     ->name('sidebar.vincular_representante');
 Route::post('/dashboard/vincular_representante',[RepresentanteController::class,'vincular_estudiante_representante'])
     ->name('vincular_representante');
-
 Route::get('/dashboard/reporte-notas', [SeccionController::class, 'obtenerReporteNotas'])
     ->name('reporte-notas');
 
@@ -126,14 +125,14 @@ Route::get('/dashboard/reporte_carga_academica', [CoordinadorController::class, 
 Route::post('/dashboard/reporte_carga_academica', [CoordinadorController::class, 'obtener_carga_academica'])
     ->name('carga_academica.obtener');
 
-
-//Rutas para Docentes
-Route::get('/dashboard/carga_notas', [DocenteController::class, 'formulario_cargar_notas'])
+    Route::get('/dashboard/carga_notas', [DocenteController::class, 'formulario_cargar_notas'])
     ->name('sidebar.CargaNotas');
 Route::post('/dashboard/carga_notas', [DocenteController::class,'cargar'])
     ->name('subir_notas');
 
 
+//Rutas para Docentes
+Route::get('/dashboard/CargaNotas', [DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');
 Route::get('/dashboard/DataSecciones', [DocenteController::class, 'verSecciones'])->name('sidebar.VerSecciones');
 Route::get('/dashboard/DataCargaAcademica', [DocenteController::class, 'verCargaAcademica'])->name('sidebar.VerCargaAcademica');
 
@@ -153,3 +152,20 @@ Route::get('/dashboard/agregar_telefono', [TelefonoController::class, 'formulari
 Route::post('/dashboard/agregar_telefono', [TelefonoController::class, 'agregarTelefono']);
 
 Route::get('/verficha/{cedula}',[EstudianteController::class, 'verFicha']);
+
+//------------------------------------------------------------------------------------------------------------------------------------
+// Modificar representante
+Route::get('/dashboard/dataRepresentantes', [RepresentanteController::class, 'mostrarRepresentantes'])
+    ->name('sidebar.modirepresentantes');
+
+// Agregar representante
+Route::post('/dashboard/dataRepresentantes', [RepresentanteController::class, 'agregarRepresentante'])
+    ->name('sidebar.agregarRepresentante');
+
+// Actualizar representante
+Route::put('/dashboard/dataRepresentantes/{id}', [RepresentanteController::class, 'actualizarRepresentante'])
+    ->name('sidebar.actualizarRepresentante');
+
+// Borrar representante
+Route::delete('/dashboard/dataRepresentantes/{id}', [RepresentanteController::class, 'borrarRepresentante'])
+    ->name('sidebar.borrarRepresentante');

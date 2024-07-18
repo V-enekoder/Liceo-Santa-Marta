@@ -27,7 +27,7 @@
         </div>
 
         <!-- FORMULARIO DE CARGA DE NOTAS -->
-        <div class="col-lg-8">
+        <div class="col-lg-8 ml-5">
             <div class="panel panel-default">
                 <div class="panel-heading text-table-head">Formulario de carga de notas</div>
                 <div class="panel-body">
@@ -55,17 +55,17 @@
                         <!-- Espacios para las calificaciones de los 3 lapsos -->
                         <div class="form-group">
                             <label for="lapso1" class="text-default-black">Lapso 1</label>
-                            <input type="number" class="form-control" id="lapso1" name="lapso1" min="1"
+                            <input type="number" class="form-control" id="lapso_1" name="lapso_1" min="1"
                                 max="20" step="1">
                         </div>
                         <div class="form-group">
                             <label for="lapso2" class="text-default-black">Lapso 2</label>
-                            <input type="number" class="form-control" id="lapso2" name="lapso2" min="1"
+                            <input type="number" class="form-control" id="lapso_2" name="lapso_2" min="1"
                                 max="20" step="1">
                         </div>
                         <div class="form-group">
                             <label for="lapso3" class="text-default-black">Lapso 3</label>
-                            <input type="number" class="form-control" id="lapso3" name="lapso3" min="1"
+                            <input type="number" class="form-control" id="lapso_3" name="lapso_3" min="1"
                                 max="20" step="1">
                         </div>
 
@@ -75,7 +75,7 @@
                         <!-- Campo oculto para enviar el ID de la materia seleccionada -->
                         <input type="hidden" id="materia_id" name="materia_id" value="">
 
-                        <button type="submit" class="btn btn-success form-control text-default"
+                        <button type="submit" class="btn btn-success form-control text-default mt-5 mb-1"
                             onclick="updateMateriaId()">Guardar notas</button>
                     </form>
                 </div>

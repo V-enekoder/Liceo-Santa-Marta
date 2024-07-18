@@ -36,10 +36,7 @@ class CoordinadorController extends Controller{
         //Gate::authorize('modificar_notas');
         return view('Paginas.Coordinadores.modificacion_notas',);
     }
-    function modificarRepresentantes(){
-        //Gate::authorize('modificar_representante');
-        return view('Paginas.Coordinadores.modificacion_representantes',);
-    }
+    
     function modificarEstudiantes(){
         //Gate::authorize('modificar_estudiante');
         return view('Paginas.Coordinadores.modificacion_estudiantes',);
