@@ -146,5 +146,19 @@ Route::get('/dashboard/agregar_telefono', [TelefonoController::class, 'formulari
     ->name('sidebar.agregar_telefono');
 Route::post('/dashboard/agregar_telefono', [TelefonoController::class, 'agregarTelefono']);
 
-//vamos a darle vida a los representantes
-Route::get('/dashboard/dataRepresentantes', [RepresentanteController::class, 'mostrarRepresentantes'])->name('sidebar.modirepresentantes');
+//------------------------------------------------------------------------------------------------------------------------------------
+// Modificar representante
+Route::get('/dashboard/dataRepresentantes', [RepresentanteController::class, 'mostrarRepresentantes'])
+    ->name('sidebar.modirepresentantes');
+
+// Agregar representante
+Route::post('/dashboard/dataRepresentantes', [RepresentanteController::class, 'agregarRepresentante'])
+    ->name('sidebar.agregarRepresentante');
+
+// Actualizar representante
+Route::put('/dashboard/dataRepresentantes/{id}', [RepresentanteController::class, 'actualizarRepresentante'])
+    ->name('sidebar.actualizarRepresentante');
+
+// Borrar representante
+Route::delete('/dashboard/dataRepresentantes/{id}', [RepresentanteController::class, 'borrarRepresentante'])
+    ->name('sidebar.borrarRepresentante');

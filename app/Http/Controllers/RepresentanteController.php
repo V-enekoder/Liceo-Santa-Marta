@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\Calificacion;
+use App\Models\Docente;
+use App\Models\Persona;
 use App\Models\Estudiante;
 use App\Models\EstudianteRepresentante;
 use App\Models\Periodo_Academico;
@@ -187,10 +189,84 @@ class RepresentanteController extends Controller{
         }
     }
 
-    //Modifcar representantes
-    function mostrarRepresentantes(){
-        return view('Paginas.Coordinadores.modificacion_representantes',);
+//CRUD representantes-----------------------------------------------------------------------------------------------------------------
+    public function mostrarRepresentantes()
+{
+    // Obtener todos los representantes junto con la información del usuario
+    $representantes = Representante::with('user.persona')->paginate(10);
+    return view('Paginas.Coordinadores.modificacion_representantes', ['representantes' => $representantes]);
+    
+}
+
+public function actualizarRepresentante(Request $request, $id)
+{
+    $representante = Representante::find($id);
+
+    $request->validate([
+        'primer_nombre' => 'required|string|max:255',
+        'primer_apellido' => 'required|string|max:255',
+        'cedula' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+    ]);
+
+    $representante->user->persona->primer_nombre = $request->input('primer_nombre');
+    $representante->user->persona->primer_apellido = $request->input('primer_apellido');
+    $representante->user->persona->cedula = $request->input('cedula');
+    $representante->user->email = $request->input('email');
+    $representante->user->persona->save();
+    $representante->user->save();
+
+    return response()->json(['message' => 'Representante actualizado correctamente', 'representante' => $representante]);
+}
+
+public function agregarRepresentante(Request $request)
+{
+    $request->validate([
+        'primer_nombre' => 'required|string|max:255',
+        'primer_apellido' => 'required|string|max:255',
+        'cedula' => 'required|string|max:255|unique:personas',
+        'direccion' => 'required|string|max:255',
+    ]);
+
+    // Crear un nuevo usuario y persona
+    $user = new User();
+    $user->email = $request->input('email');
+    $user->password = bcrypt('defaultpassword'); // Aquí deberías tener un proceso seguro para establecer la contraseña
+    $user->save();
+
+    $persona = new Persona();
+    $persona->primer_nombre = $request->input('primer_nombre');
+    $persona->primer_apellido = $request->input('primer_apellido');
+    $persona->cedula = $request->input('cedula');
+    $persona->direccion = $request->input('direccion');
+    $persona->user_id = $user->id;
+    $persona->save();
+
+    // Asignar el rol de representante al usuario
+    $user->assignRole('representante');
+
+    // Crear el representante asociado al usuario
+    $representante = new Representante();
+    $representante->user_id = $user->id;
+    $representante->save();
+
+    return response()->json(['message' => 'Representante agregado correctamente', 'representante' => $representante]);
+}
+
+public function borrarRepresentante($id)
+{
+    $representante = Representante::find($id);
+
+    if (!$representante) {
+        return response()->json(['error' => 'Representante no encontrado'], 404);
     }
 
+    // Eliminar el usuario y la persona asociada
+    $representante->user->persona->delete();
+    $representante->user->delete();
+    $representante->delete();
+
+    return response()->json(['message' => 'Representante eliminado correctamente']);
+}
 
 }

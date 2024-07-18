@@ -1,267 +1,169 @@
 <x-app-layout>
-
-    <h1 class="h1Docente">Coordinador: Modificar representantes</h1>
-
-    <button id="open-add-representante" class="agregarData">
-        <i class="fas fa-plus mr-2"></i> Agregar representante
-    </button>
-
-    <div class="col-lg-8 panel-carga-academica">
-        <div class="panel panel-default panel-carga-academica">
-            <div class="panel-heading text-table-head">Listado de representantes</div>
-                    <div class="row">
-
-                        <div class="entradas_search distancia_show"><select class="border_radio" name="entradas">
-                            <option value="10">10</option>
-                            <option value="25">25</option>
-                            <option value="50">50</option>
-                            <option value="100">100</option>
-                        </select> entradas por pagina</label>
-
-                        <div class="buscar_pag distancia_left"><label>Buscar por Cedula:</label><input class="border_radio" type="search" id="dt-search-0">
-                        </div>
-                    </div>
-
-                        <div class="col-sm-12 padding-carga">
-                            <table width="100%"
-                                class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline"
-                                id="dataTables" role="grid" aria-describedby="dataTables_info" style="width: 100%;">
-                                <thead>
-                                    <tr role="row">
-                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 100px;">Cedula</th>
-                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 300px;">Nombre</th>
-                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 300px;">Apellido</th>
-                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 300px;">Dirección</th>
-                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 30px;">Accion</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr role="row" class="odd">
-                                        <th scope="row">3655066</th>
-                                        <td>MARIA DEL VALLE</td>
-                                        <td>ORTIZ</td>
-                                        <td>Disgreca</td>
-                                        <td>
-                                            <button id="open-alert-edit" class="btn bottom-success">
-                                                <i class="fa-solid fa-pencil"></i>
-                                            </button>
-                                            <button id="open-alert-deletedata" class="btn bottom-delete">
-                                                <i class="fa-solid fa-box-archive"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr role="row" class="even">
-                                        <th scope="row">3975584</th>
-                                        <td>AMARA MONICA</td>
-                                        <td>SALVADOR PEREZ</td>
-                                        <td>Las Lomas</td>
-                                        <td>
-                                            <button id="open-alert-edit" class="btn bottom-success">
-                                                <i class="fa-solid fa-pencil"></i>
-                                            </button>
-                                            <button id="open-alert-deletedata" class="btn bottom-delete">
-                                                <i class="fa-solid fa-box-archive"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr role="row" class="odd">
-                                        <th scope="row">14536874</th>
-                                        <td>YURIBILEIXIS JOANNYSON</td>
-                                        <td>RODRIGUEZ HERNANDEZ</td>
-                                        <td>Core 8 sin asfalto</td>
-                                        <td>
-                                            <button id="open-alert-edit" class="btn bottom-success">
-                                                <i class="fa-solid fa-pencil"></i>
-                                            </button>
-                                            <button id="open-alert-deletedata" class="btn bottom-delete">
-                                                <i class="fa-solid fa-box-archive"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr role="row" class="even">
-                                        <th scope="row">16879365</th>
-                                        <td>MARIA ALEJANDRA</td>
-                                        <td>PACHECO FUENTES</td>
-                                        <td>Unare I</td>
-                                        <td>
-                                            <button id="open-alert-edit" class="btn bottom-success">
-                                                <i class="fa-solid fa-pencil"></i>
-                                            </button>
-                                            <button id="open-alert-deletedata" class="btn bottom-delete">
-                                                <i class="fa-solid fa-box-archive"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr role="row" class="odd">
-                                        <th scope="row">16955789</th>
-                                        <td>CARLOS ERNESTO</td>
-                                        <td>MILLAN</td>
-                                        <td>Las garzas</td>
-                                        <td>
-                                            <button id="open-alert-edit" class="btn bottom-success">
-                                                <i class="fa-solid fa-pencil"></i>
-                                            </button>
-                                            <button id="open-alert-deletedata" class="btn bottom-delete">
-                                                <i class="fa-solid fa-box-archive"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr role="row" class="even">
-                                        <th scope="row">21008756</th>
-                                        <td>JUAN ALMEIDA</td>
-                                        <td>MISOGINO ESCONTIGO</td>
-                                        <td>Caracas</td>
-                                        <td>
-                                            <button id="open-alert-edit" class="btn bottom-success">
-                                                <i class="fa-solid fa-pencil"></i>
-                                            </button>
-                                            <button id="open-alert-deletedata" class="btn bottom-delete">
-                                                <i class="fa-solid fa-box-archive"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                    <tr role="row" class="odd">
-                                        <th scope="row">22365791</th>
-                                        <td>BLACKPINK INDUSTRIA</td>
-                                        <td>MUSICAL POP</td>
-                                        <td>Corea</td>
-                                        <td>
-                                            <button id="open-alert-edit" class="btn bottom-success">
-                                                <i class="fa-solid fa-pencil"></i>
-                                            </button>
-                                            <button id="open-alert-deletedata" class="btn bottom-delete">
-                                                <i class="fa-solid fa-box-archive"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-sm-6 ajust-right">
-                                <div class="dataTables_info" id="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of 7
-                                    entries</div>
-                            </div>
-                            <div class="col-sm-6 ajust-left">
-                                <div class="dataTables_paginate paging_simple_numbers" id="dataTables_paginate">
-                                    <ul class="pagination">
-                                        <li class="paginate_button previous disabled" aria-controls="dataTables" tabindex="0"
-                                            id="dataTables_previous"><a href="#">Previous</a></li>
-                                        <li class="paginate_button active" aria-controls="dataTables" tabindex="0"><a href="#">1</a></li>
-                                        <li class="paginate_button " aria-controls="dataTables" tabindex="0"><a href="#">2</a></li>
-                                        <li class="paginate_button " aria-controls="dataTables" tabindex="0"><a href="#">3</a></li>
-                                        <li class="paginate_button " aria-controls="dataTables" tabindex="0"><a href="#">4</a></li>
-                                        <li class="paginate_button " aria-controls="dataTables" tabindex="0"><a href="#">5</a></li>
-                                        <li class="paginate_button disabled" aria-controls="dataTables" tabindex="0" id="dataTables_ellipsis"><a
-                                                href="#">…</a></li>
-                                        <li class="paginate_button " aria-controls="dataTables" tabindex="0"><a href="#">12</a></li>
-                                        <li class="paginate_button next" aria-controls="dataTables" tabindex="0" id="dataTables_next"><a
-                                                href="#">Next</a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    </div>
-                </div>
-
-
-                <!---OK AQUI ES MODIFICACION-->
-                <dialog id="alert-edit">
-                <h1 class="h1Advertencia">¡ADVERTENCIA!</h1>
-                <p>Estás a punto de guardar/modificar datos importantes, ¿seguro/a que quieres realizar esta acción?</p>
-                <p class="text-black-alert">   Si no deseas realizar los cambios presiona la tecla "Esc" o "Escape"</p>
-
-                <div class="col-lg-8 panel-modificacion-datos">
-                    <div class="panel panel-default panel-modificacion-datos">
-                        <div class="panel-heading text-table-head">Informacion del representante</div>
-                                    <div class="col-sm-12 padding-carga">
-                                        <table width="100%"
-                                            class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline"
-                                            id="dataTables" role="grid" aria-describedby="dataTables_info" style="width: 100%;">
-                                            <thead>
-                                                <tr role="row">
-                                                    <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 100px;">Cedula</th>
-                                                    <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 300px;">Nombre</th>
-                                                    <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 300px;">Apellido</th>
-                                                    <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 300px;">Dirección</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr role="row" class="odd">
-                                                    <th> <div class="casilla_editora"> <input class="form-control" value="3655066"></div> </th>
-                                                    <td> <div class="casilla_editora"> <input class="form-control" value="MARIA DEL VALLE"></div> </td>
-                                                    <td> <div class="casilla_editora"> <input class="form-control" value="ORTIZ"></div> </td>
-                                                    <td> <div class="casilla_editora"> <input class="form-control" value="Disgreca"></div> </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                    </div>
-                </div>
-
-                <button id="close-alert-edit" class="btn btn-confirm form-control text-default ajust-btn">Confirmar cambios</button>
-                </dialog>
-
-                <!-- FIN MODIFICAR DATOS-->
-
-                <!-- AHORA VAMOS A AGREGARLOS COMO KE NOO0O0O0OO0O0 holis uwu owo nwn nya-->
-
-                <dialog id="add-representante">
-                    <h1 class="h1Advertencia">¡ADVERTENCIA!</h1>
-                    <p>Estás a punto de agregar en la tabla un nuevo representante, ¿seguro/a que quieres realizar esta acción?</p>
-                    <p class="text-black-alert">   Si no deseas realizar los cambios presiona la tecla "Esc" o "Escape"</p>
-    
-                    <div class="col-lg-8 panel-agregar-datos">
-                        <div class="panel panel-default panel-agregar-datos">
-                            <div class="panel-heading text-table-head">Informacion del representante</div>
-                                        <div class="col-sm-12 padding-carga">
-                                            <table width="100%"
-                                                class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline"
-                                                id="dataTables" role="grid" aria-describedby="dataTables_info" style="width: 100%;">
-                                                <thead>
-                                                    <tr role="row">
-                                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 100px;">Cedula</th>
-                                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 300px;">Nombre</th>
-                                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 300px;">Apellido</th>
-                                                        <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 300px;">Dirección</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr role="row" class="odd">
-                                                        <th> <div class="casilla_editora"> <input class="form-control" value=""></div> </th>
-                                                        <td> <div class="casilla_editora"> <input class="form-control" value=""></div> </td>
-                                                        <td> <div class="casilla_editora"> <input class="form-control" value=""></div> </td>
-                                                        <td> <div class="casilla_editora"> <input class="form-control" value=""></div> </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                        </div>
-                    </div>
-    
-                    <button id="close-add-representante" class="btn btn-confirm form-control text-default ajust-btn">Confirmar</button>
-                    </dialog>
-
-                    <!-- FIN AGREGAR -->
-
-
-                <!--- ELIMINAR -->
-                <dialog id="alert-deletedata">
-                    <h1 class="h1Advertencia" style="color: red">¡IMPORTANTE!</h1>
-                    <p>Estás a punto de eliminar datos importantes, ¿seguro/a que quieres realizar esta acción?</p>
-                    <p class="text-black-alert" style="color: red">   Si no deseas realizar los cambios presiona la tecla "Esc" o "Escape"</p>
-                    <button id="close-alert-deletedata" class="btn btn-confirm form-control text-default">Confirmar cambios</button>
-                </dialog>
-                <!-- FIN ELIMINAR -->
-
-            
-            
-            </div>
-        </div>
+    <div class="flex justify-between items-center mb-4">
+        <h1 class="text-2xl font-bold">Gestión de Representantes</h1>
     </div>
 
+    <div class="container mx-auto px-4">
+        <table class="table-auto w-full mt-4">
+            <thead>
+                <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                    <th class="py-3 px-6 text-center">ID</th>
+                    <th class="py-3 px-6 text-center">Nombre</th>
+                    <th class="py-3 px-6 text-center">Apellido</th>
+                    <th class="py-3 px-6 text-center">Cédula</th>
+                    <th class="py-3 px-6 text-center">Correo</th>
+                    <th class="py-3 px-6 text-center">Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="table-body" class="text-gray-800">
+                @foreach($representantes as $representante)
+                    <tr data-id="{{ $representante->id }}">
+                        <td class="py-3 px-6 border-b border-gray-200">{{ $representante->id }}</td>
+                        <td class="py-3 px-6 border-b border-gray-200">{{ $representante->user->persona->primer_nombre }}</td>
+                        <td class="py-3 px-6 border-b border-gray-200">{{ $representante->user->persona->primer_apellido }}</td>
+                        <td class="py-3 px-6 border-b border-gray-200">{{ $representante->user->persona->cedula }}</td>
+                        <td class="py-3 px-6 border-b border-gray-200">{{ $representante->user->email }}</td>
+                        <td class="py-3 px-6 text-center border-b border-gray-200">
+                            <a href="#"
+                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs editarRepresentanteBtn"
+                                data-id="{{ $representante->id }}" data-nombre="{{ $representante->user->persona->primer_nombre }}"
+                                data-apellido="{{ $representante->user->persona->primer_apellido }}" data-cedula="{{ $representante->user->persona->cedula }}"
+                                data-email="{{ $representante->user->email }}">
+                                <i class="fas fa-edit mr-1"></i> Editar
+                            </a>
+                            <button
+                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs eliminarRepresentanteBtn"
+                                data-id="{{ $representante->id }}">
+                                Eliminar
+                            </button>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Formulario para editar representante -->
+    <div id="editarRepresentanteForm" style="display: none;">
+        <form id="formEditarRepresentante" method="POST">
+            @csrf
+            @method('PUT')
+            <div class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                <div class="bg-white p-4 rounded">
+                    <h1 class="text-xl font-bold mb-4">Editar Representante</h1>
+                    <div>
+                        <label for="editNombre" class="block mb-2">Nombre:</label>
+                        <input type="text" id="editNombre" name="primer_nombre" class="border border-gray-300 px-2 py-1 rounded mb-2" required>
+                    </div>
+                    <div>
+                        <label for="editApellido" class="block mb-2">Apellido:</label>
+                        <input type="text" id="editApellido" name="primer_apellido" class="border border-gray-300 px-2 py-1 rounded mb-2" required>
+                    </div>
+                    <div>
+                        <label for="editCedula" class="block mb-2">Cédula:</label>
+                        <input type="text" id="editCedula" name="cedula" class="border border-gray-300 px-2 py-1 rounded mb-2" required>
+                    </div>
+                    <div>
+                        <label for="editEmail" class="block mb-2">Usuario (Email):</label>
+                        <input type="email" id="editEmail" name="email" class="border border-gray-300 px-2 py-1 rounded mb-2" required>
+                    </div>
+                    <div class="flex justify-end mt-4">
+                        <button type="button" id="cancelarEditarBtn" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded mr-2">Cancelar</button>
+                        <button type="submit" id="guardarEditarBtn" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Mostrar el formulario para editar representante
+            $(document).on('click', '.editarRepresentanteBtn', function() {
+                var id = $(this).data('id');
+                var nombre = $(this).data('nombre');
+                var apellido = $(this).data('apellido');
+                var cedula = $(this).data('cedula');
+                var email = $(this).data('email');
+
+                $('#editNombre').val(nombre);
+                $('#editApellido').val(apellido);
+                $('#editCedula').val(cedula);
+                $('#editEmail').val(email);
+
+                $('#formEditarRepresentante').attr('action', '/dashboard/dataRepresentantes/' + id);
+                $('#editarRepresentanteForm').show();
+            });
+
+            $('#cancelarEditarBtn').click(function() {
+                $('#editarRepresentanteForm').hide();
+            });
+
+            $('#formEditarRepresentante').submit(function(event) {
+                event.preventDefault();
+
+                var formData = $(this).serialize();
+                var actionUrl = $(this).attr('action');
+
+                $.ajax({
+                    url: actionUrl,
+                    type: 'POST',
+                    dataType: 'json',
+                    data: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                        'X-HTTP-Method-Override': 'PUT'
+                    },
+                    success: function(response) {
+                        alert(response.message);
+                        var updatedRow = '<td class="py-3 px-6 border-b border-gray-200">' +
+                            response.representante.id + '</td>' +
+                            '<td class="py-3 px-6 border-b border-gray-200">' + $('#editNombre').val() + '</td>' +
+                            '<td class="py-3 px-6 border-b border-gray-200">' + $('#editApellido').val() + '</td>' +
+                            '<td class="py-3 px-6 border-b border-gray-200">' + $('#editCedula').val() + '</td>' +
+                            '<td class="py-3 px-6 border-b border-gray-200">' + $('#editEmail').val() + '</td>' +
+                            '<td class="py-3 px-6 text-center border-b border-gray-200">' +
+                            '<a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-xs editarRepresentanteBtn" data-id="' +
+                            response.representante.id + '" data-nombre="' + $('#editNombre').val() + '" data-apellido="' +
+                            $('#editApellido').val() + '" data-cedula="' + $('#editCedula').val() + '" data-email="' +
+                            $('#editEmail').val() + '">' +
+                            '<i class="fas fa-edit mr-1"></i> Editar</a>' +
+                            '<button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded text-xs eliminarRepresentanteBtn" data-id="' +
+                            response.representante.id + '">Eliminar</button>' +
+                            '</td>';
+
+                        $('tr[data-id="' + response.representante.id + '"]').html(updatedRow);
+                        $('#editarRepresentanteForm').hide();
+                    },
+                    error: function(xhr) {
+                        alert('Error al actualizar el representante.');
+                    }
+                });
+            });
+
+            // Eliminar un representante
+            $(document).on('click', '.eliminarRepresentanteBtn', function() {
+                var id = $(this).data('id');
+
+                if (confirm('¿Estás seguro de que deseas eliminar este representante?')) {
+                    $.ajax({
+                        url: '/dashboard/dataRepresentantes/' + id,
+                        type: 'DELETE',
+                        dataType: 'json',
+                        data: {
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function(response) {
+                            alert(response.message);
+                            $('tr[data-id="' + id + '"]').remove();
+                        },
+                        error: function(xhr) {
+                            alert('Error al eliminar el representante.');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 </x-app-layout>
