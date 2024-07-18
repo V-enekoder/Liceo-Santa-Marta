@@ -116,6 +116,7 @@ Route::get('/dashboard/vincular_representante',[RepresentanteController::class,'
     ->name('sidebar.vincular_representante');
 Route::post('/dashboard/vincular_representante',[RepresentanteController::class,'vincular_estudiante_representante'])
     ->name('vincular_representante');
+    
 Route::get('/dashboard/reporte-notas', [SeccionController::class, 'obtenerReporteNotas'])
     ->name('reporte-notas');
 
