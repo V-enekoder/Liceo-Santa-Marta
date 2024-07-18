@@ -48,6 +48,12 @@ class CreateNewUser implements CreatesNewUsers
                 'email' => ['No se encontró un usuario asociado a esta persona.'],
             ]);
         }
+
+        if ($user->persona->activo == false){
+            throw ValidationException::withMessages([
+                'cedula' => ['El usuario no está activo.'],
+            ]);
+        }
     
         if ($user->rol_id != 4) {
             throw ValidationException::withMessages([

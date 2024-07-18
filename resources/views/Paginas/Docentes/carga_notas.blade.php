@@ -1,146 +1,94 @@
 <x-app-layout>
     <h1 class="h1Docente">Carga de notas</h1>
 
-<div class="ajuste-tablas">
+    <div class="ajuste-tablas">
 
-    <!--TABLA DE BUSQUEDA DE MATERIA-->
-    <div class="col-lg-4">
-        <div class="panel panel-default">
-            <div class="panel-heading text-table-head">Panel de cargas academicas</div>
+        <!-- PANEL DE CARGAS ACADÉMICAS -->
+        <div class="col-lg-4">
+            <div class="panel panel-default">
+                <div class="panel-heading text-table-head">Panel de cargas académicas</div>
                 <div class="panel-body">
-                    <form class="form-signin" id="settingsform" autocomplete="off">
+                    <!-- Formulario de búsqueda de asignatura -->
+                    <form class="form-signin" id="materiaForm" autocomplete="on">
                         <label class="text-default-black">Buscar asignatura</label>
-                             <div class="input-group" style="width:100%">
-                                <select class="form-control"><option value="100000">MATEMATICA</option><option value="100001">FISICA</option><option value="100002">QUIMICA</option></select>
-                                    <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
-                                        </div>
-    </form>
-        <form class="form-signin" id="settingsform" autocomplete="off">
-            <label class="text-default-black">Buscar seccion</label>
-                <div class="input-group" style="width:100%">
-                    <select name="_search" class="form-control"><option value="1">A</option><option value="2">B</option><option value="3">C</option><option value="4">D</option></select>
-                        <span class="input-group-addon" style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
-                            <button type="submit" class="btn btn-success form-control text-default">Buscar</button>
+                        <div class="input-group" style="width:100%">
+                            <select id="materia_select" class="form-control" name="materia_id">
+                                <option value="">Selecciona una asignatura</option>
+                                @foreach ($materias as $materia)
+                                    <option value="{{ $materia->id }}">{{ $materia->nombre }}</option>
+                                @endforeach
+                            </select>
+                            <span class="input-group-addon"
+                                style="width:0px; padding-left:0px; padding-right:0px; border:none;"></span>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
 
-
-        <!---TABLA DE ALUMNOS Y CARGA--->
+        <!-- FORMULARIO DE CARGA DE NOTAS -->
         <div class="col-lg-8">
-            <div class="panel panel-carga panel-default">
-                <div class="panel-heading text-table-head">Listado de alumnos inscritos</div>
+            <div class="panel panel-default">
+                <div class="panel-heading text-table-head">Formulario de carga de notas</div>
                 <div class="panel-body">
-                    <div id="dataTables_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer text-default">
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <table width="100%"
-                                    class="table table-striped table-bordered table-hover dataTable no-footer dtr-inline"
-                                    id="dataTables" role="grid" aria-describedby="dataTables_info" style="width: 100%;">
-                                    <thead>
-                                        <tr role="row" class="info-table-head">
-                                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 133px;">Cedula</th>
-                                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 300px;">Nombres</th>
-                                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 300px;">Apellidos</th>
-                                            <th class="sorting_disabled" rowspan="1" colspan="1" style="width: 100px;">Nota</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr role="row" class="odd">
-                                            <th scope="row">30293487</th>
-                                            <td>FRANCISCO JAVIER</td>
-                                            <td>ISEA GARCIA</td>
-                                            <td><select name="_elegirNota" class="form-control"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></option><option value="5">5</option>
-                                            </option><option value="6">6</option></option><option value="7">7</option></option><option value="8">8</option></option><option value="9">9</option></option><option value="4">10</option></select></td>
-                                        </tr>
-                                        <tr role="row" class="even">
-                                            <th scope="row">29906987</th>
-                                            <td>JOEY RAYAN</td>
-                                            <td>DANIELS RUIZ</td>
-                                            <td><select name="_elegirNota" class="form-control"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></option><option value="5">5</option>
-                                            </option><option value="6">6</option></option><option value="7">7</option></option><option value="8">8</option></option><option value="9">9</option></option><option value="4">10</option></select></td>
-                                        </tr>
-                                        <tr role="row" class="odd">
-                                            <th scope="row">30498257</th>
-                                            <td>MARIA DEL VALLE</td>
-                                            <td>NAVARRO RAMOS</td>
-                                            <td><select name="_elegirNota" class="form-control"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></option><option value="5">5</option>
-                                            </option><option value="6">6</option></option><option value="7">7</option></option><option value="8">8</option></option><option value="9">9</option></option><option value="4">10</option></select></td>
-                                        </tr>
-                                        <tr role="row" class="even">
-                                            <th scope="row">30366096</th>
-                                            <td>ANGEL PAUL</td>
-                                            <td>GONZALEZ CASTILLO</td>
-                                            <td><select name="_elegirNota" class="form-control"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></option><option value="5">5</option>
-                                            </option><option value="6">6</option></option><option value="7">7</option></option><option value="8">8</option></option><option value="9">9</option></option><option value="4">10</option></select></td>
-                                        </tr>
-                                        <tr role="row" class="odd">
-                                            <th scope="row">32059780</th>
-                                            <td>KEINER JOSE</td>
-                                            <td>FRONTADO FIGUERA</td>
-                                            <td><select name="_elegirNota" class="form-control"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></option><option value="5">5</option>
-                                            </option><option value="6">6</option></option><option value="7">7</option></option><option value="8">8</option></option><option value="9">9</option></option><option value="4">10</option></select></td>
-                                        </tr>
-                                        <tr role="row" class="even">
-                                            <th scope="row">30231978</th>
-                                            <td>MIGUEL ANGEL</td>
-                                            <td>LINARES AVILA</td>
-                                            <td><select name="_elegirNota" class="form-control"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></option><option value="5">5</option>
-                                            </option><option value="6">6</option></option><option value="7">7</option></option><option value="8">8</option></option><option value="9">9</option></option><option value="4">10</option></select></td>
-                                        </tr>
-                                        <tr role="row" class="odd">
-                                            <th scope="row">30664502</th>
-                                            <td>JEANNYBETH DALOWTY</td>
-                                            <td>HERRERA LALL</td>
-                                            <td><select name="_elegirNota" class="form-control"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></option><option value="5">5</option>
-                                            </option><option value="6">6</option></option><option value="7">7</option></option><option value="8">8</option></option><option value="9">9</option></option><option value="4">10</option></select></td>
-                                        </tr>
-                                        <tr role="row" class="even">
-                                            <th scope="row">30577090</th>
-                                            <td>BRAYAN EDUARDO</td>
-                                            <td>CASANOVA AGUILERA</td>
-                                            <td><select name="_elegirNota" class="form-control"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></option><option value="5">5</option>
-                                            </option><option value="6">6</option></option><option value="7">7</option></option><option value="8">8</option></option><option value="9">9</option></option><option value="4">10</option></select></td>
-                                        </tr>
-                                        <tr role="row" class="odd">
-                                            <th scope="row">29643097</th>
-                                            <td>OCTAVIO JOSE</td>
-                                            <td>MALAVE RONDON</td>
-                                            <td><select name="_elegirNota" class="form-control"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></option><option value="5">5</option>
-                                            </option><option value="6">6</option></option><option value="7">7</option></option><option value="8">8</option></option><option value="9">9</option></option><option value="4">10</option></select></td>
-                                        </tr>
-                                        <tr role="row" class="even">
-                                            <th scope="row">30857308</th>
-                                            <td>ANDREW XANDER</td>
-                                            <td>PUERTA VELIZ</td>
-                                            <td><select name="_elegirNota" class="form-control"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></option><option value="5">5</option>
-                                            </option><option value="6">6</option></option><option value="7">7</option></option><option value="8">8</option></option><option value="9">9</option></option><option value="4">10</option></select></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <button id="open-alert-changes" class="btn btn-success form-control text-default">Cargar notas de lapso</button>
+                    <!-- Mostrar el nombre del periodo académico -->
+                    <h3>{{ $periodo->nombre }}</h3>
 
-                        <dialog id="alert-changes">
-                            <h1 class="h1Advertencia">¡ADVERTENCIA!</h1>
-                            <p>Estás a punto de guardar/modificar datos importantes, ¿seguro/a que quieres realizar esta acción?</p>
-                            <p class="text-black-alert">   Si no deseas realizar los cambios presiona la tecla "Esc" o "Escape"</p>
-                            <button id="close-alert-changes" class="btn btn-confirm form-control text-default">Confirmar cambios</button>
-                        </dialog>
-
-                            </div>
+                    <!-- Notificación de error -->
+                    @if (session('error'))
+                        <div class="alert alert-danger" role="alert">
+                            {{ session('error') }}
                         </div>
-                    </div>
+                    @endif
+
+                    <!-- Formulario para cargar notas -->
+                    <form class="form-signin" id="cargaNotasForm" autocomplete="off" action="{{ route('subir_notas') }}"
+                        method="POST">
+                        @csrf
+                        <input type="hidden" id="docente_id" name="docente_id" value="{{ $docente->id }}">
+                        <div class="form-group">
+                            <label for="cedula_estudiante" class="text-default-black">Cédula del estudiante</label>
+                            <input type="text" class="form-control" id="cedula_estudiante" name="cedula_estudiante"
+                                required>
+                        </div>
+
+                        <!-- Espacios para las calificaciones de los 3 lapsos -->
+                        <div class="form-group">
+                            <label for="lapso1" class="text-default-black">Lapso 1</label>
+                            <input type="number" class="form-control" id="lapso1" name="lapso1" min="1"
+                                max="20" step="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="lapso2" class="text-default-black">Lapso 2</label>
+                            <input type="number" class="form-control" id="lapso2" name="lapso2" min="1"
+                                max="20" step="1">
+                        </div>
+                        <div class="form-group">
+                            <label for="lapso3" class="text-default-black">Lapso 3</label>
+                            <input type="number" class="form-control" id="lapso3" name="lapso3" min="1"
+                                max="20" step="1">
+                        </div>
+
+                        <!-- Campo oculto para enviar el ID del periodo académico -->
+                        <input type="hidden" id="periodo_id" name="periodo_id" value="{{ $periodo->id }}">
+
+                        <!-- Campo oculto para enviar el ID de la materia seleccionada -->
+                        <input type="hidden" id="materia_id" name="materia_id" value="">
+
+                        <button type="submit" class="btn btn-success form-control text-default"
+                            onclick="updateMateriaId()">Guardar notas</button>
+                    </form>
                 </div>
             </div>
         </div>
-
-
     </div>
 
-    
+    <script>
+        function updateMateriaId() {
+            var materiaSelect = document.getElementById('materia_select');
+            var materiaIdInput = document.getElementById('materia_id');
+
+            materiaIdInput.value = materiaSelect.value;
+        }
+    </script>
 </x-app-layout>
