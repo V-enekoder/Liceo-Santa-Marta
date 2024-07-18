@@ -26,7 +26,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-
+use App\Models\Persona;
+use Exception;
 
 
 class CoordinadorController extends Controller{
@@ -43,35 +44,7 @@ class CoordinadorController extends Controller{
         //Gate::authorize('modificar_estudiante');
         return view('Paginas.Coordinadores.modificacion_estudiantes',);
     }
-//-----------------------------------------------------------------------------------------------------------------------
-    // public function mostrarDocentes() 
-    // {
-    // // Obtener todos los docentes junto con la información del usuario
-    // $docentes = Docente::with('user.persona')->get();
-    // return view('Paginas.Coordinadores.Profesores', ['docentes' => $docentes]);
-    // }
 
-    // public function updateDocente(Request $request, $id)
-    // {
-    //     $docente = Docente::find($id);
-
-    //     $request->validate([
-    //         'primer_nombre' => 'required|string|max:255',
-    //         'primer_apellido' => 'required|string|max:255',
-    //         'cedula' => 'required|string|max:255',
-    //         'email' => 'required|email|max:255',
-    //     ]);
-
-    //     $docente->user->persona->primer_nombre = $request->input('primer_nombre');
-    //     $docente->user->persona->primer_apellido = $request->input('primer_apellido');
-    //     $docente->user->persona->cedula = $request->input('cedula');
-    //     $docente->user->email = $request->input('email');
-    //     $docente->user->persona->save();
-    //     $docente->user->save();
-
-    //     return response()->json(['message' => 'Docente actualizado correctamente', 'docente' => $docente]);
-    // }
-//-----------------------------------------------------------------------------------------------------------------------
     function modificarMaterias(){
         //Gate::authorize('modificar_materias');
         return view('Paginas.Coordinadores.Materias',);
@@ -136,13 +109,54 @@ class CoordinadorController extends Controller{
                 'secciones' => $secciones,
             ], 200);
 
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             return response()->json([
                 'error' => 'Error al realizar la operación: ' . $e->getMessage(),
             ], 400);
         }
     }
+    public function formulario_carga_academica()
+    {
+        $per = Persona::where('categoria_id', 1)->get();
 
+        // Filtrar las personas que tienen rol_id = 3 (docentes)
+        $personas = $per->filter(function ($per) {
+            return $per->user && $per->user->rol_id === 3;
+        });
+        $periodos = Periodo_Academico::all();
+
+        return view('Paginas.Coordinadores.reporte_carga_academica', compact('personas', 'periodos'));
+    }
+
+    public function obtener_carga_academica(Request $request)
+    {
+        $request->validate([
+            'persona_id' => 'required|integer|exists:personas,id',
+            'periodo_id' => 'required|integer|exists:periodos_academicos,id',
+        ]);
+
+        try {
+            $persona = Persona::findOrFail($request->persona_id);
+            $usuario = $persona->user;
+            $docente = $usuario->docente;
+            // Buscar las materias asignadas al docente en el período especificado
+            $materias = DocenteMateria::where('docente_id', $docente->id)
+                ->where('periodo_id', $request->periodo_id)
+                ->with('materia')
+                ->get()
+                ->pluck('materia');
+
+            // Retornar la información de las materias
+            return response()->json([
+                'materias' => $materias,
+            ], 200);
+
+        } catch (Exception $e) {
+            return response()->json([
+                'error' => 'Error al realizar la operación: ' . $e->getMessage(),
+            ], 400);
+        }
+    }
     public function crearCalificaciones(Request $request)
     {
         $request->validate([
