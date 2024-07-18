@@ -53,9 +53,9 @@ Route::get('/dashboard/dataEstudiantes', [CoordinadorController::class, 'modific
 
 
 //-----------------------------------------------------------------------------------------------------------------------------------------
-
-Route::get('/dashboard/dataDocentes', [CoordinadorController::class, 'modificarDocentes'])->name('sidebar.modidocentes');
-
+//Rutas para la edicion de docentes (coordinador)
+Route::get('/dashboard/dataDocentes', [CoordinadorController::class, 'mostrarDocentes'])->name('sidebar.modidocentes');
+Route::put('/dashboard/dataDocentes/{id}', [CoordinadorController::class, 'updateDocente'])->name('sidebar.updateDocente');
 
 //-----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -98,7 +98,7 @@ Route::get('/dashboard/docentes/buscar', [DocenteController::class, 'mostrarTodo
 Route::get('/dashboard/dataNotas', [CoordinadorController::class, 'modificarNotas'])->name('sidebar.notas');
 Route::get('/dashboard/dataRepresentantes', [CoordinadorController::class, 'modificarRepresentantes'])->name('sidebar.modirepresentantes');
 Route::get('/dashboard/dataEstudiantes', [CoordinadorController::class, 'modificarEstudiantes'])->name('sidebar.modiestudiantes');
-Route::get('/dashboard/dataDocentes', [CoordinadorController::class, 'modificarDocentes'])->name('sidebar.modidocentes');
+
 
 
 Route::get('/dashboard/dataMaterias', [MateriaController::class, 'mostrarMaterias'])

@@ -44,8 +44,11 @@ class CoordinadorController extends Controller{
         return view('Paginas.Coordinadores.modificacion_estudiantes',);
     }
 //-----------------------------------------------------------------------------------------------------------------------
-    public function modificarDocentes(){
-        return view('Paginas.Coordinadores.Profesores',);
+    public function mostrarDocentes() 
+    {
+    // Obtener todos los docentes junto con la información del usuario
+    $docentes = Docente::with('user.persona')->get();
+    return view('Paginas.Coordinadores.Profesores', ['docentes' => $docentes]);
     }
 
     public function updateDocente(Request $request, $id)
@@ -68,7 +71,6 @@ class CoordinadorController extends Controller{
 
         return response()->json(['message' => 'Docente actualizado correctamente', 'docente' => $docente]);
     }
-
 //-----------------------------------------------------------------------------------------------------------------------
     function modificarMaterias(){
         //Gate::authorize('modificar_materias');
