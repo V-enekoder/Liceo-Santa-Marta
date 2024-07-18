@@ -151,7 +151,18 @@ Route::get('/dashboard/agregar_telefono', [TelefonoController::class, 'formulari
     ->name('sidebar.agregar_telefono');
 Route::post('/dashboard/agregar_telefono', [TelefonoController::class, 'agregarTelefono']);
 
-Route::get('/verficha/{cedula}',[EstudianteController::class, 'verFicha']);
+Route::get('/dashboard/verficha/{cedula}',[EstudianteController::class, 'verFicha']);
+
+
+Route::get('/dashboard/seleccionar-boletin', [RepresentanteController::class, 'formulario_mostrar_boletines'])
+    ->name('formulario.seleccionar_boletin');
+Route::post('/dashboard/buscar-boletin', [RepresentanteController::class, 'buscar_boletin'])
+    ->name('buscar.boletin');
+
+Route::get('/dashboard/seleccionar-finales', [RepresentanteController::class, 'formulario_mostrar_finales'])
+    ->name('formulario.seleccionar_finales');
+Route::post('/dashboard/buscar-finales', [RepresentanteController::class, 'buscar_finales'])
+    ->name('buscar.finales');
 
 //------------------------------------------------------------------------------------------------------------------------------------
 // Modificar representante

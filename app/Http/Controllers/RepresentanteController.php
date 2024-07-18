@@ -12,13 +12,15 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Persona;
 use Illuminate\Support\Facades\Auth;
+use App\Models\DocenteMateria;
 use Illuminate\Support\Facades\Gate;
-
+use App\Models\Grado;
 class RepresentanteController extends Controller{
     function mostrar_boletin(){
         //Gate::authorize('ver_boletin');
         $user = Auth::user();
         $representante = Representante::where('user_id', $user->id)->first();
+
         return view('Paginas.Representantes.boletin_notas_actual',);
     }
 
@@ -33,36 +35,126 @@ class RepresentanteController extends Controller{
 
     public function formulario_agregar_telefono()
     {
-        $user = Auth::user();
+        
         return view('Paginas.Representantes.agregar_telefono', compact('user'));
     }
 
-    public function obtener_boletín_actual(Request $request)
-    {
+    public function formulario_mostrar_boletines(){
+        $grados = Grado::all();
+        return view('Paginas.Representantes.seleccionar_boletin', compact('grados'));
+    }
+    
+    public function buscar_boletin(Request $request) {
         $request->validate([
-            'cedula_estudiante' => 'required|integer',
+            'cedula_estudiante' => 'required|integer|exists:personas,cedula',
+            'grado_id' => 'required|exists:grados,id',
         ]);
 
         try {
-            // Buscar al estudiante por su cédula
-            $estudiante = Estudiante::where('cedula', $request->cedula_estudiante)->firstOrFail();
+            $periodo = Periodo_Academico::where('actual', true)->firstOrFail();
+            $representante = Representante::where('user_id', Auth::id())->firstOrFail();
 
-            // Buscar todas las calificaciones del estudiante
-            $calificaciones = Calificacion::where('estudiante_id', $estudiante->id)
-                ->with('docenteMateria')
-                ->get();
+            // Buscar el estudiante por su cédula
+            $persona_estudiante = Persona::where('cedula', $request->cedula_estudiante)->firstOrFail();
+            $estudiante = $persona_estudiante->estudiante;
 
-            // Retornar la información de las calificaciones
-            return response()->json([
-                'calificaciones' => $calificaciones,
-            ], 200);
+            // Verificar que el estudiante está relacionado con el representante en el período actual
+            $relacion = $representante->estudiantes()
+                ->where('estudiante_id', $estudiante->id)
+                ->wherePivot('periodo_id', $periodo->id)
+                ->exists();
+
+            if (!$relacion) {
+                return redirect()->back()->withErrors(['cedula_estudiante' => 'El estudiante no está relacionado con el representante en el período actual.']);
+            }
+
+            // Obtener el grado y sus materias
+            $grado = Grado::findOrFail($request->grado_id);
+            $materias = $grado->materias;
+
+            // Array para almacenar las calificaciones por materia
+            $calificaciones = [];
+
+            foreach ($materias as $materia) {
+                // Buscar el docente_materia_id para esta materia, grado y periodo
+                $docenteMateria = DocenteMateria::where('materia_id', $materia->id)
+                    ->where('periodo_id', $periodo->id)
+                    ->firstOrFail();
+
+                // Buscar las calificaciones del estudiante para esta materia y periodo
+                $calificacion = Calificacion::where('estudiante_id', $estudiante->id)
+                    ->where('docente_materia_id', $docenteMateria->id)
+                    ->first();
+
+                // Guardar las calificaciones en el array por materia
+                $calificaciones[$materia->nombre] = $calificacion;
+            }
+
+            return view('Paginas.Representantes.mostrar_boletin', compact('estudiante', 'calificaciones','grado'));
 
         } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Error al realizar la operación: ' . $e->getMessage(),
-            ], 400);
+            return redirect()->back()->withErrors(['error' => 'Error al buscar el boletín: ' . $e->getMessage()]);
         }
+}
+
+    public function formulario_mostrar_finales(){
+        $grados = Grado::all();
+        return view('Paginas.Representantes.seleccionar_finales', compact('grados'));
     }
+
+public function buscar_finales(Request $request) {
+        $request->validate([
+            'cedula_estudiante' => 'required|integer|exists:personas,cedula',
+            'grado_id' => 'required|exists:grados,id',
+        ]);
+
+        try {
+            $periodo = Periodo_Academico::where('actual', true)->firstOrFail();
+            $representante = Representante::where('user_id', Auth::id())->firstOrFail();
+
+            // Buscar el estudiante por su cédula
+            $persona_estudiante = Persona::where('cedula', $request->cedula_estudiante)->firstOrFail();
+            $estudiante = $persona_estudiante->estudiante;
+
+            // Verificar que el estudiante está relacionado con el representante en el período actual
+            $relacion = $representante->estudiantes()
+                ->where('estudiante_id', $estudiante->id)
+                ->wherePivot('periodo_id', $periodo->id)
+                ->exists();
+
+            if (!$relacion) {
+                return redirect()->back()->withErrors(['cedula_estudiante' => 'El estudiante no está relacionado con el representante en el período actual.']);
+            }
+
+            // Obtener el grado y sus materias
+            $grado = Grado::findOrFail($request->grado_id);
+            $materias = $grado->materias;
+
+            // Array para almacenar las calificaciones por materia
+            $calificaciones = [];
+
+            foreach ($materias as $materia) {
+                // Buscar el docente_materia_id para esta materia, grado y periodo
+                $docenteMateria = DocenteMateria::where('materia_id', $materia->id)
+                    ->where('periodo_id', $periodo->id)
+                    ->firstOrFail();
+
+                // Buscar las calificaciones del estudiante para esta materia y periodo
+                $calificacion = Calificacion::where('estudiante_id', $estudiante->id)
+                    ->where('docente_materia_id', $docenteMateria->id)
+                    ->first();
+
+                // Guardar las calificaciones en el array por materia
+                $calificaciones[$materia->nombre] = $calificacion;
+            }
+
+            return view('Paginas.Representantes.mostrar_finales', compact('estudiante', 'calificaciones','grado'));
+
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Error al buscar el boletín: ' . $e->getMessage()]);
+        }
+}
+
     public function eliminarRepresentante(Request $request)
     {
         $request->validate([
@@ -152,50 +244,74 @@ class RepresentanteController extends Controller{
         // Retornar la vista con los períodos académicos
         return view('Paginas.Coordinadores.vincular_representante', compact('periodos'));
     }
-    public function vincular_estudiante_representante(Request $request)
-    {
-        $request->validate([
-            'cedula_representante' => 'required|integer|exists:personas,cedula',
-            'cedula_estudiante' => 'required|integer|exists:personas,cedula',
-        ]);
+public function vincular_estudiante_representante(Request $request)
+{
+    $request->validate([
+        'cedula_representante' => 'required|integer|exists:personas,cedula',
+        'cedula_estudiante' => 'required|integer|exists:personas,cedula',
+    ]);
 
-        try {
-            // Obtener el periodo académico actual
-            $periodo = Periodo_Academico::where('actual', true)->firstOrFail();
+    try {
+        // Obtener el periodo académico actual
+        $periodo = Periodo_Academico::where('actual', true)->firstOrFail();
 
-            // Buscar el representante por su cédula
-            $persona_representante = Persona::where('cedula', $request->cedula_representante)->firstOrFail();
-            $representante = $persona_representante->user->representante;
+        // Buscar el representante por su cédula
+        $persona_representante = Persona::where('cedula', $request->cedula_representante)->firstOrFail();
+        $representante = $persona_representante->user->representante;
 
-            // Buscar el estudiante por su cédula
-            $persona_estudiante = Persona::where('cedula', $request->cedula_estudiante)->firstOrFail();
-            $estudiante = $persona_estudiante->estudiante;
+        // Buscar el estudiante por su cédula
+        $persona_estudiante = Persona::where('cedula', $request->cedula_estudiante)->firstOrFail();
+        $estudiante = $persona_estudiante->estudiante;
 
-            // Verificar si el representante y el estudiante existen
-            if (!$representante || !$estudiante) {
-                return response()->json([
-                    'error' => 'No se encontró un representante o estudiante asociado a las cédulas proporcionadas.'
-                ], 400);
-            }
-
-            // Vincular al estudiante y representante en el período académico
-            $estudianteRepresentante = EstudianteRepresentante::create([
-                'estudiante_id' => $estudiante->id,
-                'representante_id' => $representante->id,
-                'periodo_id' => $periodo->id,
-            ]);
-
+        // Verificar si el representante y el estudiante existen
+        if (!$representante || !$estudiante) {
             return response()->json([
-                'message' => 'Estudiante y representante vinculados exitosamente.',
-                'data' => $estudianteRepresentante,
-            ], 201);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Error al vincular el estudiante y representante: ' . $e->getMessage(),
+                'error' => 'No se encontró un representante o estudiante asociado a las cédulas proporcionadas.'
             ], 400);
         }
+
+        // Verificar si la relación ya existe
+        $relacionExistente = EstudianteRepresentante::where('estudiante_id', $estudiante->id)
+            ->where('representante_id', $representante->id)
+            ->where('periodo_id', $periodo->id)
+            ->first();
+
+        if ($relacionExistente) {
+            return response()->json([
+                'error' => 'La relación entre el estudiante y el representante ya existe en este período académico.'
+            ], 400);
+        }
+
+        // Contar cuántos representantes tiene el estudiante en el mismo período
+        $contadorRepresentantes = EstudianteRepresentante::where('estudiante_id', $estudiante->id)
+            ->where('periodo_id', $periodo->id)
+            ->count();
+
+        if ($contadorRepresentantes == 3) {
+            return response()->json([
+                'error' => 'El estudiante ya tiene 3  representantes en este período académico.'
+            ], 400);
+        }
+
+        // Vincular al estudiante y representante en el período académico
+        $estudianteRepresentante = EstudianteRepresentante::create([
+            'estudiante_id' => $estudiante->id,
+            'representante_id' => $representante->id,
+            'periodo_id' => $periodo->id,
+        ]);
+
+        return response()->json([
+            'message' => 'Estudiante y representante vinculados exitosamente.',
+            'data' => $estudianteRepresentante,
+        ], 201);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => 'Error al vincular el estudiante y representante: ' . $e->getMessage(),
+        ], 400);
     }
+}
+
 
 //CRUD representantes-----------------------------------------------------------------------------------------------------------------
     public function mostrarRepresentantes()
@@ -276,5 +392,4 @@ public function borrarRepresentante($id)
 
     return response()->json(['message' => 'Representante eliminado correctamente']);
 }
-
 }
