@@ -16,7 +16,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading text-table-head">Panel de crear sección</div>
                 <div class="panel-body">
-                    <form action="{{ url('/dashboard/crear-seccion') }}" method="POST">
+                    <form id="crearSeccionForm" method="POST">
                         @csrf
                         <div class="form-group">
                             <label class="text-default-black" for="grado_id">Grado</label>
@@ -41,4 +41,40 @@
             </div>
         </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#crearSeccionForm').submit(function(event) {
+                event.preventDefault();
+
+                var formData = $(this).serialize();
+
+                $.ajax({
+                    url: '{{ url('/dashboard/crear-seccion') }}',
+                    type: 'POST',
+                    data: formData,
+                    success: function(response) {
+                        // Mostrar ventana emergente en caso de éxito
+                        alert('Sección creada exitosamente: \n' +
+                            'ID: ' + response.seccion.id + '\n' +
+                            'Capacidad: ' + response.seccion.capacidad + '\n' +
+                            'Grado/Año: ' + response.seccion.grado_periodo_id + '\n' +
+                            'Seccion: ' + response.seccion.nombre);
+                        
+                        // Redireccionar o realizar cualquier otra acción necesaria
+                        window.location.reload();
+                    },
+                    error: function(xhr) {
+                        var errorMessage = 'Error al crear la sección.';
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMessage = xhr.responseJSON.message;
+                        }
+                        // Mostrar ventana emergente en caso de error
+                        alert(errorMessage);
+                    }
+                });
+            });
+        });
+    </script>
 </x-app-layout>
