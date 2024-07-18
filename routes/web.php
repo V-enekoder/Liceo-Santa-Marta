@@ -10,6 +10,8 @@ use App\Http\Controllers\MateriaController;
 use App\Http\Controllers\SeccionController;
 use App\Http\Controllers\TelefonoController;
 use App\Http\Controllers\PersonaController;
+use App\Http\Controllers\PeriodoController;
+use App\Http\Controllers\Materia;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -32,14 +34,14 @@ Route::middleware([
 //Rutas para Administradores
 
 //Rutas para Coorinadores
-Route::get('/dashboard/periodos', [CoordinadorController::class, 'ver_periodos'])
+Route::get('/dashboard/periodos', [PeriodoController::class, 'ver_periodos'])
     ->name('sidebar.periodos');
-Route::post('/dashboard/periodos', [CoordinadorController::class, 'crear_periodo_academico'])
+Route::post('/dashboard/periodos', [PeriodoController::class, 'crear_periodo_academico'])
     ->name('crear_periodo_academico');
 
 Route::get('/dashboard/crear_persona', [PersonaController::class, 'mostrar_formulario_crear_usuario'])
     ->name('sidebar.crearpersona');
-Route::post('/dashboard/crear_persona', [PersonaController::class, 'crear']); // OJO: hay que cambiar el nombre de la función 'crear' a 'crear_persona' por motivos de coherencia
+Route::post('/dashboard/crear_persona', [PersonaController::class, 'crear']);
 
 Route::get('/dashboard/crear-seccion', [SeccionController::class, 'mostrarFormularioCrearSeccion'])
     ->name('sidebar.crearseccion');
@@ -50,9 +52,10 @@ Route::get('/dashboard/dataRepresentantes', [CoordinadorController::class, 'modi
 Route::get('/dashboard/dataEstudiantes', [CoordinadorController::class, 'modificarEstudiantes'])->name('sidebar.modiestudiantes');
 
 
+
 //Rutas para la edicion de docentes (coordinador)
-Route::get('/dashboard/dataDocentes', [CoordinadorController::class, 'mostrarDocentes'])->name('sidebar.modidocentes');
-Route::put('/dashboard/dataDocentes/{id}', [CoordinadorController::class, 'updateDocente'])->name('sidebar.updateDocente');
+Route::get('/dashboard/dataDocentes', [DocenteController::class, 'mostrarDocentes'])->name('sidebar.modidocentes');
+Route::put('/dashboard/dataDocentes/{id}', [DocenteController::class, 'updateDocente'])->name('sidebar.updateDocente');
 
 
 //rutas para la edición y creación de materias (coordinador)
@@ -60,6 +63,9 @@ Route::get('/dashboard/dataMaterias', [MateriaController::class, 'mostrarMateria
 Route::post('/dashboard/dataMaterias', [MateriaController::class, 'crear_materia'])->name('sidebar.crearMateria');
 Route::put('/dashboard/dataMaterias/{id}', [MateriaController::class, 'editar_materia'])->name('sidebar.editarMateria');
 Route::delete('/dashboard/dataMaterias/{id}', [MateriaController::class, 'eliminar_materia'])->name('sidebar.eliminarMateria');
+
+
+
 
 
 Route::get('/dashboard/asignar-carga', [DocenteController::class, 'mostrarFormularioAsignarCarga'])
@@ -110,11 +116,8 @@ Route::get('/dashboard/vincular_representante',[RepresentanteController::class,'
     ->name('sidebar.vincular_representante');
 Route::post('/dashboard/vincular_representante',[RepresentanteController::class,'vincular_estudiante_representante'])
     ->name('vincular_representante');
-
-Route::get('/dashboard/reporte_carga_academica', [CoordinadorController::class, 'formulario_carga_academica'])  
-    ->name('sidebar.reporte_carga_academica');
-Route::post('/dashboard/reporte_carga_academica', [CoordinadorController::class, 'obtener_carga_academica'])
-    ->name('carga_academica.obtener');
+Route::get('/dashboard/reporte-notas', [SeccionController::class, 'obtenerReporteNotas'])
+    ->name('reporte-notas');
 
 Route::get('/dashboard/obtener_secciones_disponibles', [SeccionController::class, 'formulario_secciones_disponibles'])
     ->name('secciones.disponibles.formulario');
@@ -127,12 +130,7 @@ Route::post('/dashboard/obtener_reporte_notas', [SeccionController::class, 'obte
 //Rutas para Docentes
 Route::get('/dashboard/CargaNotas', [DocenteController::class, 'cargarNotas'])->name('sidebar.CargaNotas');
 Route::get('/dashboard/DataSecciones', [DocenteController::class, 'verSecciones'])->name('sidebar.VerSecciones');
-
-
-Route::get('/dashboard/carga_academica', [DocenteController::class, 'ver_carga_academica'])
-    ->name('sidebar.ver_carga_academica');
-Route::post('/dashboard/carga_academica', [DocenteController::class,'obtener_carga_academica'])
-    ->name('obtener_carga_academica');
+Route::get('/dashboard/DataCargaAcademica', [DocenteController::class, 'verCargaAcademica'])->name('sidebar.VerCargaAcademica');
 
 Route::get('/dashboard/cambiar-contrasena', [DocenteController::class, 'showCambiarContrasenaForm'])
     ->name('sidebar.mostrar_cambiar_clave');

@@ -87,8 +87,8 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
 
                         <li><a href="{{ route('sidebar.VerSecciones') }}" class="block p-2 hover:bg-gray-800">Ver
                                 secciones de clases</a></li>
-
-                        <li><a href="{{ route('sidebar.ver_carga_academica') }}" class="block p-2 hover:bg-gray-800">Mi
+                                {{-- aqui debería ser {{route('sidebar.ver_carga_academica')}} --}}
+                        <li><a href="{{ route('sidebar.VerSecciones') }}" class="block p-2 hover:bg-gray-800">Mi
                                 carga académica</a></li>
                         {{-- @endcan --}}
                     </ul>
