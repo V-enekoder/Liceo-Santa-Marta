@@ -22,7 +22,7 @@ class Estudiante extends Model
         return $this->belongsTo(Persona::class);
     }
 
-    //Relaciones Uno-Muchos
+        //Relaciones Uno-Muchos
     public function calificaciones(){
         return $this->hasMany(Calificacion::class);
     }
