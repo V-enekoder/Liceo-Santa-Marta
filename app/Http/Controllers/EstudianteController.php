@@ -51,9 +51,7 @@ class EstudianteController extends Controller
             return response()->json([
                 'error' => 'Error al realizar la operación: ' . $e->getMessage(),
             ], 400);
-        } 
-
-        
+        }
     }
 
 // app/Http/Controllers/TuControlador.php
@@ -198,13 +196,5 @@ class EstudianteController extends Controller
                 'error' => 'No se encontró al estudiante con la cédula proporcionada.'
             ], 404);
         }
-    }
-
-    public function verFicha($cedula){
-        
-        $estudiante = Estudiante::whereHas('persona', function ($query) use ($cedula) {
-           $query->where('cedula', $cedula);
-         })->with('persona')->first();
-        return response()->json($estudiante);
     }
 }

@@ -86,8 +86,6 @@ Route::get('/dashboard/buscar-estudiante', [EstudianteController::class, 'formul
 Route::get('/dashboard/buscar-estudiante', [EstudianteController::class, 'buscar_estudiante'])
     ->name('buscar_estudiante');
 
-Route::get('/verficha/{cedula}',[EstudianteController::class, 'verFicha']);
-
 Route::get('/dashboard/modificar_calificacion', [CalificacionController::class, 'mostrar_datos_calificacion'])
     ->name('sidebar.modificar_calificacion');
 Route::post('/dashboard/modificar_calificacion', [CalificacionController::class, 'actualizar_calificacion'])
