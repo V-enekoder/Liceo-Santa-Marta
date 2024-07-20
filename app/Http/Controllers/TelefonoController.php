@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 
 class TelefonoController extends Controller
 {
-    public function indexTelefono()
-    {
+    public function indexTelefono(){
         $user = Auth::user();
         return view('Paginas.Representantes.agregar_telefono', compact('user'));
     }

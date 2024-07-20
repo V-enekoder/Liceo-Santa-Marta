@@ -46,6 +46,7 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                             <li><a href="{{ route('sidebar.inscribir') }}" class="block p-2 hover:bg-gray-800">Inscribir
                                     estudiante</a></li>
 
+<<<<<<< HEAD
                             <li><a href="{{ route('sidebar.modificar_calificacion') }}"
                                     class="block p-2 hover:bg-gray-800">Modificar Calificaciones</a></li>
 
@@ -54,16 +55,35 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
 
                             <li><a href="{{ route('sidebar.modiestudiantes') }}"
                                     class="block p-2 hover:bg-gray-800">Modificación de datos Estudiante</a> </li>
+=======
+                        <li><a href="{{ route('sidebar.modificar_calificacion') }}"
+                                class="block p-2 hover:bg-gray-800">Modificar Calificaciones</a></li>
+
+                        <li><a href="{{ route('sidebar.modirepresentantes') }}"
+                                class="block p-2 hover:bg-gray-800">Modificación de datos Representante</a> </li>
+
+                        <li><a href="{{ route('sidebar.modiestudiantes') }}"
+                                class="block p-2 hover:bg-gray-800">Modificación de datos Estudiante</a> </li>
+>>>>>>> f4a65f6104ff74546a7c480dc56d44ee9d3ccb61
 
                             <li><a href="{{ route('sidebar.modidocentes') }}"
                                     class="block p-2 hover:bg-gray-800">Modificación datos de Docente</a></li>
 
+<<<<<<< HEAD
                             <li><a href="{{ route('sidebar.materias') }}" class="block p-2 hover:bg-gray-800">Modificar
                                     datos de Materias</a></li>
 
                             <li><a href="{{ route('sidebar.reporte_carga_academica') }}"
                                     class="block p-2 hover:bg-gray-800">Buscar reporte academico</a></li>
                         @endcan
+=======
+                        <li><a href="{{ route('sidebar.materias') }}" class="block p-2 hover:bg-gray-800">Modificar
+                                datos de Materias</a></li>
+
+                        <li><a href="{{ route('sidebar.reporte_carga_academica') }}"
+                                class="block p-2 hover:bg-gray-800">Buscar reporte academico</a></li>
+                        {{-- @endcan --}}
+>>>>>>> f4a65f6104ff74546a7c480dc56d44ee9d3ccb61
 
                     </ul>
                 </li>
@@ -84,6 +104,7 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                         x-transition:leave="transition ease-in duration-75"
                         x-transition:leave-start="transform opacity-100 scale-100"
                         x-transition:leave-end="transform opacity-0 scale-95" class="submenu ml-4 space-y-2">
+<<<<<<< HEAD
                         @can('es_administrador_o_docente')
                             <li><a href="{{ route('sidebar.mostrar_cambiar_clave') }}"
                                     class="block p-2 hover:bg-gray-800">Cambiar contraseña</a></li>
@@ -91,6 +112,16 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                             <li><a href="{{ route('sidebar.CargaNotas') }}" class="block p-2 hover:bg-gray-800">Cargar
                                     notas</a></li>
                         @endcan
+=======
+                        {{-- @can('es_docente') --}}
+                        <li><a href="{{ route('sidebar.mostrar_cambiar_clave') }}" class="block p-2 hover:bg-gray-800">Cambiar contraseña</a></li>
+
+                        <li><a href="{{ route('sidebar.CargaNotas') }}" class="block p-2 hover:bg-gray-800">Cargar
+                                notas</a></li>
+
+
+                        {{-- @endcan --}}
+>>>>>>> f4a65f6104ff74546a7c480dc56d44ee9d3ccb61
                     </ul>
                 </li>
                 <li x-data="{ open: false }">
@@ -109,6 +140,7 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                         x-transition:leave="transition ease-in duration-75"
                         x-transition:leave-start="transform opacity-100 scale-100"
                         x-transition:leave-end="transform opacity-0 scale-95" class="submenu ml-4 space-y-2">
+<<<<<<< HEAD
                         @can('es_representante_o_administrador')
                             <li><a href="{{ route('sidebar.agregar_telefono') }}"
                                     class="block p-2 hover:bg-gray-800">Agregar teléfono</a></li>
@@ -116,6 +148,14 @@ overflow-y-auto transform -translate-x-full md:translate-x-0 transition duration
                     <li><a href="{{ route('formulario.seleccionar_boletin') }}"
                             class="block p-2 hover:bg-gray-800">Consulta de
                             boletines académicos</a></li>
+=======
+                        {{-- @can('es_representante') --}}
+
+                        <li><a href="{{ route('sidebar.agregar_telefono') }}" class="block p-2 hover:bg-gray-800">Agregar teléfono</a></li>
+                        </li>
+                        <li><a href="{{ route('formulario.seleccionar_boletin') }}" class="block p-2 hover:bg-gray-800">Consulta de
+                                boletines académicos</a></li>
+>>>>>>> f4a65f6104ff74546a7c480dc56d44ee9d3ccb61
 
                     <li><a href="{{ route('Ficha.index') }}" class="block p-2 hover:bg-gray-800">Ficha del
                             estudiante</a></li>

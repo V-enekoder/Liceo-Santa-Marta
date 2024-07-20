@@ -1,12 +1,11 @@
 <x-app-layout>
 
-    <head>
-        <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
-    </head>
-    <!-- Contenido principal -->
-    <div class="flex justify-center items-center h-screen">
-        <div class="bg-white p-8 rounded shadow-md w-1/2">
-            <h1 style="font-family: 'Arial', sans-serif; font-size: 30px" class="text-center">Agregar Teléfono</h1>
+    <h1 class="h1Docente">Representante: Agregar teléfono</h1>
+
+    <div class="col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading text-table-head">Panel de agregar teléfono</div>
+            <div class="panel-body">
 
             <!-- Mensajes de éxito y error -->
             @if (session('success'))
