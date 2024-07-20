@@ -1,21 +1,19 @@
-<x-app-layout>
-
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 
-        <h1 class="h1Docente">Coordinador: Crear persona</h1>
+<h1 class="h1Docente">Coordinador: Crear persona</h1>
 
-        <div class="panel panel-default">
-            <div class="panel-heading text-table-head">Panel de registro</div>
-            <div class="panel-body">
+<div class="panel panel-default">
+    <div class="panel-heading text-table-head">Panel de registro</div>
+    <div class="panel-body">
 
         <form action="{{ route('sidebar.crearpersona') }}" method="POST">
             @csrf
@@ -104,37 +102,36 @@
             </div>
 
             <button type="submit"
-            class="mt-5 mb-0 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Crear usuario</button>
+                class="mt-5 mb-0 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Crear
+                usuario</button>
         </form>
     </div>
 
 
-<script>
-    var categoriaSelect = document.getElementById('categoria_id');
-    var rolIdGroup = document.getElementById('rol_id_group');
-    var emailGroup = document.getElementById('email_group');
-    var passwordGroup = document.getElementById('password_group');
-    var passwordConfirmationGroup = document.getElementById('password_confirmation_group');
-    var estudianteFields = document.getElementById('estudiante-fields');
+    <script>
+        var categoriaSelect = document.getElementById('categoria_id');
+        var rolIdGroup = document.getElementById('rol_id_group');
+        var emailGroup = document.getElementById('email_group');
+        var passwordGroup = document.getElementById('password_group');
+        var passwordConfirmationGroup = document.getElementById('password_confirmation_group');
+        var estudianteFields = document.getElementById('estudiante-fields');
 
-    categoriaSelect.addEventListener('change', function() {
-        var categoria = this.value;
+        categoriaSelect.addEventListener('change', function() {
+            var categoria = this.value;
 
-        // Mostrar u ocultar campos según la categoria seleccionada
-        if (categoria === '2') { // Estudiante
-            estudianteFields.style.display = 'block';
-            rolIdGroup.style.display = 'none';
-            emailGroup.style.display = 'none';
-            passwordGroup.style.display = 'none';
-            passwordConfirmationGroup.style.display = 'none';
-        } else { // Usuario (categoria 1)
-            estudianteFields.style.display = 'none';
-            rolIdGroup.style.display = 'block';
-            emailGroup.style.display = 'block';
-            passwordGroup.style.display = 'block';
-            passwordConfirmationGroup.style.display = 'block';
-        }
-    });
-</script>
-
-</x-app-layout>
+            // Mostrar u ocultar campos según la categoria seleccionada
+            if (categoria === '2') { // Estudiante
+                estudianteFields.style.display = 'block';
+                rolIdGroup.style.display = 'none';
+                emailGroup.style.display = 'none';
+                passwordGroup.style.display = 'none';
+                passwordConfirmationGroup.style.display = 'none';
+            } else { // Usuario (categoria 1)
+                estudianteFields.style.display = 'none';
+                rolIdGroup.style.display = 'block';
+                emailGroup.style.display = 'block';
+                passwordGroup.style.display = 'block';
+                passwordConfirmationGroup.style.display = 'block';
+            }
+        });
+    </script>

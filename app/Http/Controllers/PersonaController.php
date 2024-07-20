@@ -82,8 +82,6 @@ public function mostrar_formulario_crear_usuario()
         // Crear un usuario si la categoria de persona es 1 y es solicitado
         $user = null;
 
-        Log::info('Persona ID: ' . $persona->id);
-
         if($persona->categoria_id == 1){
             $user = User::create([
                 'persona_id' => $persona->id,

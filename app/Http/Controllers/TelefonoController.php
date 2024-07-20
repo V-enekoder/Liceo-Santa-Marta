@@ -10,7 +10,7 @@ class TelefonoController extends Controller
     public function indexTelefono()
     {
         $user = Auth::user();
-        return view('agregar_telefono', compact('user'));
+        return view('Paginas.Representantes.agregar_telefono', compact('user'));
     }
 
     public function agregarTelefono(Request $request)

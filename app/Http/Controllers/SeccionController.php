@@ -6,6 +6,7 @@ use App\Models\Periodo_Academico;
 use App\Models\GradoPeriodo;
 use App\Models\Seccion;
 use App\Models\Materia;
+use App\Models\Calificacion;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -66,7 +67,7 @@ public function crearSeccion(Request $request)
 public function obtenerDatosSecciones()
 {
     $grados = Grado::all();
-    $periodos = PeriodoAcademico::all();
+    $periodos = Periodo_Academico::all();
     $materias = Materia::all();
     
     $seccionesPorGradoYPeriodo = Seccion::with(['grado', 'periodoAcademico'])->get()->groupBy(['grado_id', 'periodo_academico_id']);

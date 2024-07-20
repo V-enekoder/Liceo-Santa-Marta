@@ -1,4 +1,3 @@
-<x-app-layout>
     <div class="container dflexFix">
         <h1 class="h1Docente mb-4">Coordinador: Crear sección</h1>
 
@@ -35,7 +34,8 @@
                         </div>
 
                         <button type="submit"
-                        class="mt-5 mb-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Crear sección</button>
+                            class="mt-5 mb-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Crear
+                            sección</button>
                     </form>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                             'Capacidad: ' + response.seccion.capacidad + '\n' +
                             'Grado/Año: ' + response.seccion.grado_periodo_id + '\n' +
                             'Seccion: ' + response.seccion.nombre);
-                        
+
                         // Redireccionar o realizar cualquier otra acción necesaria
                         window.location.reload();
                     },
@@ -77,4 +77,3 @@
             });
         });
     </script>
-</x-app-layout>
