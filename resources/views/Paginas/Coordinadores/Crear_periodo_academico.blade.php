@@ -1,4 +1,3 @@
-<x-app-layout>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,10 +8,12 @@
 </head>
 
 <body>
-    <form action="{{ route('sidebar.periodos') }}" method="POST">
+    <form action="{{ route('sidebar.periodos') }}" method="POST" class="flex justify-end">
         @csrf
-        <button class="ml-60 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Crear Periodo Académico</button>
+        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" type="submit">Crear
+            Periodo Académico</button>
     </form>
+
 
     @if (request()->isMethod('post')) {{-- Verifica si se ha enviado el formulario --}}
         @if (session('success'))
@@ -26,4 +27,3 @@
 </body>
 
 </html>
-</x-app-layout>
